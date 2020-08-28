@@ -1,0 +1,20 @@
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.exe.config
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.exe
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.pdb
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead_Matter_Server_Manager.Form1.resources
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead_Matter_Server_Manager.Properties.Resources.resources
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csproj.GenerateResource.cache
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csproj.CoreCompileInputs.cache
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.exe
+C:\Users\Dave\Source\Repos\DeadSplatter\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.pdb
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead_Matter_Server_Manager.Form1.resources
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead_Matter_Server_Manager.Properties.Resources.resources
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csproj.GenerateResource.cache
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.csproj.CoreCompileInputs.cache
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.exe
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\Debug\Dead Matter Server Manager.pdb
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.exe.config
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.exe
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\Debug\Dead Matter Server Manager.pdb
