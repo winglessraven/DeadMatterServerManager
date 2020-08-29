@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,12 +47,6 @@
             this.softwareVersion = new System.Windows.Forms.Label();
             this.updateServer = new System.Windows.Forms.Button();
             this.getConfig = new System.Windows.Forms.Button();
-            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
-            this.configSettings = new System.Windows.Forms.DataGridView();
-            this.Variable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saveConfig = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.maxServerMemory = new System.Windows.Forms.TextBox();
@@ -60,8 +55,32 @@
             this.stopServer = new System.Windows.Forms.Button();
             this.serverStatus = new System.Windows.Forms.Label();
             this.memoryUsedProgressBar = new System.Windows.Forms.ProgressBar();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.settingsTabPage = new System.Windows.Forms.TabPage();
+            this.configSettings = new System.Windows.Forms.DataGridView();
+            this.Variable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.whitelistDGV = new System.Windows.Forms.DataGridView();
+            this.whiteListPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.adminDGV = new System.Windows.Forms.DataGridView();
+            this.adminPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.superAdminDGV = new System.Windows.Forms.DataGridView();
+            this.superAdminPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.settingsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configSettings)).BeginInit();
+            this.userTabPage.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.whitelistDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adminDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superAdminDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -88,8 +107,6 @@
             this.tableLayoutPanel1.Controls.Add(this.softwareVersion, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.updateServer, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.getConfig, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.configSettings, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.saveConfig, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 5, 5);
             this.tableLayoutPanel1.Controls.Add(this.maxServerMemory, 6, 5);
@@ -98,6 +115,9 @@
             this.tableLayoutPanel1.Controls.Add(this.stopServer, 6, 8);
             this.tableLayoutPanel1.Controls.Add(this.serverStatus, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.memoryUsedProgressBar, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 6, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -105,8 +125,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 398F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -115,7 +135,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 732);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 647);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label2
@@ -238,7 +258,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(60, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 0.1";
+            this.softwareVersion.Text = "Version 1.0";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
@@ -262,65 +282,6 @@
             this.getConfig.Text = "Get Config";
             this.getConfig.UseVisualStyleBackColor = true;
             this.getConfig.Click += new System.EventHandler(this.getConfig_Click);
-            // 
-            // checkUpdateOnStart
-            // 
-            this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(134, 88);
-            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
-            this.checkUpdateOnStart.Size = new System.Drawing.Size(320, 20);
-            this.checkUpdateOnStart.TabIndex = 15;
-            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
-            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
-            this.checkUpdateOnStart.Visible = false;
-            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
-            // 
-            // configSettings
-            // 
-            this.configSettings.AllowUserToAddRows = false;
-            this.configSettings.AllowUserToDeleteRows = false;
-            this.configSettings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.configSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Variable,
-            this.Value,
-            this.Script,
-            this.Info});
-            this.tableLayoutPanel1.SetColumnSpan(this.configSettings, 7);
-            this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.configSettings.Location = new System.Drawing.Point(3, 114);
-            this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1139, 394);
-            this.configSettings.TabIndex = 16;
-            // 
-            // Variable
-            // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Variable.DefaultCellStyle = dataGridViewCellStyle10;
-            this.Variable.HeaderText = "Variable";
-            this.Variable.Name = "Variable";
-            this.Variable.ReadOnly = true;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            // 
-            // Script
-            // 
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Script.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Script.HeaderText = "Script Location";
-            this.Script.Name = "Script";
-            this.Script.ReadOnly = true;
-            // 
-            // Info
-            // 
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Info.DefaultCellStyle = dataGridViewCellStyle12;
-            this.Info.HeaderText = "Info";
-            this.Info.Name = "Info";
-            this.Info.ReadOnly = true;
             // 
             // saveConfig
             // 
@@ -407,17 +368,199 @@
             this.memoryUsedProgressBar.Size = new System.Drawing.Size(320, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
             // 
+            // tabControl1
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.tabControl1, 8);
+            this.tabControl1.Controls.Add(this.settingsTabPage);
+            this.tabControl1.Controls.Add(this.userTabPage);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 88);
+            this.tabControl1.Name = "tabControl1";
+            this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1139, 420);
+            this.tabControl1.TabIndex = 25;
+            // 
+            // settingsTabPage
+            // 
+            this.settingsTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.settingsTabPage.Controls.Add(this.configSettings);
+            this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.settingsTabPage.Name = "settingsTabPage";
+            this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.settingsTabPage.Size = new System.Drawing.Size(1131, 394);
+            this.settingsTabPage.TabIndex = 1;
+            this.settingsTabPage.Text = "Settings";
+            // 
+            // configSettings
+            // 
+            this.configSettings.AllowUserToAddRows = false;
+            this.configSettings.AllowUserToDeleteRows = false;
+            this.configSettings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.configSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Variable,
+            this.Value,
+            this.Script,
+            this.Info});
+            this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.configSettings.Location = new System.Drawing.Point(3, 3);
+            this.configSettings.Name = "configSettings";
+            this.configSettings.Size = new System.Drawing.Size(1125, 388);
+            this.configSettings.TabIndex = 16;
+            // 
+            // Variable
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Variable.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Variable.HeaderText = "Variable";
+            this.Variable.Name = "Variable";
+            this.Variable.ReadOnly = true;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            // 
+            // Script
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Script.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Script.HeaderText = "Script Location";
+            this.Script.Name = "Script";
+            this.Script.ReadOnly = true;
+            // 
+            // Info
+            // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Info.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Info.HeaderText = "Info";
+            this.Info.Name = "Info";
+            this.Info.ReadOnly = true;
+            // 
+            // userTabPage
+            // 
+            this.userTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.userTabPage.Controls.Add(this.tableLayoutPanel2);
+            this.userTabPage.Location = new System.Drawing.Point(4, 22);
+            this.userTabPage.Name = "userTabPage";
+            this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 394);
+            this.userTabPage.TabIndex = 0;
+            this.userTabPage.Text = "Admin/Whitelist";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.Controls.Add(this.whitelistDGV, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.adminDGV, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.superAdminDGV, 2, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 388F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 388);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // whitelistDGV
+            // 
+            this.whitelistDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.whitelistDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.whitelistDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.whiteListPlayers});
+            this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
+            this.whitelistDGV.Name = "whitelistDGV";
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 382);
+            this.whitelistDGV.TabIndex = 0;
+            // 
+            // whiteListPlayers
+            // 
+            this.whiteListPlayers.HeaderText = "Whitelist Players (Steam64 ID)";
+            this.whiteListPlayers.Name = "whiteListPlayers";
+            // 
+            // adminDGV
+            // 
+            this.adminDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.adminDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.adminDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.adminPlayers});
+            this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.adminDGV.Location = new System.Drawing.Point(378, 3);
+            this.adminDGV.Name = "adminDGV";
+            this.adminDGV.Size = new System.Drawing.Size(369, 382);
+            this.adminDGV.TabIndex = 1;
+            // 
+            // adminPlayers
+            // 
+            this.adminPlayers.HeaderText = "Admin Players (Steam64 ID)";
+            this.adminPlayers.Name = "adminPlayers";
+            // 
+            // superAdminDGV
+            // 
+            this.superAdminDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.superAdminDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.superAdminDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.superAdminPlayers});
+            this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
+            this.superAdminDGV.Name = "superAdminDGV";
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 382);
+            this.superAdminDGV.TabIndex = 2;
+            // 
+            // superAdminPlayers
+            // 
+            this.superAdminPlayers.HeaderText = "Super Admin Players (Steam64 ID)";
+            this.superAdminPlayers.Name = "superAdminPlayers";
+            // 
+            // checkUpdateOnStart
+            // 
+            this.checkUpdateOnStart.AutoSize = true;
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(134, 564);
+            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
+            this.checkUpdateOnStart.Size = new System.Drawing.Size(184, 17);
+            this.checkUpdateOnStart.TabIndex = 15;
+            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
+            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
+            this.checkUpdateOnStart.Visible = false;
+            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabel1.Location = new System.Drawing.Point(962, 621);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(180, 26);
+            this.linkLabel1.TabIndex = 26;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Buy me a beer ;)";
+            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1145, 732);
+            this.ClientSize = new System.Drawing.Size(1145, 647);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Dead Matter Server Manager";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.settingsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configSettings)).EndInit();
+            this.userTabPage.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.whitelistDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.adminDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superAdminDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -453,6 +596,17 @@
         private System.Windows.Forms.Button stopServer;
         private System.Windows.Forms.Label serverStatus;
         private System.Windows.Forms.ProgressBar memoryUsedProgressBar;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage settingsTabPage;
+        private System.Windows.Forms.TabPage userTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.DataGridView whitelistDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn whiteListPlayers;
+        private System.Windows.Forms.DataGridView adminDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn adminPlayers;
+        private System.Windows.Forms.DataGridView superAdminDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn superAdminPlayers;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

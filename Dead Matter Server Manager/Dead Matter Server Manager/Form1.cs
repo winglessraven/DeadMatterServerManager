@@ -23,7 +23,7 @@ namespace Dead_Matter_Server_Manager
     public partial class Form1 : Form
     {
         private static List<Settings> settings = new List<Settings>();
-        private static string configFilePath = Environment.SpecialFolder.ApplicationData + "\\DMSM.cfg";
+        private static string configFilePath;
         private List<String> scripts = new List<String>();
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
@@ -35,6 +35,7 @@ namespace Dead_Matter_Server_Manager
         public Form1()
         {
             InitializeComponent();
+            configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             CheckAppData();
             AddConfigRows();
             MonitorServer(maxServerMemory.Text);
@@ -81,6 +82,9 @@ namespace Dead_Matter_Server_Manager
             }
             else
             {
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string specificFolder = Path.Combine(folder, "DeadMatterServerManager");
+                Directory.CreateDirectory(specificFolder);
                 File.Create(configFilePath).Close();
             }
         }
@@ -105,6 +109,7 @@ namespace Dead_Matter_Server_Manager
             settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper." });
             settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host." });
             settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query port." });
+            settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled." });
 
             foreach (Settings s in settings)
             {
@@ -197,11 +202,15 @@ namespace Dead_Matter_Server_Manager
             string[] configGame = File.ReadAllLines(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
             string[] configEngine = File.ReadAllLines(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
 
+            whitelistDGV.Rows.Clear();
+            adminDGV.Rows.Clear();
+            superAdminDGV.Rows.Clear();
+
             foreach (string configLine in configGame)
             {
+                string[] configVariable = configLine.Split('=');
                 foreach (Settings s in settings)
                 {
-                    string[] configVariable = configLine.Split('=');
                     if (configVariable[0] == s.Variable)
                     {
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
@@ -212,6 +221,19 @@ namespace Dead_Matter_Server_Manager
                             }
                         }
                     }
+                }
+
+                if (configVariable[0] == "Admins")
+                {
+                    adminDGV.Rows.Add(configVariable[1]);
+                }
+                if (configVariable[0] == "SuperAdmins")
+                {
+                    superAdminDGV.Rows.Add(configVariable[1]);
+                }
+                if (configVariable[0] == "Whitelist")
+                {
+                    whitelistDGV.Rows.Add(configVariable[1]);
                 }
             }
         }
@@ -240,6 +262,37 @@ namespace Dead_Matter_Server_Manager
                 gameIni += Environment.NewLine + writeConfig.Script + Environment.NewLine + writeConfig.Values;
             }
 
+            //write whitelist players
+            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            foreach(DataGridViewRow row in whitelistDGV.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    gameIni += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
+                }
+            }
+
+            //write admin players
+            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            foreach (DataGridViewRow row in adminDGV.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    gameIni += Environment.NewLine + "Admins=" + row.Cells[0].Value;
+                }
+            }
+
+            //write superadmin players
+            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            foreach (DataGridViewRow row in superAdminDGV.Rows)
+            {
+                if(row.Cells[0].Value != null)
+                {
+                    gameIni += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
+                }
+                
+            }
+
             File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
             MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -253,7 +306,7 @@ namespace Dead_Matter_Server_Manager
         {
             firstTimeServerStarted = true;
             serverStarted = true;
-            
+
         }
 
         private async void MonitorServer(string maxMemory)
@@ -269,30 +322,34 @@ namespace Dead_Matter_Server_Manager
                 {
                     memory = dmServer[0].VirtualMemorySize64;
                     string memoryGB = SizeSuffix(memory, 2);
-                    SetText(memoryUsed,memoryGB,Color.Black,true);
-                    SetText(serverStatus,"SERVER RUNNING",Color.Green,true);
+                    SetText(memoryUsed, memoryGB, Color.Black, true);
+                    SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
                     serverStatus.ForeColor = Color.Green;
                     SetText(startServer, "Start Server", Color.Black, false);
                     SetText(stopServer, "Stop Server", Color.Black, true);
                     SetReadOnly(maxServerMemory, false);
 
                     string maxMem = ReadControl(maxServerMemory);
-                    if(maxMem == "")
+                    if (maxMem == "")
                     {
                         maxMem = "20";
                     }
-
                     SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
+
+                    if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
+                    {
+                        dmServer[0].CloseMainWindow();
+                    }
                 }
                 else
                 {
-                    SetText(memoryUsed, "0 GB",Color.Black,true);
-                    SetText(serverStatus, "SERVER OFFLINE", Color.Red,true);
+                    SetText(memoryUsed, "0 GB", Color.Black, true);
+                    SetText(serverStatus, "SERVER OFFLINE", Color.Red, true);
                     SetText(startServer, "Start Server", Color.Black, true);
                     SetText(stopServer, "Stop Server", Color.Black, false);
                     SetProgress(memoryUsedProgressBar, 100, 0);
                     SetReadOnly(maxServerMemory, true);
-                    if(serverStarted && firstTimeServerStarted)
+                    if (serverStarted && firstTimeServerStarted)
                     {
                         if (checkUpdateOnStart.Checked)
                         {
@@ -316,7 +373,7 @@ namespace Dead_Matter_Server_Manager
 
         public string ReadControl(Control control)
         {
-            if(control.InvokeRequired)
+            if (control.InvokeRequired)
             {
                 ReadControls DDD = new ReadControls(ReadControl);
                 control.Invoke(DDD, control);
@@ -331,7 +388,7 @@ namespace Dead_Matter_Server_Manager
 
         public void SetReadOnly(Control control, bool enabled)
         {
-            if(control.InvokeRequired)
+            if (control.InvokeRequired)
             {
                 SetReadOnlyControl DDD = new SetReadOnlyControl(SetReadOnly);
                 control.Invoke(DDD, control, enabled);
@@ -342,12 +399,12 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void SetText(Control controlToChange, string message,Color foreColour,bool enabled)
+        public void SetText(Control controlToChange, string message, Color foreColour, bool enabled)
         {
             if (controlToChange.InvokeRequired)
             {
                 SetTextOnControl DDD = new SetTextOnControl(SetText);
-                controlToChange.Invoke(DDD, controlToChange, message,foreColour,enabled);
+                controlToChange.Invoke(DDD, controlToChange, message, foreColour, enabled);
             }
             else
             {
@@ -357,9 +414,9 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void SetProgress(ProgressBar progressBar,double maximum,double current)
+        public void SetProgress(ProgressBar progressBar, double maximum, double current)
         {
-            if(progressBar.InvokeRequired)
+            if (progressBar.InvokeRequired)
             {
                 SetProgressBar DDD = new SetProgressBar(SetProgress);
                 progressBar.Invoke(DDD, progressBar, maximum, current);
@@ -369,7 +426,7 @@ namespace Dead_Matter_Server_Manager
                 int currentVal = Convert.ToInt32(current);
                 int maxVal = Convert.ToInt32(maximum);
 
-                if(currentVal > maxVal)
+                if (currentVal > maxVal)
                 {
                     progressBar.Maximum = maxVal;
                     progressBar.Value = maxVal;
@@ -452,6 +509,11 @@ namespace Dead_Matter_Server_Manager
         private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://paypal.me/winglessraven");
         }
     }
 }

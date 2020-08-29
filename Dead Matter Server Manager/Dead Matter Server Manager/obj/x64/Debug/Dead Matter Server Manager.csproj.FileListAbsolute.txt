@@ -1,11 +1,9 @@
-C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\RunServer.ps1
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Dead Matter Server Manager.exe.config
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Dead Matter Server Manager.exe
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Dead Matter Server Manager.pdb
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Management.Automation.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Microsoft.Management.Infrastructure.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Management.Automation.xml
-C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead_Matter_Server_Manager.Form1.resources
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead_Matter_Server_Manager.Properties.Resources.resources
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csproj.GenerateResource.cache
