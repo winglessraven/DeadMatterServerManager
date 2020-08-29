@@ -246,7 +246,10 @@ namespace Dead_Matter_Server_Manager
             {
                 if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
                 {
-                    writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                    if(dataGridViewRow.Cells[1].Value != null)
+                    {
+                        writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                    }                    
                 }
                 else
                 {
@@ -292,9 +295,14 @@ namespace Dead_Matter_Server_Manager
                 }
                 
             }
-
+            FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
+            if(fileInfo.IsReadOnly)
+            {
+                fileInfo.IsReadOnly = false;
+            }
             File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
             MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            fileInfo.IsReadOnly = true;
         }
 
         private void SaveData()
