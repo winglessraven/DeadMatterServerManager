@@ -258,7 +258,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(60, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.1";
+            this.softwareVersion.Text = "Version 1.2";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer

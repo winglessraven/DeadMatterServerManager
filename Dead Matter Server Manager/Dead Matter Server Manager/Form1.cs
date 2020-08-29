@@ -35,12 +35,29 @@ namespace Dead_Matter_Server_Manager
         public Form1()
         {
             InitializeComponent();
+            VersionCheck();
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             CheckAppData();
             AddConfigRows();
             MonitorServer(maxServerMemory.Text);
         }
 
+        private void VersionCheck()
+        {
+            WebClient webClient = new WebClient();
+            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+            Version version = new Version(releaseVersion);
+            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
+            if(version.CompareTo(new Version(this.ProductVersion)) > 0)
+            {
+                DialogResult result = MessageBox.Show("Update available, download now?", "Update Available",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
+                    Environment.Exit(0);
+                }
+            }
+        }
         private void CheckAppData()
         {
             if (File.Exists(configFilePath))
