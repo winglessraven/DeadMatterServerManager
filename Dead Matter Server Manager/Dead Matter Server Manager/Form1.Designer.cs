@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,6 +53,13 @@
             this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saveConfig = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.maxServerMemory = new System.Windows.Forms.TextBox();
+            this.startServer = new System.Windows.Forms.Button();
+            this.memoryUsed = new System.Windows.Forms.Label();
+            this.stopServer = new System.Windows.Forms.Button();
+            this.serverStatus = new System.Windows.Forms.Label();
+            this.memoryUsedProgressBar = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configSettings)).BeginInit();
             this.SuspendLayout();
@@ -60,13 +67,13 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.07775F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.92225F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.66521F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.33479F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 184F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.steamCMDBrowse, 2, 1);
@@ -82,28 +89,33 @@
             this.tableLayoutPanel1.Controls.Add(this.updateServer, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.getConfig, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.configSettings, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.configSettings, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.saveConfig, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 5, 5);
+            this.tableLayoutPanel1.Controls.Add(this.maxServerMemory, 6, 5);
+            this.tableLayoutPanel1.Controls.Add(this.startServer, 6, 7);
+            this.tableLayoutPanel1.Controls.Add(this.memoryUsed, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.stopServer, 6, 8);
+            this.tableLayoutPanel1.Controls.Add(this.serverStatus, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.memoryUsedProgressBar, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 14;
+            this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 105F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1144, 615);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 732);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label2
@@ -112,7 +124,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 30);
+            this.label2.Size = new System.Drawing.Size(125, 30);
             this.label2.TabIndex = 1;
             this.label2.Text = "Steam CMD Path";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -123,7 +135,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 55);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 30);
+            this.label3.Size = new System.Drawing.Size(125, 30);
             this.label3.TabIndex = 2;
             this.label3.Text = "Server Folder Path";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -153,17 +165,17 @@
             // steamCMDPath
             // 
             this.steamCMDPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamCMDPath.Location = new System.Drawing.Point(131, 28);
+            this.steamCMDPath.Location = new System.Drawing.Point(134, 28);
             this.steamCMDPath.Name = "steamCMDPath";
-            this.steamCMDPath.Size = new System.Drawing.Size(323, 20);
+            this.steamCMDPath.Size = new System.Drawing.Size(320, 20);
             this.steamCMDPath.TabIndex = 5;
             // 
             // serverFolderPath
             // 
             this.serverFolderPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverFolderPath.Location = new System.Drawing.Point(131, 58);
+            this.serverFolderPath.Location = new System.Drawing.Point(134, 58);
             this.serverFolderPath.Name = "serverFolderPath";
-            this.serverFolderPath.Size = new System.Drawing.Size(323, 20);
+            this.serverFolderPath.Size = new System.Drawing.Size(320, 20);
             this.serverFolderPath.TabIndex = 6;
             // 
             // updateSteamCMD
@@ -182,8 +194,9 @@
             this.steamID.Dock = System.Windows.Forms.DockStyle.Fill;
             this.steamID.Location = new System.Drawing.Point(962, 28);
             this.steamID.Name = "steamID";
-            this.steamID.Size = new System.Drawing.Size(179, 20);
+            this.steamID.Size = new System.Drawing.Size(180, 20);
             this.steamID.TabIndex = 8;
+            this.steamID.Leave += new System.EventHandler(this.steamID_Leave);
             // 
             // steamPassword
             // 
@@ -191,8 +204,9 @@
             this.steamPassword.Location = new System.Drawing.Point(962, 58);
             this.steamPassword.Name = "steamPassword";
             this.steamPassword.PasswordChar = '*';
-            this.steamPassword.Size = new System.Drawing.Size(179, 20);
+            this.steamPassword.Size = new System.Drawing.Size(180, 20);
             this.steamPassword.TabIndex = 9;
+            this.steamPassword.Leave += new System.EventHandler(this.steamPassword_Leave);
             // 
             // label4
             // 
@@ -220,7 +234,7 @@
             // 
             this.softwareVersion.AutoSize = true;
             this.softwareVersion.Dock = System.Windows.Forms.DockStyle.Right;
-            this.softwareVersion.Location = new System.Drawing.Point(1081, 0);
+            this.softwareVersion.Location = new System.Drawing.Point(1082, 0);
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(60, 25);
             this.softwareVersion.TabIndex = 12;
@@ -253,12 +267,14 @@
             // 
             this.checkUpdateOnStart.AutoSize = true;
             this.checkUpdateOnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(131, 88);
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(134, 88);
             this.checkUpdateOnStart.Name = "checkUpdateOnStart";
-            this.checkUpdateOnStart.Size = new System.Drawing.Size(323, 20);
+            this.checkUpdateOnStart.Size = new System.Drawing.Size(320, 20);
             this.checkUpdateOnStart.TabIndex = 15;
             this.checkUpdateOnStart.Text = "Check for Update on Server Start";
             this.checkUpdateOnStart.UseVisualStyleBackColor = true;
+            this.checkUpdateOnStart.Visible = false;
+            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
             // 
             // configSettings
             // 
@@ -272,16 +288,15 @@
             this.Info});
             this.tableLayoutPanel1.SetColumnSpan(this.configSettings, 7);
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.configSettings.Location = new System.Drawing.Point(3, 136);
+            this.configSettings.Location = new System.Drawing.Point(3, 114);
             this.configSettings.Name = "configSettings";
-            this.tableLayoutPanel1.SetRowSpan(this.configSettings, 8);
-            this.configSettings.Size = new System.Drawing.Size(1138, 256);
+            this.configSettings.Size = new System.Drawing.Size(1139, 394);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Variable.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Variable.DefaultCellStyle = dataGridViewCellStyle10;
             this.Variable.HeaderText = "Variable";
             this.Variable.Name = "Variable";
             this.Variable.ReadOnly = true;
@@ -293,16 +308,16 @@
             // 
             // Script
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Script.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Script.DefaultCellStyle = dataGridViewCellStyle11;
             this.Script.HeaderText = "Script Location";
             this.Script.Name = "Script";
             this.Script.ReadOnly = true;
             // 
             // Info
             // 
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Info.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Info.DefaultCellStyle = dataGridViewCellStyle12;
             this.Info.HeaderText = "Info";
             this.Info.Name = "Info";
             this.Info.ReadOnly = true;
@@ -318,11 +333,85 @@
             this.saveConfig.UseVisualStyleBackColor = true;
             this.saveConfig.Click += new System.EventHandler(this.saveConfig_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(804, 511);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(152, 30);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Max Server Memory (GB)";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // maxServerMemory
+            // 
+            this.maxServerMemory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.maxServerMemory.Location = new System.Drawing.Point(962, 514);
+            this.maxServerMemory.Name = "maxServerMemory";
+            this.maxServerMemory.Size = new System.Drawing.Size(180, 20);
+            this.maxServerMemory.TabIndex = 19;
+            this.maxServerMemory.Leave += new System.EventHandler(this.maxServerMemory_Leave);
+            // 
+            // startServer
+            // 
+            this.startServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.startServer.Location = new System.Drawing.Point(962, 564);
+            this.startServer.Name = "startServer";
+            this.startServer.Size = new System.Drawing.Size(180, 24);
+            this.startServer.TabIndex = 20;
+            this.startServer.Text = "Start Server";
+            this.startServer.UseVisualStyleBackColor = true;
+            this.startServer.Click += new System.EventHandler(this.startServer_Click);
+            // 
+            // memoryUsed
+            // 
+            this.memoryUsed.AutoSize = true;
+            this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryUsed.Location = new System.Drawing.Point(460, 511);
+            this.memoryUsed.Name = "memoryUsed";
+            this.memoryUsed.Size = new System.Drawing.Size(82, 30);
+            this.memoryUsed.TabIndex = 21;
+            this.memoryUsed.Text = "memused";
+            this.memoryUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // stopServer
+            // 
+            this.stopServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stopServer.Location = new System.Drawing.Point(962, 594);
+            this.stopServer.Name = "stopServer";
+            this.stopServer.Size = new System.Drawing.Size(180, 24);
+            this.stopServer.TabIndex = 22;
+            this.stopServer.Text = "Stop Server";
+            this.stopServer.UseVisualStyleBackColor = true;
+            this.stopServer.Click += new System.EventHandler(this.stopServer_Click);
+            // 
+            // serverStatus
+            // 
+            this.serverStatus.AutoSize = true;
+            this.serverStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverStatus.ForeColor = System.Drawing.Color.Red;
+            this.serverStatus.Location = new System.Drawing.Point(3, 511);
+            this.serverStatus.Name = "serverStatus";
+            this.serverStatus.Size = new System.Drawing.Size(125, 30);
+            this.serverStatus.TabIndex = 23;
+            this.serverStatus.Text = "SERVER OFFLINE";
+            this.serverStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // memoryUsedProgressBar
+            // 
+            this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryUsedProgressBar.Location = new System.Drawing.Point(134, 514);
+            this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
+            this.memoryUsedProgressBar.Size = new System.Drawing.Size(320, 24);
+            this.memoryUsedProgressBar.TabIndex = 24;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1144, 615);
+            this.ClientSize = new System.Drawing.Size(1145, 732);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -357,6 +446,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Script;
         private System.Windows.Forms.DataGridViewTextBoxColumn Info;
         private System.Windows.Forms.Button saveConfig;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox maxServerMemory;
+        private System.Windows.Forms.Button startServer;
+        private System.Windows.Forms.Label memoryUsed;
+        private System.Windows.Forms.Button stopServer;
+        private System.Windows.Forms.Label serverStatus;
+        private System.Windows.Forms.ProgressBar memoryUsedProgressBar;
     }
 }
 
