@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_49D049DCED02440A99ADFF64EA5EB474"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_884AA8BE0C34A4448A660EDFEC8B34EF"
         "OwnerKey" = "8:_262D2683AA2142C289BFC824DDFCD381"
         "MsmSig" = "8:_UNDEFINED"
@@ -134,6 +140,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -237,6 +251,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_49D049DCED02440A99ADFF64EA5EB474"
+            {
+            "SourcePath" = "8:..\\Dead Matter Server Manager\\defaultEngine.txt"
+            "TargetName" = "8:defaultEngine.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_12EB296AC619417D8A628C01638EB039"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_884AA8BE0C34A4448A660EDFEC8B34EF"
@@ -462,7 +496,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Dead Matter Server Manager"
         "ProductCode" = "8:{D4D0AB07-41B1-41BD-B395-0353450DD9FD}"
-        "PackageCode" = "8:{6A459ADE-2B90-4F10-8206-EB916D551290}"
+        "PackageCode" = "8:{5E3E7C88-7778-4C4B-9793-D5426844B31A}"
         "UpgradeCode" = "8:{BC345328-E944-4F2F-9559-E95043070B11}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
