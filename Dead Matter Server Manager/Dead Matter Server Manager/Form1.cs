@@ -432,10 +432,11 @@ namespace Dead_Matter_Server_Manager
             {
                 long memory;
                 Process[] dmServer;
-                dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+                dmServer = Process.GetProcessesByName("deadmatterServer");
                 if (dmServer.Length != 0)
                 {
-                    memory = dmServer[0].PagedMemorySize64;
+                    Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+                    memory = dmServerShipping[0].PagedMemorySize64;
                     string memoryGB = SizeSuffix(memory, 2);
                     SetText(memoryUsed, memoryGB, Color.Black, true);
                     SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
@@ -484,7 +485,7 @@ namespace Dead_Matter_Server_Manager
                             dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
                             dmServerExe.StartInfo.Arguments = "-USEALLAVAILABLECORES -log";
                             dmServerExe.Start();
-                            Thread.Sleep(1000);
+                            Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
                         }
                     }
