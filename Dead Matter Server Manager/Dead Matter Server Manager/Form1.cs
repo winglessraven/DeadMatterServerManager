@@ -1,22 +1,14 @@
-﻿using Dead_Matter_Server_Manager.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Management.Automation;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using System.Runtime.InteropServices;
 
 namespace Dead_Matter_Server_Manager
 {
@@ -36,10 +28,10 @@ namespace Dead_Matter_Server_Manager
         public Form1()
         {
             InitializeComponent();
-            VersionCheck();
+            VersionCheckOnStart();
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
-            CheckAppData();
             AddConfigRows();
+            CheckAppData();
             MonitorServer(maxServerMemory.Text);
             if (autoStartServer.Checked)
             {
@@ -47,8 +39,12 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void VersionCheck()
+        private void VersionCheckOnStart()
         {
+            if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi"))
+            {
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+            }
             WebClient webClient = new WebClient();
             string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
             Version version = new Version(releaseVersion);
@@ -61,6 +57,18 @@ namespace Dead_Matter_Server_Manager
                     Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
                     Environment.Exit(0);
                 }
+            }
+        }
+
+        private void VersionCheck()
+        {
+            WebClient webClient = new WebClient();
+            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+            Version version = new Version(releaseVersion);
+            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
+            if (version.CompareTo(new Version(this.ProductVersion)) > 0)
+            {
+                updateSoftware.Text = "Version " + releaseVersion + " available - click to update now";
             }
         }
         private void CheckAppData()
@@ -81,6 +89,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         serverFolderPath.Text = temp[1];
+                        getConfig_Click(null, null);
                     }
 
                     if (s.StartsWith("SteamID"))
@@ -111,6 +120,12 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         autoStartServer.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if(s.StartsWith("LastStart"))
+                    {
+                        String[] temp = s.Split('=');
+                        serverStartTime = Convert.ToDateTime(temp[1]);
                     }
                 }
             }
@@ -413,7 +428,8 @@ namespace Dead_Matter_Server_Manager
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
                 "MaxMemory=" + maxServerMemory.Text + Environment.NewLine +
                 "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine +
-                "StartServerOnLaunch=" + autoStartServer.Checked
+                "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
+                "LastStart=" + serverStartTime
                 );
         }
 
@@ -436,30 +452,46 @@ namespace Dead_Matter_Server_Manager
                 if (dmServer.Length != 0)
                 {
                     Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
-                    memory = dmServerShipping[0].PagedMemorySize64;
-                    string memoryGB = SizeSuffix(memory, 2);
-                    SetText(memoryUsed, memoryGB, Color.Black, true);
-                    SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
-                    serverStatus.ForeColor = Color.Green;
-                    SetText(startServer, "Start Server", Color.Black, false);
-                    SetText(stopServer, "Stop Server", Color.Black, true);
-                    SetReadOnly(maxServerMemory, false);
-
-                    string maxMem = ReadControl(maxServerMemory);
-                    if (maxMem == "")
+                    if(dmServerShipping.Length != 0)
                     {
-                        maxMem = "100";
+                        memory = dmServerShipping[0].PagedMemorySize64;
+                        string memoryGB = SizeSuffix(memory, 2);
+                        SetText(memoryUsed, memoryGB, Color.Black, true);
+                        SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
+                        serverStatus.ForeColor = Color.Green;
+                        SetText(startServer, "Start Server", Color.Black, false);
+                        SetText(stopServer, "Stop Server", Color.Black, true);
+                        SetReadOnly(maxServerMemory, false);
+                        string maxMem = ReadControl(maxServerMemory);
+                        if (maxMem == "")
+                        {
+                            maxMem = "100";
+                        }
+                        SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
+
+                        TimeSpan uptime = DateTime.Now - serverStartTime;
+
+                        SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
+                        if (uptime.Minutes % 10 == 0 && uptime.Seconds % 30 == 0)
+                        {
+                            WebClient webClient = new WebClient();
+                            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM-test.html");
+                            Version version = new Version(releaseVersion);
+                            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
+                            if (version.CompareTo(new Version(this.ProductVersion)) > 0)
+                            {
+                                SetText(updateSoftware, "Version " + releaseVersion + " available - click to update now", Color.Blue, true);
+                            }
+                        }
+
+                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
+                        {
+                            dmServer[0].CloseMainWindow();
+                        }
                     }
-                    SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
+                    
 
-                    TimeSpan uptime = DateTime.Now - serverStartTime;
-
-                    SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
-
-                    if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
-                    {
-                        dmServer[0].CloseMainWindow();
-                    }
+                    
                 }
                 else
                 {
@@ -487,6 +519,7 @@ namespace Dead_Matter_Server_Manager
                             dmServerExe.Start();
                             Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
+                            SaveData();
                         }
                     }
                 }
@@ -668,6 +701,14 @@ namespace Dead_Matter_Server_Manager
         private void autoStartServer_CheckedChanged(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void updateSoftware_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+            Environment.Exit(0);
         }
     }
 }

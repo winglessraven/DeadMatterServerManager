@@ -78,6 +78,7 @@
             this.serverUptime = new System.Windows.Forms.Label();
             this.autoStartWithWindows = new System.Windows.Forms.CheckBox();
             this.autoStartServer = new System.Windows.Forms.CheckBox();
+            this.updateSoftware = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -128,6 +129,7 @@
             this.tableLayoutPanel1.Controls.Add(this.serverUptime, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.autoStartWithWindows, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.autoStartServer, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.updateSoftware, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -265,7 +267,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(69, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.4.2";
+            this.softwareVersion.Text = "Version 1.4.3";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
@@ -606,6 +608,17 @@
             this.autoStartServer.UseVisualStyleBackColor = true;
             this.autoStartServer.CheckedChanged += new System.EventHandler(this.autoStartServer_CheckedChanged);
             // 
+            // updateSoftware
+            // 
+            this.updateSoftware.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.updateSoftware, 2);
+            this.updateSoftware.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.updateSoftware.Location = new System.Drawing.Point(3, 0);
+            this.updateSoftware.Name = "updateSoftware";
+            this.updateSoftware.Size = new System.Drawing.Size(451, 25);
+            this.updateSoftware.TabIndex = 31;
+            this.updateSoftware.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateSoftware_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -676,6 +689,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Script;
         private System.Windows.Forms.DataGridViewTextBoxColumn Info;
         private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
+        private System.Windows.Forms.LinkLabel updateSoftware;
     }
 }
 
