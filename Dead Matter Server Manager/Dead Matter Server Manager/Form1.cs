@@ -472,18 +472,19 @@ namespace Dead_Matter_Server_Manager
                     {
                         if (checkUpdateOnStart.Checked)
                         {
-                    //not currently used
-                    updateServer_Click(this, null);
+                            //not currently used
+                            updateServer_Click(this, null);
                             string serverExe = serverFolderPath.Text + @"\deadmatterServer.exe";
                             Process.Start(serverExe, "-USEALLAVAILABLECORES -log");
                         }
                         else
                         {
+                            SetText(startServer, "Start Server", Color.Black, false);
                             Process dmServerExe = new Process();
                             dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
                             dmServerExe.StartInfo.Arguments = "-USEALLAVAILABLECORES -log";
                             dmServerExe.Start();
-                            dmServerExe.WaitForInputIdle(60);
+                            Thread.Sleep(1000);
                             serverStartTime = DateTime.Now;
                         }
                     }

@@ -261,11 +261,11 @@
             // 
             this.softwareVersion.AutoSize = true;
             this.softwareVersion.Dock = System.Windows.Forms.DockStyle.Right;
-            this.softwareVersion.Location = new System.Drawing.Point(1082, 0);
+            this.softwareVersion.Location = new System.Drawing.Point(1073, 0);
             this.softwareVersion.Name = "softwareVersion";
-            this.softwareVersion.Size = new System.Drawing.Size(60, 25);
+            this.softwareVersion.Size = new System.Drawing.Size(69, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.4";
+            this.softwareVersion.Text = "Version 1.4.1";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
