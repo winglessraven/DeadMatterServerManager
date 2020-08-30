@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,6 +63,7 @@
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IniFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.whitelistDGV = new System.Windows.Forms.DataGridView();
@@ -72,6 +74,10 @@
             this.superAdminPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.uptimeLbl = new System.Windows.Forms.Label();
+            this.serverUptime = new System.Windows.Forms.Label();
+            this.autoStartWithWindows = new System.Windows.Forms.CheckBox();
+            this.autoStartServer = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -118,6 +124,10 @@
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 6, 9);
+            this.tableLayoutPanel1.Controls.Add(this.uptimeLbl, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.serverUptime, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.autoStartWithWindows, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.autoStartServer, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -126,15 +136,12 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 398F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 647);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -258,7 +265,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(60, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.3";
+            this.softwareVersion.Text = "Version 1.4";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
@@ -298,7 +305,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(804, 511);
+            this.label1.Location = new System.Drawing.Point(804, 497);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(152, 30);
             this.label1.TabIndex = 18;
@@ -308,7 +315,7 @@
             // maxServerMemory
             // 
             this.maxServerMemory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maxServerMemory.Location = new System.Drawing.Point(962, 514);
+            this.maxServerMemory.Location = new System.Drawing.Point(962, 500);
             this.maxServerMemory.Name = "maxServerMemory";
             this.maxServerMemory.Size = new System.Drawing.Size(180, 20);
             this.maxServerMemory.TabIndex = 19;
@@ -317,7 +324,7 @@
             // startServer
             // 
             this.startServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startServer.Location = new System.Drawing.Point(962, 564);
+            this.startServer.Location = new System.Drawing.Point(962, 560);
             this.startServer.Name = "startServer";
             this.startServer.Size = new System.Drawing.Size(180, 24);
             this.startServer.TabIndex = 20;
@@ -329,7 +336,7 @@
             // 
             this.memoryUsed.AutoSize = true;
             this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsed.Location = new System.Drawing.Point(460, 511);
+            this.memoryUsed.Location = new System.Drawing.Point(460, 497);
             this.memoryUsed.Name = "memoryUsed";
             this.memoryUsed.Size = new System.Drawing.Size(82, 30);
             this.memoryUsed.TabIndex = 21;
@@ -339,7 +346,7 @@
             // stopServer
             // 
             this.stopServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stopServer.Location = new System.Drawing.Point(962, 594);
+            this.stopServer.Location = new System.Drawing.Point(962, 590);
             this.stopServer.Name = "stopServer";
             this.stopServer.Size = new System.Drawing.Size(180, 24);
             this.stopServer.TabIndex = 22;
@@ -353,7 +360,7 @@
             this.serverStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.serverStatus.ForeColor = System.Drawing.Color.Red;
-            this.serverStatus.Location = new System.Drawing.Point(3, 511);
+            this.serverStatus.Location = new System.Drawing.Point(3, 497);
             this.serverStatus.Name = "serverStatus";
             this.serverStatus.Size = new System.Drawing.Size(125, 30);
             this.serverStatus.TabIndex = 23;
@@ -363,7 +370,7 @@
             // memoryUsedProgressBar
             // 
             this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsedProgressBar.Location = new System.Drawing.Point(134, 514);
+            this.memoryUsedProgressBar.Location = new System.Drawing.Point(134, 500);
             this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
             this.memoryUsedProgressBar.Size = new System.Drawing.Size(320, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
@@ -378,7 +385,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 420);
+            this.tabControl1.Size = new System.Drawing.Size(1139, 406);
             this.tabControl1.TabIndex = 25;
             // 
             // settingsTabPage
@@ -388,7 +395,7 @@
             this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.settingsTabPage.Name = "settingsTabPage";
             this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsTabPage.Size = new System.Drawing.Size(1131, 394);
+            this.settingsTabPage.Size = new System.Drawing.Size(1131, 380);
             this.settingsTabPage.TabIndex = 1;
             this.settingsTabPage.Text = "Settings";
             // 
@@ -401,11 +408,12 @@
             this.Variable,
             this.Value,
             this.Script,
-            this.Info});
+            this.Info,
+            this.IniFile});
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1125, 388);
+            this.configSettings.Size = new System.Drawing.Size(1125, 374);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
@@ -437,6 +445,14 @@
             this.Info.Name = "Info";
             this.Info.ReadOnly = true;
             // 
+            // IniFile
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.IniFile.DefaultCellStyle = dataGridViewCellStyle4;
+            this.IniFile.HeaderText = "Ini File";
+            this.IniFile.Name = "IniFile";
+            this.IniFile.ReadOnly = true;
+            // 
             // userTabPage
             // 
             this.userTabPage.BackColor = System.Drawing.Color.Transparent;
@@ -444,7 +460,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 394);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 380);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -463,7 +479,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 388F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 388);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -475,7 +491,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 382);
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 368);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -492,7 +508,7 @@
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminDGV.Location = new System.Drawing.Point(378, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 382);
+            this.adminDGV.Size = new System.Drawing.Size(369, 368);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -509,7 +525,7 @@
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 382);
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 368);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -520,7 +536,7 @@
             // checkUpdateOnStart
             // 
             this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(134, 564);
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(134, 560);
             this.checkUpdateOnStart.Name = "checkUpdateOnStart";
             this.checkUpdateOnStart.Size = new System.Drawing.Size(184, 17);
             this.checkUpdateOnStart.TabIndex = 15;
@@ -533,14 +549,62 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel1.Location = new System.Drawing.Point(962, 621);
+            this.linkLabel1.Location = new System.Drawing.Point(962, 617);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(180, 26);
+            this.linkLabel1.Size = new System.Drawing.Size(180, 30);
             this.linkLabel1.TabIndex = 26;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Buy me a beer ;)";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // uptimeLbl
+            // 
+            this.uptimeLbl.AutoSize = true;
+            this.uptimeLbl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.uptimeLbl.Location = new System.Drawing.Point(51, 527);
+            this.uptimeLbl.Name = "uptimeLbl";
+            this.uptimeLbl.Size = new System.Drawing.Size(77, 30);
+            this.uptimeLbl.TabIndex = 27;
+            this.uptimeLbl.Text = "Server Uptime:";
+            this.uptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // serverUptime
+            // 
+            this.serverUptime.AutoSize = true;
+            this.serverUptime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverUptime.Location = new System.Drawing.Point(134, 527);
+            this.serverUptime.Name = "serverUptime";
+            this.serverUptime.Size = new System.Drawing.Size(320, 30);
+            this.serverUptime.TabIndex = 28;
+            this.serverUptime.Text = "00:00:00";
+            this.serverUptime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // autoStartWithWindows
+            // 
+            this.autoStartWithWindows.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.autoStartWithWindows, 2);
+            this.autoStartWithWindows.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.autoStartWithWindows.Location = new System.Drawing.Point(3, 590);
+            this.autoStartWithWindows.Name = "autoStartWithWindows";
+            this.autoStartWithWindows.Size = new System.Drawing.Size(451, 24);
+            this.autoStartWithWindows.TabIndex = 29;
+            this.autoStartWithWindows.Text = "Auto Start with Windows";
+            this.autoStartWithWindows.UseVisualStyleBackColor = true;
+            this.autoStartWithWindows.CheckedChanged += new System.EventHandler(this.autoStartWithWindows_CheckedChanged);
+            // 
+            // autoStartServer
+            // 
+            this.autoStartServer.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.autoStartServer, 2);
+            this.autoStartServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.autoStartServer.Location = new System.Drawing.Point(3, 620);
+            this.autoStartServer.Name = "autoStartServer";
+            this.autoStartServer.Size = new System.Drawing.Size(451, 24);
+            this.autoStartServer.TabIndex = 30;
+            this.autoStartServer.Text = "Auto Start Server on Launch";
+            this.autoStartServer.UseVisualStyleBackColor = true;
+            this.autoStartServer.CheckedChanged += new System.EventHandler(this.autoStartServer_CheckedChanged);
             // 
             // Form1
             // 
@@ -584,10 +648,6 @@
         private System.Windows.Forms.Button getConfig;
         private System.Windows.Forms.CheckBox checkUpdateOnStart;
         private System.Windows.Forms.DataGridView configSettings;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Variable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Script;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Info;
         private System.Windows.Forms.Button saveConfig;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox maxServerMemory;
@@ -607,6 +667,15 @@
         private System.Windows.Forms.DataGridView superAdminDGV;
         private System.Windows.Forms.DataGridViewTextBoxColumn superAdminPlayers;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label uptimeLbl;
+        private System.Windows.Forms.Label serverUptime;
+        private System.Windows.Forms.CheckBox autoStartWithWindows;
+        private System.Windows.Forms.CheckBox autoStartServer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Variable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Script;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Info;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
     }
 }
 

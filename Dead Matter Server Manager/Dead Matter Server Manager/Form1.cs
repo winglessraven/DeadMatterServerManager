@@ -32,6 +32,7 @@ namespace Dead_Matter_Server_Manager
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
         private bool serverStarted;
         private bool firstTimeServerStarted;
+        private DateTime serverStartTime;
         public Form1()
         {
             InitializeComponent();
@@ -40,6 +41,10 @@ namespace Dead_Matter_Server_Manager
             CheckAppData();
             AddConfigRows();
             MonitorServer(maxServerMemory.Text);
+            if (autoStartServer.Checked)
+            {
+                startServer_Click(this, null);
+            }
         }
 
         private void VersionCheck()
@@ -48,10 +53,10 @@ namespace Dead_Matter_Server_Manager
             string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
             Version version = new Version(releaseVersion);
             //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
-            if(version.CompareTo(new Version(this.ProductVersion)) > 0)
+            if (version.CompareTo(new Version(this.ProductVersion)) > 0)
             {
-                DialogResult result = MessageBox.Show("Update available, download now?", "Update Available",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                if(result == DialogResult.Yes)
+                DialogResult result = MessageBox.Show("Update available, download now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
                 {
                     Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
                     Environment.Exit(0);
@@ -95,6 +100,18 @@ namespace Dead_Matter_Server_Manager
                         String[] temp = s.Split('=');
                         maxServerMemory.Text = temp[1];
                     }
+
+                    if (s.StartsWith("StartWithWindows"))
+                    {
+                        String[] temp = s.Split('=');
+                        autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("StartServerOnLaunch"))
+                    {
+                        String[] temp = s.Split('=');
+                        autoStartServer.Checked = Convert.ToBoolean(temp[1]);
+                    }
                 }
             }
             else
@@ -109,28 +126,32 @@ namespace Dead_Matter_Server_Manager
 
         private void AddConfigRows()
         {
-            settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations." });
-            settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server." });
-            settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations." });
-            settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation." });
-            settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player." });
-            settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn." });
-            settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn." });
-            settings.Add(new Settings { Variable = "MaxBanditCount", Value = "256", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for non-safezone human NPCs. If this many human NPCs are on the server, no more will be allowed to spawn." });
-            settings.Add(new Settings { Variable = "PVP", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Toggles whether or not PVP is enabled. If this is false, no damage can be inflicted by one player on another." });
-            settings.Add(new Settings { Variable = "FallDamageMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Change how much damage falling does here. 1.0 is full damage, 0 is no damage at all." });
-            settings.Add(new Settings { Variable = "AnimalSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.FlockSpawner]", Tooltip = "How many more animals to spawn than usual." });
-            settings.Add(new Settings { Variable = "ZombieSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.GlobalAISpawner]", Tooltip = "How many more zombies to spawn than usual." });
-            settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame." });
-            settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable." });
-            settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper." });
-            settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host." });
-            settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query port." });
-            settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled." });
+            settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxBanditCount", Value = "256", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for non-safezone human NPCs. If this many human NPCs are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "PVP", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Toggles whether or not PVP is enabled. If this is false, no damage can be inflicted by one player on another.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "FallDamageMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Change how much damage falling does here. 1.0 is full damage, 0 is no damage at all.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "AnimalSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.FlockSpawner]", Tooltip = "How many more animals to spawn than usual.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "ZombieSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.GlobalAISpawner]", Tooltip = "How many more zombies to spawn than usual.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query port.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
+            settings.Add(new Settings { Variable = "grass.DensityScale", Value = "1.0", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
+            settings.Add(new Settings { Variable = "foliage.DensityScale", Value = "1.0", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
+
 
             foreach (Settings s in settings)
             {
-                configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.Tooltip);
+                configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.Tooltip, s.IniFile);
             }
 
             configSettings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -253,26 +274,48 @@ namespace Dead_Matter_Server_Manager
                     whitelistDGV.Rows.Add(configVariable[1]);
                 }
             }
+
+            foreach (string configLine in configEngine)
+            {
+                string[] configVariable = configLine.Split('=');
+                foreach (Settings s in settings)
+                {
+                    if (configVariable[0] == s.Variable)
+                    {
+                        foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
+                        {
+                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
+                            {
+                                dataGridViewRow.Cells[1].Value = configVariable[1];
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void saveConfig_Click(object sender, EventArgs e)
         {
             List<WriteConfig> writeConfigs = new List<WriteConfig>();
 
+            //game.ini
             foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
             {
-                if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
+                if (dataGridViewRow.Cells[4].Value.ToString().Equals("Game.ini"))
                 {
-                    if(dataGridViewRow.Cells[1].Value != null)
+                    if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
                     {
-                        writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
-                    }                    
+                        if (dataGridViewRow.Cells[1].Value != null)
+                        {
+                            writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                        }
+                    }
+                    else
+                    {
+                        writeConfigs.Add(new WriteConfig { Script = dataGridViewRow.Cells[2].Value.ToString(), Values = dataGridViewRow.Cells[0].Value + "=" + dataGridViewRow.Cells[1].Value });
+                    }
+                    scripts.Add(dataGridViewRow.Cells[2].Value.ToString());
                 }
-                else
-                {
-                    writeConfigs.Add(new WriteConfig { Script = dataGridViewRow.Cells[2].Value.ToString(), Values = dataGridViewRow.Cells[0].Value + "=" + dataGridViewRow.Cells[1].Value });
-                }
-                scripts.Add(dataGridViewRow.Cells[2].Value.ToString());
             }
 
             string gameIni = "";
@@ -284,7 +327,7 @@ namespace Dead_Matter_Server_Manager
 
             //write whitelist players
             gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
-            foreach(DataGridViewRow row in whitelistDGV.Rows)
+            foreach (DataGridViewRow row in whitelistDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
@@ -306,25 +349,72 @@ namespace Dead_Matter_Server_Manager
             gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
             foreach (DataGridViewRow row in superAdminDGV.Rows)
             {
-                if(row.Cells[0].Value != null)
+                if (row.Cells[0].Value != null)
                 {
                     gameIni += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
                 }
-                
+
             }
             FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
-            if(fileInfo.IsReadOnly)
+            if (fileInfo.IsReadOnly)
             {
                 fileInfo.IsReadOnly = false;
             }
             File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
-            MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             fileInfo.IsReadOnly = true;
+
+
+
+            //engine.ini
+            writeConfigs.Clear();
+
+            foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
+            {
+                if (dataGridViewRow.Cells[4].Value.ToString().Equals("Engine.ini"))
+                {
+                    if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
+                    {
+                        if (dataGridViewRow.Cells[1].Value != null)
+                        {
+                            writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                        }
+                    }
+                    else
+                    {
+                        writeConfigs.Add(new WriteConfig { Script = dataGridViewRow.Cells[2].Value.ToString(), Values = dataGridViewRow.Cells[0].Value + "=" + dataGridViewRow.Cells[1].Value });
+                    }
+                    scripts.Add(dataGridViewRow.Cells[2].Value.ToString());
+                }
+            }
+
+            string defaultEngine = File.ReadAllText("defaultEngine.txt");
+
+            foreach(WriteConfig writeConfig in writeConfigs)
+            {
+                defaultEngine += Environment.NewLine + writeConfig.Script + Environment.NewLine + writeConfig.Values;
+            }
+
+            fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
+            if (fileInfo.IsReadOnly)
+            {
+                fileInfo.IsReadOnly = false;
+            }
+
+            File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini", defaultEngine);
+            fileInfo.IsReadOnly = true;
+            MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SaveData()
         {
-            File.WriteAllText(configFilePath, "SteamCMDPath=" + steamCMDPath.Text + Environment.NewLine + "ServerPath=" + serverFolderPath.Text + Environment.NewLine + "SteamID=" + steamID.Text + Environment.NewLine + "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine + "MaxMemory=" + maxServerMemory.Text);
+            File.WriteAllText(configFilePath, "SteamCMDPath=" + steamCMDPath.Text + Environment.NewLine +
+                "ServerPath=" + serverFolderPath.Text + Environment.NewLine +
+                "SteamID=" + steamID.Text + Environment.NewLine +
+                "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
+                "MaxMemory=" + maxServerMemory.Text + Environment.NewLine +
+                "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine +
+                "StartServerOnLaunch=" + autoStartServer.Checked
+                );
         }
 
         private void startServer_Click(object sender, EventArgs e)
@@ -357,9 +447,13 @@ namespace Dead_Matter_Server_Manager
                     string maxMem = ReadControl(maxServerMemory);
                     if (maxMem == "")
                     {
-                        maxMem = "20";
+                        maxMem = "100";
                     }
                     SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
+
+                    TimeSpan uptime = DateTime.Now - serverStartTime;
+
+                    SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
                     if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
                     {
@@ -378,7 +472,8 @@ namespace Dead_Matter_Server_Manager
                     {
                         if (checkUpdateOnStart.Checked)
                         {
-                            updateServer_Click(this, null);
+                    //not currently used
+                    updateServer_Click(this, null);
                             string serverExe = serverFolderPath.Text + @"\deadmatterServer.exe";
                             Process.Start(serverExe, "-USEALLAVAILABLECORES -log");
                         }
@@ -389,6 +484,7 @@ namespace Dead_Matter_Server_Manager
                             dmServerExe.StartInfo.Arguments = "-USEALLAVAILABLECORES -log";
                             dmServerExe.Start();
                             dmServerExe.WaitForInputIdle(60);
+                            serverStartTime = DateTime.Now;
                         }
                     }
                 }
@@ -499,12 +595,14 @@ namespace Dead_Matter_Server_Manager
             public string Value { get; set; }
             public string Script { get; set; }
             public string Tooltip { get; set; }
+            public string IniFile { get; set; }
         }
 
         public class WriteConfig
         {
             public string Script { get; set; }
             public string Values { get; set; }
+            public bool AlreadyExists { get; set; }
         }
 
         private void steamID_Leave(object sender, EventArgs e)
@@ -532,6 +630,7 @@ namespace Dead_Matter_Server_Manager
             }
             serverStarted = false;
             firstTimeServerStarted = false;
+            serverUptime.Text = "00:00:00";
         }
 
         private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
@@ -542,6 +641,31 @@ namespace Dead_Matter_Server_Manager
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://paypal.me/winglessraven");
+        }
+
+        private void autoStartWithWindows_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autoStartWithWindows.Checked)
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    key.SetValue("Dead Matter Server Manager", "\"" + Application.ExecutablePath + "\"");
+                }
+            }
+            else
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    key.DeleteValue("Dead Matter Server Manager", false);
+                }
+            }
+
+            SaveData();
+        }
+
+        private void autoStartServer_CheckedChanged(object sender, EventArgs e)
+        {
+            SaveData();
         }
     }
 }
