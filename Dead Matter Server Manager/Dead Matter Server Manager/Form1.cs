@@ -46,7 +46,17 @@ namespace Dead_Matter_Server_Manager
                 File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
             }
             WebClient webClient = new WebClient();
-            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+
+            string releaseVersion;
+            try
+            {
+                releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+            }
+            catch
+            {
+                //server not found
+                releaseVersion = this.ProductVersion.ToString();
+            }
             Version version = new Version(releaseVersion);
             //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
@@ -63,7 +73,16 @@ namespace Dead_Matter_Server_Manager
         private void VersionCheck()
         {
             WebClient webClient = new WebClient();
-            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+            string releaseVersion;
+            try
+            {
+                releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+            }
+            catch
+            {
+                releaseVersion = this.ProductVersion.ToString();
+            }
+            
             Version version = new Version(releaseVersion);
             //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
@@ -475,7 +494,15 @@ namespace Dead_Matter_Server_Manager
                         if (uptime.Minutes % 10 == 0 && uptime.Seconds % 30 == 0)
                         {
                             WebClient webClient = new WebClient();
-                            string releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM-test.html");
+                            string releaseVersion;
+                            try
+                            {
+                                releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
+                            }
+                            catch
+                            {
+                                releaseVersion = this.ProductVersion.ToString();
+                            }
                             Version version = new Version(releaseVersion);
                             //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
                             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
