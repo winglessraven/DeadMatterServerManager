@@ -79,6 +79,9 @@
             this.autoStartWithWindows = new System.Windows.Forms.CheckBox();
             this.autoStartServer = new System.Windows.Forms.CheckBox();
             this.updateSoftware = new System.Windows.Forms.LinkLabel();
+            this.restartServerTimelbl = new System.Windows.Forms.Label();
+            this.restartServerTime = new System.Windows.Forms.TextBox();
+            this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -130,6 +133,9 @@
             this.tableLayoutPanel1.Controls.Add(this.autoStartWithWindows, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.autoStartServer, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.updateSoftware, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTimelbl, 5, 6);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTime, 6, 6);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTimeOption, 4, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -619,6 +625,40 @@
             this.updateSoftware.TabIndex = 31;
             this.updateSoftware.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateSoftware_LinkClicked);
             // 
+            // restartServerTimelbl
+            // 
+            this.restartServerTimelbl.AutoSize = true;
+            this.restartServerTimelbl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartServerTimelbl.Location = new System.Drawing.Point(804, 527);
+            this.restartServerTimelbl.Name = "restartServerTimelbl";
+            this.restartServerTimelbl.Size = new System.Drawing.Size(152, 30);
+            this.restartServerTimelbl.TabIndex = 32;
+            this.restartServerTimelbl.Text = "Restart Server Time (Hrs)";
+            this.restartServerTimelbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // restartServerTime
+            // 
+            this.restartServerTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartServerTime.Location = new System.Drawing.Point(962, 530);
+            this.restartServerTime.Name = "restartServerTime";
+            this.restartServerTime.Size = new System.Drawing.Size(180, 20);
+            this.restartServerTime.TabIndex = 33;
+            this.restartServerTime.Leave += new System.EventHandler(this.restartServerTime_Leave);
+            // 
+            // restartServerTimeOption
+            // 
+            this.restartServerTimeOption.AutoSize = true;
+            this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartServerTimeOption.Location = new System.Drawing.Point(674, 530);
+            this.restartServerTimeOption.Name = "restartServerTimeOption";
+            this.restartServerTimeOption.Size = new System.Drawing.Size(124, 24);
+            this.restartServerTimeOption.TabIndex = 34;
+            this.restartServerTimeOption.Text = "Timed Restart";
+            this.restartServerTimeOption.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restartServerTimeOption.UseVisualStyleBackColor = true;
+            this.restartServerTimeOption.CheckedChanged += new System.EventHandler(this.restartServerTimeOption_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -690,6 +730,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Info;
         private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
         private System.Windows.Forms.LinkLabel updateSoftware;
+        private System.Windows.Forms.Label restartServerTimelbl;
+        private System.Windows.Forms.TextBox restartServerTime;
+        private System.Windows.Forms.CheckBox restartServerTimeOption;
     }
 }
 

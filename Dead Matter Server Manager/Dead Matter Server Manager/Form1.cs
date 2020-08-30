@@ -32,6 +32,14 @@ namespace Dead_Matter_Server_Manager
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             AddConfigRows();
             CheckAppData();
+
+            //check if server is already running
+            Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+            if (dmServerShipping.Length != 0)
+            {
+                serverStarted = true;
+                firstTimeServerStarted = true;
+            }
             MonitorServer(maxServerMemory.Text);
             if (autoStartServer.Checked)
             {
@@ -145,6 +153,19 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         serverStartTime = Convert.ToDateTime(temp[1]);
+                    }
+
+                    if (s.StartsWith("TimedRestart"))
+                    {
+                        String[] temp = s.Split('=');
+                        restartServerTimeOption.Checked = Convert.ToBoolean(temp[1]);
+                        restartServerTimeOption_CheckedChanged(null, null);
+                    }
+
+                    if (s.StartsWith("TimerRestartTime"))
+                    {
+                        String[] temp = s.Split('=');
+                        restartServerTime.Text = Convert.ToString(temp[1]);
                     }
                 }
             }
@@ -448,7 +469,9 @@ namespace Dead_Matter_Server_Manager
                 "MaxMemory=" + maxServerMemory.Text + Environment.NewLine +
                 "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine +
                 "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
-                "LastStart=" + serverStartTime
+                "LastStart=" + serverStartTime + Environment.NewLine +
+                "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
+                "TimerRestartTime=" + restartServerTime.Text
                 );
         }
 
@@ -480,6 +503,8 @@ namespace Dead_Matter_Server_Manager
                         serverStatus.ForeColor = Color.Green;
                         SetText(startServer, "Start Server", Color.Black, false);
                         SetText(stopServer, "Stop Server", Color.Black, true);
+                        SetReadOnly(restartServerTimeOption, false);
+                        SetReadOnly(restartServerTime, false);
                         SetReadOnly(maxServerMemory, false);
                         string maxMem = ReadControl(maxServerMemory);
                         if (maxMem == "")
@@ -511,14 +536,14 @@ namespace Dead_Matter_Server_Manager
                             }
                         }
 
-                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
+                        string restartTime = ReadControl(restartServerTime);
+
+                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) || (restartServerTimeOption.Checked &&  restartTime == uptime.Hours.ToString()))
                         {
-                            dmServer[0].CloseMainWindow();
+                            dmServerShipping[0].CloseMainWindow();
+                            uptime = new TimeSpan(0, 0, 0);
                         }
                     }
-                    
-
-                    
                 }
                 else
                 {
@@ -527,6 +552,8 @@ namespace Dead_Matter_Server_Manager
                     SetText(startServer, "Start Server", Color.Black, true);
                     SetText(stopServer, "Stop Server", Color.Black, false);
                     SetProgress(memoryUsedProgressBar, 100, 0);
+                    SetReadOnly(restartServerTimeOption, true);
+                    SetReadOnly(restartServerTime, true);
                     SetReadOnly(maxServerMemory, true);
                     if (serverStarted && firstTimeServerStarted)
                     {
@@ -736,6 +763,25 @@ namespace Dead_Matter_Server_Manager
             webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
             Environment.Exit(0);
+        }
+
+        private void restartServerTimeOption_CheckedChanged(object sender, EventArgs e)
+        {
+            if (restartServerTimeOption.Checked)
+            {
+                restartServerTime.Enabled = true;
+            }
+            else
+            {
+                restartServerTime.Enabled = false;
+            }
+
+            SaveData();
+        }
+
+        private void restartServerTime_Leave(object sender, EventArgs e)
+        {
+            SaveData();
         }
     }
 }
