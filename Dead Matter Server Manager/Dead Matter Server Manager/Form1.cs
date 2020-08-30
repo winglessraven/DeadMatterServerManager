@@ -477,6 +477,12 @@ namespace Dead_Matter_Server_Manager
 
         private void startServer_Click(object sender, EventArgs e)
         {
+            //check for steam_appid.txt
+            if(!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
+            {
+                File.Create(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt");
+                File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
+            }
             firstTimeServerStarted = true;
             serverStarted = true;
 
