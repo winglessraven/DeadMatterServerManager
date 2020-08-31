@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -29,6 +30,10 @@ namespace Dead_Matter_Server_Manager
         private bool serverStarted;
         private bool firstTimeServerStarted;
         private DateTime serverStartTime;
+        private IPAddress serverIP;
+        private A2S_INFO serverInfo;
+        private int steamQueryPort;
+
         public Form1()
         {
             InitializeComponent();
@@ -53,7 +58,7 @@ namespace Dead_Matter_Server_Manager
 
         private void VersionCheckOnStart()
         {
-            if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi"))
             {
                 File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
             }
@@ -94,7 +99,7 @@ namespace Dead_Matter_Server_Manager
             {
                 releaseVersion = this.ProductVersion.ToString();
             }
-            
+
             Version version = new Version(releaseVersion);
             //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
@@ -153,7 +158,7 @@ namespace Dead_Matter_Server_Manager
                         autoStartServer.Checked = Convert.ToBoolean(temp[1]);
                     }
 
-                    if(s.StartsWith("LastStart"))
+                    if (s.StartsWith("LastStart"))
                     {
                         String[] temp = s.Split('=');
                         serverStartTime = Convert.ToDateTime(temp[1]);
@@ -181,11 +186,11 @@ namespace Dead_Matter_Server_Manager
                     if (s.StartsWith("SteamPassword"))
                     {
                         String[] temp = s.Split('=');
-                        if(!temp[1].Equals(""))
+                        if (!temp[1].Equals(""))
                         {
-                            steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]),Environment.UserName);
+                            steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
                         }
-                        
+
                     }
                 }
             }
@@ -299,7 +304,7 @@ namespace Dead_Matter_Server_Manager
             }
             Process steamCMD = new Process();
             steamCMD.StartInfo.FileName = steamCMDPath.Text + "\\steamcmd.exe";
-            steamCMD.StartInfo.Arguments = "+login " + steamID.Text + " " + steamPassword.Text + " +force_install_dir " + serverFolderPath.Text + " +app_update 1110990 +quit";
+            steamCMD.StartInfo.Arguments = "+login " + steamID.Text + " " + steamPassword.Text + @" +force_install_dir """ + serverFolderPath.Text + @""" +app_update 1110990 +quit";
             steamCMD.Start();
             steamCMD.WaitForExit();
         }
@@ -326,6 +331,16 @@ namespace Dead_Matter_Server_Manager
                 {
                     if (configVariable[0] == s.Variable)
                     {
+                        if(configVariable[0].Equals("SteamQueryPort"))
+                        {
+                            steamQueryPort = Convert.ToInt16(configVariable[1]);
+                        }
+
+                        if (configVariable[0].Equals("SteamQueryIP"))
+                        {
+                            //ipAddress = configVariable[1].ToString();
+                        }
+
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
                         {
                             if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
@@ -394,6 +409,16 @@ namespace Dead_Matter_Server_Manager
                         writeConfigs.Add(new WriteConfig { Script = dataGridViewRow.Cells[2].Value.ToString(), Values = dataGridViewRow.Cells[0].Value + "=" + dataGridViewRow.Cells[1].Value });
                     }
                     scripts.Add(dataGridViewRow.Cells[2].Value.ToString());
+                }
+
+                if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryPort"))
+                {
+                    steamQueryPort = Convert.ToInt16(dataGridViewRow.Cells[1].ToString());
+                }
+
+                if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryIP"))
+                {
+                    //ipAddress = dataGridViewRow.Cells[1].ToString();
                 }
             }
 
@@ -467,7 +492,7 @@ namespace Dead_Matter_Server_Manager
 
             string defaultEngine = File.ReadAllText("defaultEngine.txt");
 
-            foreach(WriteConfig writeConfig in writeConfigs)
+            foreach (WriteConfig writeConfig in writeConfigs)
             {
                 defaultEngine += Environment.NewLine + writeConfig.Script + Environment.NewLine + writeConfig.Values;
             }
@@ -486,7 +511,7 @@ namespace Dead_Matter_Server_Manager
         private void SaveData()
         {
             string steamPass = "";
-            if(rememberSteamPass.Checked)
+            if (rememberSteamPass.Checked)
             {
                 steamPass = StringCipher.Encrypt(steamPassword.Text, Environment.UserName);
             }
@@ -511,7 +536,7 @@ namespace Dead_Matter_Server_Manager
         private void startServer_Click(object sender, EventArgs e)
         {
             //check for steam_appid.txt
-            if(!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
+            if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
             {
                 File.Create(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt");
                 File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
@@ -533,7 +558,7 @@ namespace Dead_Matter_Server_Manager
                 if (dmServer.Length != 0)
                 {
                     Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
-                    if(dmServerShipping.Length != 0)
+                    if (dmServerShipping.Length != 0)
                     {
                         memory = dmServerShipping[0].WorkingSet64;
                         string memoryGB = SizeSuffix(memory, 2);
@@ -542,6 +567,8 @@ namespace Dead_Matter_Server_Manager
                         serverStatus.ForeColor = Color.Green;
                         SetText(startServer, "Start Server", Color.Black, false);
                         SetText(stopServer, "Stop Server", Color.Black, true);
+                        
+                        
                         SetReadOnly(restartServerTimeOption, false);
                         SetReadOnly(restartServerTime, false);
                         SetReadOnly(maxServerMemory, false);
@@ -550,11 +577,28 @@ namespace Dead_Matter_Server_Manager
                         {
                             maxMem = "100";
                         }
+
                         SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
 
                         TimeSpan uptime = DateTime.Now - serverStartTime;
 
                         SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
+
+                        if(uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
+                        {
+                            try
+                            {
+                                serverIP = IPAddress.Parse(GetPublicIP());
+                                serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
+                                SetText(onlinePlayers, serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
+                            }
+                            catch
+                            {
+                                SetText(onlinePlayers, "", Color.Black, true);
+                            }
+                        }
+                        
+
                         if (uptime.Minutes % 10 == 0 && uptime.Seconds % 30 == 0)
                         {
                             WebClient webClient = new WebClient();
@@ -577,7 +621,7 @@ namespace Dead_Matter_Server_Manager
 
                         string restartTime = ReadControl(restartServerTime);
 
-                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) || (restartServerTimeOption.Checked &&  restartTime == uptime.Hours.ToString()))
+                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString()))
                         {
                             dmServerShipping[0].CloseMainWindow();
                             uptime = new TimeSpan(0, 0, 0);
@@ -594,6 +638,7 @@ namespace Dead_Matter_Server_Manager
                     SetReadOnly(restartServerTimeOption, true);
                     SetReadOnly(restartServerTime, true);
                     SetReadOnly(maxServerMemory, true);
+                    SetText(onlinePlayers, "", Color.Black, true);
                     if (serverStarted && firstTimeServerStarted)
                     {
                         if (checkUpdateOnStart.Checked)
@@ -922,6 +967,142 @@ namespace Dead_Matter_Server_Manager
                 }
                 return randomBytes;
             }
+
+
+        }
+
+        public class A2S_INFO
+        {
+            // \xFF\xFF\xFF\xFFTSource Engine Query\x00 because UTF-8 doesn't like to encode 0xFF
+            public static readonly byte[] REQUEST = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0x54, 0x53, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x20, 0x45, 0x6E, 0x67, 0x69, 0x6E, 0x65, 0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x00 };
+            #region Strong Typing Enumerators
+            [Flags]
+            public enum ExtraDataFlags : byte
+            {
+                GameID = 0x01,
+                SteamID = 0x10,
+                Keywords = 0x20,
+                Spectator = 0x40,
+                Port = 0x80
+            }
+            public enum VACFlags : byte
+            {
+                Unsecured = 0,
+                Secured = 1
+            }
+            public enum VisibilityFlags : byte
+            {
+                Public = 0,
+                Private = 1
+            }
+            public enum EnvironmentFlags : byte
+            {
+                Linux = 0x6C,   //l
+                Windows = 0x77, //w
+                Mac = 0x6D,     //m
+                MacOsX = 0x6F   //o
+            }
+            public enum ServerTypeFlags : byte
+            {
+                Dedicated = 0x64,     //d
+                Nondedicated = 0x6C,   //l
+                SourceTV = 0x70   //p
+            }
+            #endregion
+            public byte Header { get; set; }        // I
+            public byte Protocol { get; set; }
+            public string Name { get; set; }
+            public string Map { get; set; }
+            public string Folder { get; set; }
+            public string Game { get; set; }
+            public short ID { get; set; }
+            public byte Players { get; set; }
+            public byte MaxPlayers { get; set; }
+            public byte Bots { get; set; }
+            public ServerTypeFlags ServerType { get; set; }
+            public EnvironmentFlags Environment { get; set; }
+            public VisibilityFlags Visibility { get; set; }
+            public VACFlags VAC { get; set; }
+            public string Version { get; set; }
+            public ExtraDataFlags ExtraDataFlag { get; set; }
+            #region Extra Data Flag Members
+            public ulong GameID { get; set; }           //0x01
+            public ulong SteamID { get; set; }          //0x10
+            public string Keywords { get; set; }        //0x20
+            public string Spectator { get; set; }       //0x40
+            public short SpectatorPort { get; set; }   //0x40
+            public short Port { get; set; }             //0x80
+            #endregion
+            public A2S_INFO(IPEndPoint ep)
+            {
+                UdpClient udp = new UdpClient();
+                udp.Send(REQUEST, REQUEST.Length, ep);
+                MemoryStream ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
+                BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
+                ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
+                Header = br.ReadByte();
+                Protocol = br.ReadByte();
+                Name = ReadNullTerminatedString(ref br);
+                Map = ReadNullTerminatedString(ref br);
+                Folder = ReadNullTerminatedString(ref br);
+                Game = ReadNullTerminatedString(ref br);
+                ID = br.ReadInt16();
+                Players = br.ReadByte();
+                MaxPlayers = br.ReadByte();
+                Bots = br.ReadByte();
+                ServerType = (ServerTypeFlags)br.ReadByte();
+                Environment = (EnvironmentFlags)br.ReadByte();
+                Visibility = (VisibilityFlags)br.ReadByte();
+                VAC = (VACFlags)br.ReadByte();
+                Version = ReadNullTerminatedString(ref br);
+                ExtraDataFlag = (ExtraDataFlags)br.ReadByte();
+                #region These EDF readers have to be in this order because that's the way they are reported
+                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
+                    Port = br.ReadInt16();
+                if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
+                    SteamID = br.ReadUInt64();
+                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
+                {
+                    SpectatorPort = br.ReadInt16();
+                    Spectator = ReadNullTerminatedString(ref br);
+                }
+                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
+                    Keywords = ReadNullTerminatedString(ref br);
+                if (ExtraDataFlag.HasFlag(ExtraDataFlags.GameID))
+                    GameID = br.ReadUInt64();
+                #endregion
+                br.Close();
+                ms.Close();
+                udp.Close();
+            }
+            /// <summary>Reads a null-terminated string into a .NET Framework compatible string.</summary>
+            /// <param name="input">Binary reader to pull the null-terminated string from.  Make sure it is correctly positioned in the stream before calling.</param>
+            /// <returns>String of the same encoding as the input BinaryReader.</returns>
+            public static string ReadNullTerminatedString(ref BinaryReader input)
+            {
+                StringBuilder sb = new StringBuilder();
+                char read = input.ReadChar();
+                while (read != '\x00')
+                {
+                    sb.Append(read);
+                    read = input.ReadChar();
+                }
+                return sb.ToString();
+            }
+        }
+        public static string GetPublicIP()
+        {
+            string url = "http://checkip.dyndns.org";
+            WebRequest req = WebRequest.Create(url);
+            WebResponse resp = req.GetResponse();
+            StreamReader sr = new StreamReader(resp.GetResponseStream());
+            string response = sr.ReadToEnd().Trim();
+            string[] a = response.Split(':');
+            string a2 = a[1].Substring(1);
+            string[] a3 = a2.Split('<');
+            string a4 = a3[0];
+            return a4;
         }
     }
 }
+

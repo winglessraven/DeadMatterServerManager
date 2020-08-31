@@ -88,6 +88,7 @@
             this.restartServerTime = new System.Windows.Forms.TextBox();
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.rememberSteamPass = new System.Windows.Forms.CheckBox();
+            this.onlinePlayers = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -146,6 +147,7 @@
             this.tableLayoutPanel1.Controls.Add(this.restartServerTime, 6, 7);
             this.tableLayoutPanel1.Controls.Add(this.restartServerTimeOption, 4, 7);
             this.tableLayoutPanel1.Controls.Add(this.rememberSteamPass, 6, 3);
+            this.tableLayoutPanel1.Controls.Add(this.onlinePlayers, 3, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -284,7 +286,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(69, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.6.1";
+            this.softwareVersion.Text = "Version 1.6.3";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
@@ -736,6 +738,16 @@
             this.rememberSteamPass.UseVisualStyleBackColor = true;
             this.rememberSteamPass.CheckedChanged += new System.EventHandler(this.rememberSteamPass_CheckedChanged);
             // 
+            // onlinePlayers
+            // 
+            this.onlinePlayers.AutoSize = true;
+            this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.onlinePlayers.Location = new System.Drawing.Point(548, 497);
+            this.onlinePlayers.Name = "onlinePlayers";
+            this.onlinePlayers.Size = new System.Drawing.Size(120, 30);
+            this.onlinePlayers.TabIndex = 36;
+            this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -820,6 +832,7 @@
         private System.Windows.Forms.DataGridView serverTagsDGV;
         private System.Windows.Forms.DataGridViewTextBoxColumn serverTags;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label onlinePlayers;
     }
 }
 
