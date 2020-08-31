@@ -33,6 +33,7 @@ namespace Dead_Matter_Server_Manager
         private IPAddress serverIP;
         private A2S_INFO serverInfo;
         private int steamQueryPort;
+        private bool killSent;
 
         public Form1()
         {
@@ -621,10 +622,12 @@ namespace Dead_Matter_Server_Manager
 
                         string restartTime = ReadControl(restartServerTime);
 
-                        if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString()))
+                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString()))
                         {
-                            dmServerShipping[0].CloseMainWindow();
+                            int processID = dmServerShipping[0].Id;
+                            Process.Start("windows-kill.exe", "-SIGINT " + processID);
                             uptime = new TimeSpan(0, 0, 0);
+                            killSent = true;
                         }
                     }
                 }
@@ -659,6 +662,7 @@ namespace Dead_Matter_Server_Manager
                             serverStartTime = DateTime.Now;
                             SaveData();
                         }
+                        killSent = false;
                     }
                 }
             });
@@ -799,7 +803,8 @@ namespace Dead_Matter_Server_Manager
             dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
             if (dmServer.Length != 0)
             {
-                dmServer[0].CloseMainWindow();
+                int processID = dmServer[0].Id;
+                Process.Start("windows-kill.exe", "-SIGINT " + processID);
             }
             serverStarted = false;
             firstTimeServerStarted = false;
@@ -1037,6 +1042,7 @@ namespace Dead_Matter_Server_Manager
             {
                 UdpClient udp = new UdpClient();
                 udp.Send(REQUEST, REQUEST.Length, ep);
+                udp.Client.ReceiveTimeout = 60;
                 MemoryStream ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
                 BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
                 ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
