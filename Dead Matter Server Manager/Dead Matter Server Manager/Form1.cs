@@ -348,6 +348,10 @@ namespace Dead_Matter_Server_Manager
                 {
                     whitelistDGV.Rows.Add(configVariable[1]);
                 }
+                if (configVariable[0] == "ServerTags")
+                {
+                    serverTagsDGV.Rows.Add(configVariable[1]);
+                }
             }
 
             foreach (string configLine in configEngine)
@@ -393,33 +397,32 @@ namespace Dead_Matter_Server_Manager
                 }
             }
 
-            
-
-            List<string> whitelist = new List<string>();
             foreach (DataGridViewRow row in whitelistDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    //whitelist.Add("Whitelist=" + row.Cells[0].Value);
                     writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
                 }
             }
-            List<string> admins = new List<string>();
             foreach (DataGridViewRow row in adminDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    //admins.Add("Admins=" + row.Cells[0].Value);
                     writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Admins=" + row.Cells[0].Value;
                 }
             }
-            List<string> superadmins = new List<string>();
             foreach (DataGridViewRow row in superAdminDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    //superadmins.Add("SuperAdmins=" + row.Cells[0].Value);
                     writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
+                }
+            }
+            foreach (DataGridViewRow row in serverTagsDGV.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "ServerTags=" + row.Cells[0].Value;
                 }
             }
 

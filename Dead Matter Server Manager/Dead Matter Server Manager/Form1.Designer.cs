@@ -83,6 +83,11 @@
             this.restartServerTime = new System.Windows.Forms.TextBox();
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.rememberSteamPass = new System.Windows.Forms.CheckBox();
+            this.serverTagsTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.serverTagsDGV = new System.Windows.Forms.DataGridView();
+            this.serverTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -92,6 +97,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.whitelistDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.adminDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.superAdminDGV)).BeginInit();
+            this.serverTagsTabPage.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.serverTagsDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -391,6 +399,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.tabControl1, 8);
             this.tabControl1.Controls.Add(this.settingsTabPage);
             this.tabControl1.Controls.Add(this.userTabPage);
+            this.tabControl1.Controls.Add(this.serverTagsTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 116);
             this.tabControl1.Name = "tabControl1";
@@ -471,7 +480,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 352);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -490,7 +499,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 374F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 346);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -502,7 +511,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 368);
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 340);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -519,7 +528,7 @@
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminDGV.Location = new System.Drawing.Point(378, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 368);
+            this.adminDGV.Size = new System.Drawing.Size(369, 340);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -536,7 +545,7 @@
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 368);
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 340);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -674,6 +683,59 @@
             this.rememberSteamPass.UseVisualStyleBackColor = true;
             this.rememberSteamPass.CheckedChanged += new System.EventHandler(this.rememberSteamPass_CheckedChanged);
             // 
+            // serverTagsTabPage
+            // 
+            this.serverTagsTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
+            this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.serverTagsTabPage.Name = "serverTagsTabPage";
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 352);
+            this.serverTagsTabPage.TabIndex = 2;
+            this.serverTagsTabPage.Text = "Server Tags";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Controls.Add(this.serverTagsDGV, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label6, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 352);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // serverTagsDGV
+            // 
+            this.serverTagsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.serverTagsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.serverTags});
+            this.serverTagsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
+            this.serverTagsDGV.Name = "serverTagsDGV";
+            this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
+            this.serverTagsDGV.Size = new System.Drawing.Size(842, 346);
+            this.serverTagsDGV.TabIndex = 0;
+            // 
+            // serverTags
+            // 
+            this.serverTags.HeaderText = "Server Tags";
+            this.serverTags.Name = "serverTags";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(851, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(277, 176);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -693,6 +755,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.whitelistDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.adminDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.superAdminDGV)).EndInit();
+            this.serverTagsTabPage.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.serverTagsDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -749,6 +815,11 @@
         private System.Windows.Forms.TextBox restartServerTime;
         private System.Windows.Forms.CheckBox restartServerTimeOption;
         private System.Windows.Forms.CheckBox rememberSteamPass;
+        private System.Windows.Forms.TabPage serverTagsTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.DataGridView serverTagsDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serverTags;
+        private System.Windows.Forms.Label label6;
     }
 }
 
