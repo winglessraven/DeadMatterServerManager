@@ -373,43 +373,43 @@ namespace Dead_Matter_Server_Manager
                 }
             }
 
-            string gameIni = "";
+            
 
-            foreach (WriteConfig writeConfig in writeConfigs)
-            {
-                gameIni += Environment.NewLine + writeConfig.Script + Environment.NewLine + writeConfig.Values;
-            }
-
-            //write whitelist players
-            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            List<string> whitelist = new List<string>();
             foreach (DataGridViewRow row in whitelistDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    gameIni += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
+                    //whitelist.Add("Whitelist=" + row.Cells[0].Value);
+                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
                 }
             }
-
-            //write admin players
-            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            List<string> admins = new List<string>();
             foreach (DataGridViewRow row in adminDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    gameIni += Environment.NewLine + "Admins=" + row.Cells[0].Value;
+                    //admins.Add("Admins=" + row.Cells[0].Value);
+                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Admins=" + row.Cells[0].Value;
                 }
             }
-
-            //write superadmin players
-            gameIni += Environment.NewLine + "[/Script/DeadMatter.DMGameSession]";
+            List<string> superadmins = new List<string>();
             foreach (DataGridViewRow row in superAdminDGV.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    gameIni += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
+                    //superadmins.Add("SuperAdmins=" + row.Cells[0].Value);
+                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
                 }
-
             }
+
+            string gameIni = "";
+
+            foreach (WriteConfig writeConfig in writeConfigs)
+            {
+                gameIni += writeConfig.Script + Environment.NewLine + writeConfig.Values + Environment.NewLine;
+            }
+
             FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
             if (fileInfo.IsReadOnly)
             {
