@@ -413,7 +413,7 @@ namespace Dead_Matter_Server_Manager
 
                 if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryPort"))
                 {
-                    steamQueryPort = Convert.ToInt16(dataGridViewRow.Cells[1].ToString());
+                    steamQueryPort = Convert.ToInt16(dataGridViewRow.Cells[1].Value.ToString());
                 }
 
                 if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryIP"))
