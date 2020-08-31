@@ -22,4 +22,7 @@ Server manager for Dead Matter
 * If you want to stop the server, click *Stop Server*
 
 
+![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
 
+
+[https://www.winglessraven.com/DMSM/](https://www.winglessraven.com/DMSM/)
