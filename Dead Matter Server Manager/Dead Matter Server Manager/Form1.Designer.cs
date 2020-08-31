@@ -82,6 +82,7 @@
             this.restartServerTimelbl = new System.Windows.Forms.Label();
             this.restartServerTime = new System.Windows.Forms.TextBox();
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
+            this.rememberSteamPass = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -118,33 +119,35 @@
             this.tableLayoutPanel1.Controls.Add(this.updateServer, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.getConfig, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.saveConfig, 4, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 5, 5);
-            this.tableLayoutPanel1.Controls.Add(this.maxServerMemory, 6, 5);
-            this.tableLayoutPanel1.Controls.Add(this.startServer, 6, 7);
-            this.tableLayoutPanel1.Controls.Add(this.memoryUsed, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.stopServer, 6, 8);
-            this.tableLayoutPanel1.Controls.Add(this.serverStatus, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.memoryUsedProgressBar, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 6, 9);
-            this.tableLayoutPanel1.Controls.Add(this.uptimeLbl, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.serverUptime, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.autoStartWithWindows, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.autoStartServer, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 5, 6);
+            this.tableLayoutPanel1.Controls.Add(this.maxServerMemory, 6, 6);
+            this.tableLayoutPanel1.Controls.Add(this.startServer, 6, 8);
+            this.tableLayoutPanel1.Controls.Add(this.memoryUsed, 2, 6);
+            this.tableLayoutPanel1.Controls.Add(this.stopServer, 6, 9);
+            this.tableLayoutPanel1.Controls.Add(this.serverStatus, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.memoryUsedProgressBar, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 6, 10);
+            this.tableLayoutPanel1.Controls.Add(this.uptimeLbl, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.serverUptime, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.autoStartWithWindows, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.autoStartServer, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.updateSoftware, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.restartServerTimelbl, 5, 6);
-            this.tableLayoutPanel1.Controls.Add(this.restartServerTime, 6, 6);
-            this.tableLayoutPanel1.Controls.Add(this.restartServerTimeOption, 4, 6);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTimelbl, 5, 7);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTime, 6, 7);
+            this.tableLayoutPanel1.Controls.Add(this.restartServerTimeOption, 4, 7);
+            this.tableLayoutPanel1.Controls.Add(this.rememberSteamPass, 6, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 10;
+            this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -389,11 +392,11 @@
             this.tabControl1.Controls.Add(this.settingsTabPage);
             this.tabControl1.Controls.Add(this.userTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 88);
+            this.tabControl1.Location = new System.Drawing.Point(3, 116);
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 406);
+            this.tabControl1.Size = new System.Drawing.Size(1139, 378);
             this.tabControl1.TabIndex = 25;
             // 
             // settingsTabPage
@@ -403,7 +406,7 @@
             this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.settingsTabPage.Name = "settingsTabPage";
             this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.settingsTabPage.Size = new System.Drawing.Size(1131, 352);
             this.settingsTabPage.TabIndex = 1;
             this.settingsTabPage.Text = "Settings";
             // 
@@ -421,7 +424,7 @@
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1125, 374);
+            this.configSettings.Size = new System.Drawing.Size(1125, 346);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
@@ -486,7 +489,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 388F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 374F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -659,6 +662,18 @@
             this.restartServerTimeOption.UseVisualStyleBackColor = true;
             this.restartServerTimeOption.CheckedChanged += new System.EventHandler(this.restartServerTimeOption_CheckedChanged);
             // 
+            // rememberSteamPass
+            // 
+            this.rememberSteamPass.AutoSize = true;
+            this.rememberSteamPass.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rememberSteamPass.Location = new System.Drawing.Point(962, 88);
+            this.rememberSteamPass.Name = "rememberSteamPass";
+            this.rememberSteamPass.Size = new System.Drawing.Size(180, 22);
+            this.rememberSteamPass.TabIndex = 35;
+            this.rememberSteamPass.Text = "Remember Steam Password";
+            this.rememberSteamPass.UseVisualStyleBackColor = true;
+            this.rememberSteamPass.CheckedChanged += new System.EventHandler(this.rememberSteamPass_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -733,6 +748,7 @@
         private System.Windows.Forms.Label restartServerTimelbl;
         private System.Windows.Forms.TextBox restartServerTime;
         private System.Windows.Forms.CheckBox restartServerTimeOption;
+        private System.Windows.Forms.CheckBox rememberSteamPass;
     }
 }
 
