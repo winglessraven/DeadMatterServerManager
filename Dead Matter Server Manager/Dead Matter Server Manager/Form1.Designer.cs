@@ -72,6 +72,11 @@
             this.adminPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.superAdminDGV = new System.Windows.Forms.DataGridView();
             this.superAdminPlayers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serverTagsTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.serverTagsDGV = new System.Windows.Forms.DataGridView();
+            this.serverTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
             this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
@@ -83,11 +88,6 @@
             this.restartServerTime = new System.Windows.Forms.TextBox();
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.rememberSteamPass = new System.Windows.Forms.CheckBox();
-            this.serverTagsTabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.serverTagsDGV = new System.Windows.Forms.DataGridView();
-            this.serverTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -284,7 +284,7 @@
             this.softwareVersion.Name = "softwareVersion";
             this.softwareVersion.Size = new System.Drawing.Size(69, 25);
             this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.6.0";
+            this.softwareVersion.Text = "Version 1.6.1";
             this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // updateServer
@@ -498,7 +498,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 374F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 346F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 346);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -552,6 +552,59 @@
             // 
             this.superAdminPlayers.HeaderText = "Super Admin Players (Steam64 ID)";
             this.superAdminPlayers.Name = "superAdminPlayers";
+            // 
+            // serverTagsTabPage
+            // 
+            this.serverTagsTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
+            this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.serverTagsTabPage.Name = "serverTagsTabPage";
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 352);
+            this.serverTagsTabPage.TabIndex = 2;
+            this.serverTagsTabPage.Text = "Server Tags";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Controls.Add(this.serverTagsDGV, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label6, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 352);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // serverTagsDGV
+            // 
+            this.serverTagsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.serverTagsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.serverTags});
+            this.serverTagsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
+            this.serverTagsDGV.Name = "serverTagsDGV";
+            this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
+            this.serverTagsDGV.Size = new System.Drawing.Size(842, 346);
+            this.serverTagsDGV.TabIndex = 0;
+            // 
+            // serverTags
+            // 
+            this.serverTags.HeaderText = "Server Tags";
+            this.serverTags.Name = "serverTags";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(851, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(277, 176);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
             // checkUpdateOnStart
             // 
@@ -682,59 +735,6 @@
             this.rememberSteamPass.Text = "Remember Steam Password";
             this.rememberSteamPass.UseVisualStyleBackColor = true;
             this.rememberSteamPass.CheckedChanged += new System.EventHandler(this.rememberSteamPass_CheckedChanged);
-            // 
-            // serverTagsTabPage
-            // 
-            this.serverTagsTabPage.BackColor = System.Drawing.Color.Transparent;
-            this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
-            this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.serverTagsTabPage.Name = "serverTagsTabPage";
-            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 352);
-            this.serverTagsTabPage.TabIndex = 2;
-            this.serverTagsTabPage.Text = "Server Tags";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Controls.Add(this.serverTagsDGV, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label6, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 352);
-            this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // serverTagsDGV
-            // 
-            this.serverTagsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.serverTagsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.serverTags});
-            this.serverTagsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
-            this.serverTagsDGV.Name = "serverTagsDGV";
-            this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
-            this.serverTagsDGV.Size = new System.Drawing.Size(842, 346);
-            this.serverTagsDGV.TabIndex = 0;
-            // 
-            // serverTags
-            // 
-            this.serverTags.HeaderText = "Server Tags";
-            this.serverTags.Name = "serverTags";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(851, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 176);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
             // Form1
             // 

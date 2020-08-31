@@ -535,7 +535,7 @@ namespace Dead_Matter_Server_Manager
                     Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
                     if(dmServerShipping.Length != 0)
                     {
-                        memory = dmServerShipping[0].PagedMemorySize64;
+                        memory = dmServerShipping[0].WorkingSet64;
                         string memoryGB = SizeSuffix(memory, 2);
                         SetText(memoryUsed, memoryGB, Color.Black, true);
                         SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
