@@ -45,7 +45,6 @@
             this.steamPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.softwareVersion = new System.Windows.Forms.Label();
             this.updateServer = new System.Windows.Forms.Button();
             this.getConfig = new System.Windows.Forms.Button();
             this.saveConfig = new System.Windows.Forms.Button();
@@ -89,6 +88,9 @@
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.rememberSteamPass = new System.Windows.Forms.CheckBox();
             this.onlinePlayers = new System.Windows.Forms.Label();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.restartsThisSessionTxt = new System.Windows.Forms.Label();
+            this.lastRestartTxt = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -108,9 +110,9 @@
             this.tableLayoutPanel1.ColumnCount = 7;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.66521F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.33479F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
@@ -124,7 +126,6 @@
             this.tableLayoutPanel1.Controls.Add(this.steamPassword, 6, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 5, 1);
             this.tableLayoutPanel1.Controls.Add(this.label5, 5, 2);
-            this.tableLayoutPanel1.Controls.Add(this.softwareVersion, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.updateServer, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.getConfig, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.saveConfig, 4, 2);
@@ -148,6 +149,9 @@
             this.tableLayoutPanel1.Controls.Add(this.restartServerTimeOption, 4, 7);
             this.tableLayoutPanel1.Controls.Add(this.rememberSteamPass, 6, 3);
             this.tableLayoutPanel1.Controls.Add(this.onlinePlayers, 3, 6);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabel2, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.restartsThisSessionTxt, 2, 7);
+            this.tableLayoutPanel1.Controls.Add(this.lastRestartTxt, 3, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -193,7 +197,7 @@
             this.steamCMDBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.steamCMDBrowse.Location = new System.Drawing.Point(460, 28);
             this.steamCMDBrowse.Name = "steamCMDBrowse";
-            this.steamCMDBrowse.Size = new System.Drawing.Size(82, 24);
+            this.steamCMDBrowse.Size = new System.Drawing.Size(117, 24);
             this.steamCMDBrowse.TabIndex = 3;
             this.steamCMDBrowse.Text = "Browse";
             this.steamCMDBrowse.UseVisualStyleBackColor = true;
@@ -204,7 +208,7 @@
             this.serverFolderBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverFolderBrowse.Location = new System.Drawing.Point(460, 58);
             this.serverFolderBrowse.Name = "serverFolderBrowse";
-            this.serverFolderBrowse.Size = new System.Drawing.Size(82, 24);
+            this.serverFolderBrowse.Size = new System.Drawing.Size(117, 24);
             this.serverFolderBrowse.TabIndex = 4;
             this.serverFolderBrowse.Text = "Browse";
             this.serverFolderBrowse.UseVisualStyleBackColor = true;
@@ -229,9 +233,9 @@
             // updateSteamCMD
             // 
             this.updateSteamCMD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateSteamCMD.Location = new System.Drawing.Point(548, 28);
+            this.updateSteamCMD.Location = new System.Drawing.Point(583, 28);
             this.updateSteamCMD.Name = "updateSteamCMD";
-            this.updateSteamCMD.Size = new System.Drawing.Size(120, 24);
+            this.updateSteamCMD.Size = new System.Drawing.Size(113, 24);
             this.updateSteamCMD.TabIndex = 7;
             this.updateSteamCMD.Text = "Update SteamCMD";
             this.updateSteamCMD.UseVisualStyleBackColor = true;
@@ -278,23 +282,12 @@
             this.label5.Text = "Steam Password";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // softwareVersion
-            // 
-            this.softwareVersion.AutoSize = true;
-            this.softwareVersion.Dock = System.Windows.Forms.DockStyle.Right;
-            this.softwareVersion.Location = new System.Drawing.Point(1073, 0);
-            this.softwareVersion.Name = "softwareVersion";
-            this.softwareVersion.Size = new System.Drawing.Size(69, 25);
-            this.softwareVersion.TabIndex = 12;
-            this.softwareVersion.Text = "Version 1.6.6";
-            this.softwareVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // updateServer
             // 
             this.updateServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateServer.Location = new System.Drawing.Point(674, 28);
+            this.updateServer.Location = new System.Drawing.Point(702, 28);
             this.updateServer.Name = "updateServer";
-            this.updateServer.Size = new System.Drawing.Size(124, 24);
+            this.updateServer.Size = new System.Drawing.Size(96, 24);
             this.updateServer.TabIndex = 13;
             this.updateServer.Text = "Update Server";
             this.updateServer.UseVisualStyleBackColor = true;
@@ -303,9 +296,9 @@
             // getConfig
             // 
             this.getConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.getConfig.Location = new System.Drawing.Point(548, 58);
+            this.getConfig.Location = new System.Drawing.Point(583, 58);
             this.getConfig.Name = "getConfig";
-            this.getConfig.Size = new System.Drawing.Size(120, 24);
+            this.getConfig.Size = new System.Drawing.Size(113, 24);
             this.getConfig.TabIndex = 14;
             this.getConfig.Text = "Get Config";
             this.getConfig.UseVisualStyleBackColor = true;
@@ -314,9 +307,9 @@
             // saveConfig
             // 
             this.saveConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConfig.Location = new System.Drawing.Point(674, 58);
+            this.saveConfig.Location = new System.Drawing.Point(702, 58);
             this.saveConfig.Name = "saveConfig";
-            this.saveConfig.Size = new System.Drawing.Size(124, 24);
+            this.saveConfig.Size = new System.Drawing.Size(96, 24);
             this.saveConfig.TabIndex = 17;
             this.saveConfig.Text = "Save Config";
             this.saveConfig.UseVisualStyleBackColor = true;
@@ -359,7 +352,7 @@
             this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryUsed.Location = new System.Drawing.Point(460, 497);
             this.memoryUsed.Name = "memoryUsed";
-            this.memoryUsed.Size = new System.Drawing.Size(82, 30);
+            this.memoryUsed.Size = new System.Drawing.Size(117, 30);
             this.memoryUsed.TabIndex = 21;
             this.memoryUsed.Text = "memused";
             this.memoryUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -717,9 +710,9 @@
             this.restartServerTimeOption.AutoSize = true;
             this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimeOption.Location = new System.Drawing.Point(674, 530);
+            this.restartServerTimeOption.Location = new System.Drawing.Point(702, 530);
             this.restartServerTimeOption.Name = "restartServerTimeOption";
-            this.restartServerTimeOption.Size = new System.Drawing.Size(124, 24);
+            this.restartServerTimeOption.Size = new System.Drawing.Size(96, 24);
             this.restartServerTimeOption.TabIndex = 34;
             this.restartServerTimeOption.Text = "Timed Restart";
             this.restartServerTimeOption.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -742,11 +735,46 @@
             // 
             this.onlinePlayers.AutoSize = true;
             this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlinePlayers.Location = new System.Drawing.Point(548, 497);
+            this.onlinePlayers.Location = new System.Drawing.Point(583, 497);
             this.onlinePlayers.Name = "onlinePlayers";
-            this.onlinePlayers.Size = new System.Drawing.Size(120, 30);
+            this.onlinePlayers.Size = new System.Drawing.Size(113, 30);
             this.onlinePlayers.TabIndex = 36;
-            this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabel2.Location = new System.Drawing.Point(962, 0);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(180, 25);
+            this.linkLabel2.TabIndex = 37;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Change log";
+            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // restartsThisSessionTxt
+            // 
+            this.restartsThisSessionTxt.AutoSize = true;
+            this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartsThisSessionTxt.Location = new System.Drawing.Point(460, 527);
+            this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
+            this.restartsThisSessionTxt.Size = new System.Drawing.Size(117, 30);
+            this.restartsThisSessionTxt.TabIndex = 38;
+            this.restartsThisSessionTxt.Text = "Restarts This Session\r\n0";
+            this.restartsThisSessionTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lastRestartTxt
+            // 
+            this.lastRestartTxt.AutoSize = true;
+            this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lastRestartTxt.Location = new System.Drawing.Point(583, 527);
+            this.lastRestartTxt.Name = "lastRestartTxt";
+            this.lastRestartTxt.Size = new System.Drawing.Size(113, 30);
+            this.lastRestartTxt.TabIndex = 39;
+            this.lastRestartTxt.Text = "Last Restart\r\n00/00/0000 00:00:00";
+            this.lastRestartTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -789,7 +817,6 @@
         private System.Windows.Forms.TextBox steamPassword;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label softwareVersion;
         private System.Windows.Forms.Button updateServer;
         private System.Windows.Forms.Button getConfig;
         private System.Windows.Forms.CheckBox checkUpdateOnStart;
@@ -833,6 +860,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn serverTags;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label onlinePlayers;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Label restartsThisSessionTxt;
+        private System.Windows.Forms.Label lastRestartTxt;
     }
 }
 

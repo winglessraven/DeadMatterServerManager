@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using Microsoft.Win32;
 
 namespace Dead_Matter_Server_Manager
@@ -34,11 +33,20 @@ namespace Dead_Matter_Server_Manager
         private A2S_INFO serverInfo;
         private int steamQueryPort;
         private bool killSent;
+        private DateTime killCommandSentAt;
+        private TimeSpan timeSinceLastKill;
+        private double restartsThisSession;
+        private bool sessionStarted;
+        private DateTime lastRestart;
+        private int killAttempts;
 
         public Form1()
         {
             InitializeComponent();
             VersionCheckOnStart();
+
+            this.Text = "Dead Matter Server Manager || " + this.ProductVersion;
+
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             AddConfigRows();
             CheckAppData();
@@ -49,12 +57,15 @@ namespace Dead_Matter_Server_Manager
             {
                 serverStarted = true;
                 firstTimeServerStarted = true;
+                sessionStarted = true;
+                restartsThisSession += 1;
             }
             MonitorServer(maxServerMemory.Text);
             if (autoStartServer.Checked)
             {
                 startServer_Click(this, null);
             }
+
         }
 
         private void VersionCheckOnStart()
@@ -224,6 +235,7 @@ namespace Dead_Matter_Server_Manager
             settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query port.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "GameServerQueryPort", Value = "27016", Script = "[OnlineSubsystemSteam]", Tooltip = "Change the Steam query port.", IniFile = "Engine.ini" });
             settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
             settings.Add(new Settings { Variable = "grass.DensityScale", Value = "1.0", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
@@ -544,6 +556,7 @@ namespace Dead_Matter_Server_Manager
             }
             firstTimeServerStarted = true;
             serverStarted = true;
+            sessionStarted = true;
 
         }
 
@@ -563,7 +576,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         memory = dmServerShipping[0].WorkingSet64;
                         string memoryGB = SizeSuffix(memory, 2);
-                        SetText(memoryUsed, memoryGB, Color.Black, true);
+                        SetText(memoryUsed, "Memory Used" + Environment.NewLine + memoryGB, Color.Black, true);
                         SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
                         serverStatus.ForeColor = Color.Green;
                         SetText(startServer, "Start Server", Color.Black, false);
@@ -591,7 +604,7 @@ namespace Dead_Matter_Server_Manager
                             {
                                 serverIP = IPAddress.Parse(GetPublicIP());
                                 serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
-                                SetText(onlinePlayers, serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
+                                SetText(onlinePlayers, "Online Players" + Environment.NewLine + serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
                             }
                             catch
                             {
@@ -622,18 +635,32 @@ namespace Dead_Matter_Server_Manager
 
                         string restartTime = ReadControl(restartServerTime);
 
-                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString()))
+                        if(killSent)
+                        {
+                            timeSinceLastKill = DateTime.Now - killCommandSentAt;
+                        }
+
+                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
                             Process.Start("windows-kill.exe", "-SIGINT " + processID);
-                            uptime = new TimeSpan(0, 0, 0);
+                            //uptime = new TimeSpan(0, 0, 0);
                             killSent = true;
+                            killAttempts += 1;
+                            killCommandSentAt = DateTime.Now;
+                        }
+                        else
+                        {
+                            if(killSent && timeSinceLastKill.Minutes >= 1)
+                            {
+                                dmServerShipping[0].CloseMainWindow();
+                            }
                         }
                     }
                 }
                 else
                 {
-                    SetText(memoryUsed, "0 GB", Color.Black, true);
+                    SetText(memoryUsed, "Memory Used" + Environment.NewLine + "0 GB", Color.Black, true);
                     SetText(serverStatus, "SERVER OFFLINE", Color.Red, true);
                     SetText(startServer, "Start Server", Color.Black, true);
                     SetText(stopServer, "Stop Server", Color.Black, false);
@@ -661,8 +688,18 @@ namespace Dead_Matter_Server_Manager
                             Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
                             SaveData();
+
+                            if(sessionStarted)
+                            {
+                                lastRestart = DateTime.Now;
+                                SetText(restartsThisSessionTxt, "Restarts this Session" + Environment.NewLine + restartsThisSession, Color.Black, true);
+                                SetText(lastRestartTxt, "Last Restart" + Environment.NewLine + lastRestart.ToString(), Color.Black, true);
+                                restartsThisSession += 1;
+                            }
+                            
                         }
                         killSent = false;
+                        killAttempts = 0;
                     }
                 }
             });
@@ -809,6 +846,8 @@ namespace Dead_Matter_Server_Manager
             serverStarted = false;
             firstTimeServerStarted = false;
             serverUptime.Text = "00:00:00";
+            sessionStarted = false;
+            restartsThisSession = 0;
         }
 
         private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
@@ -1108,6 +1147,11 @@ namespace Dead_Matter_Server_Manager
             string[] a3 = a2.Split('<');
             string a4 = a3[0];
             return a4;
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases");
         }
     }
 }
