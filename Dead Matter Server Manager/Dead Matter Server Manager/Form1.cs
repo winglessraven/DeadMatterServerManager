@@ -25,12 +25,14 @@ namespace Dead_Matter_Server_Manager
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
         delegate string ReadControls(Control control);
         delegate void SetReadOnlyControl(Control control, bool enabled);
+        delegate void SetOnlinePlayersDGV(DataGridView dGV, A2S_PLAYER onlinePlayers);
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
         private bool serverStarted;
         private bool firstTimeServerStarted;
         private DateTime serverStartTime;
         private IPAddress serverIP;
         private A2S_INFO serverInfo;
+        private A2S_PLAYER playerInfo;
         private int steamQueryPort;
         private bool killSent;
         private DateTime killCommandSentAt;
@@ -228,6 +230,7 @@ namespace Dead_Matter_Server_Manager
             settings.Add(new Settings { Variable = "MaxBanditCount", Value = "256", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for non-safezone human NPCs. If this many human NPCs are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "PVP", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Toggles whether or not PVP is enabled. If this is false, no damage can be inflicted by one player on another.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "FallDamageMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Change how much damage falling does here. 1.0 is full damage, 0 is no damage at all.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "bVACSecure", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Whether or not to turn on VAC and EAC.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "AnimalSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.FlockSpawner]", Tooltip = "How many more animals to spawn than usual.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "ZombieSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.GlobalAISpawner]", Tooltip = "How many more zombies to spawn than usual.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
@@ -336,6 +339,7 @@ namespace Dead_Matter_Server_Manager
             whitelistDGV.Rows.Clear();
             adminDGV.Rows.Clear();
             superAdminDGV.Rows.Clear();
+            serverTagsDGV.Rows.Clear();
 
             foreach (string configLine in configGame)
             {
@@ -439,7 +443,7 @@ namespace Dead_Matter_Server_Manager
             {
                 if (row.Cells[0].Value != null)
                 {
-                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
+                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.SurvivalBaseGamemode]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
                 }
             }
             foreach (DataGridViewRow row in adminDGV.Rows)
@@ -551,7 +555,6 @@ namespace Dead_Matter_Server_Manager
             //check for steam_appid.txt
             if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
             {
-                File.Create(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt");
                 File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
             }
             firstTimeServerStarted = true;
@@ -605,6 +608,9 @@ namespace Dead_Matter_Server_Manager
                                 serverIP = IPAddress.Parse(GetPublicIP());
                                 serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
                                 SetText(onlinePlayers, "Online Players" + Environment.NewLine + serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
+                                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
+                                SetOnlinePlayers(playersOnlineDGV, playerInfo);
+
                             }
                             catch
                             {
@@ -775,8 +781,27 @@ namespace Dead_Matter_Server_Manager
                     progressBar.Value = currentVal;
                 }
             }
-
         }
+
+        public void SetOnlinePlayers(DataGridView dGV, A2S_PLAYER playerInfo)
+        {
+            if (dGV.InvokeRequired)
+            {
+                SetOnlinePlayersDGV DDD = new SetOnlinePlayersDGV(SetOnlinePlayers);
+                dGV.Invoke(DDD, dGV, playerInfo);
+            }
+            else
+            {
+                dGV.Rows.Clear();
+                    
+                foreach(A2S_PLAYER.Player player in playerInfo.Players)
+                {
+                    TimeSpan time = TimeSpan.FromSeconds(player.Duration);
+                    dGV.Rows.Add(player.Name, time.ToString(@"hh\:mm\:ss"));
+                }
+            }
+        }
+
         static string SizeSuffix(Int64 value, int decimalPlaces = 1)
         {
             if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
@@ -1152,6 +1177,95 @@ namespace Dead_Matter_Server_Manager
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases");
+        }
+
+        // <summary>Adopted from Valve description: https://developer.valvesoftware.com/wiki/Server_queries#A2S_PLAYER </summary>
+        public class A2S_PLAYER
+        {
+            public struct Player
+            {
+                public Player(ref BinaryReader br)
+                {
+                    Index = br.ReadByte();
+                    Name = ReadNullTerminatedString(ref br);
+                    Score = br.ReadInt32();
+                    Duration = br.ReadSingle();
+                }
+                public byte Index { get; set; }
+                public string Name { get; set; }
+                public int Score { get; set; }
+                public float Duration { get; set; }
+
+                public override string ToString()
+                {
+                    return Name;
+                }
+            }
+
+            // \xFF\xFF\xFF\xFFU\xFF\xFF\xFF\xFF
+            public static readonly byte[] REQUEST = new byte[] { 0xFF, 0xFF, 0xFF, 0xFF, 0x55, 0xFF, 0xFF, 0xFF, 0xFF };
+
+            public byte Header { get; set; }        // D
+            public Player[] Players { get; set; }
+
+            public A2S_PLAYER(IPEndPoint ep)
+            {
+                UdpClient udp = new UdpClient();
+                udp.Send(REQUEST, REQUEST.Length, ep); // Request Challenge.
+                byte[] challenge_response = udp.Receive(ref ep);
+                if (challenge_response.Length == 9 && challenge_response[4] == 0x41) //B
+                {
+                    challenge_response[4] = 0x55; //U
+                                                  // \xFF\xFF\xFF\xFFU[CHALLENGE]
+                    udp.Send(challenge_response, challenge_response.Length, ep); // Request data.
+
+                    MemoryStream ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
+                    BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
+                    ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
+                    Header = br.ReadByte(); // D
+                    Players = new Player[br.ReadByte()];
+                    for (int i = 0; i < Players.Length; i++)
+                        Players[i] = new Player(ref br);
+                    br.Close();
+                    ms.Close();
+                    udp.Close();
+                }
+                else
+                    throw new Exception("Response invalid.");
+
+            }
+
+            /// <summary>Reads a null-terminated string into a .NET Framework compatible string.</summary>
+            /// <param name="input">Binary reader to pull the null-terminated string from.  Make sure it is correctly positioned in the stream before calling.</param>
+            /// <returns>String of the same encoding as the input BinaryReader.</returns>
+            public static string ReadNullTerminatedString(ref BinaryReader input)
+            {
+                StringBuilder sb = new StringBuilder();
+                char read = input.ReadChar();
+                while (read != '\x00')
+                {
+                    sb.Append(read);
+                    read = input.ReadChar();
+                }
+                return sb.ToString();
+            }
+        }
+
+        private void refreshOnlinePlayerList_Click(object sender, EventArgs e)
+        {
+            serverIP = IPAddress.Parse(GetPublicIP());
+            serverIP = IPAddress.Parse("45.157.190.235");
+            playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
+            try
+            {
+                SetOnlinePlayers(playersOnlineDGV, playerInfo);
+            }
+            catch
+            {
+                //no response from steam
+                playersOnlineDGV.Rows.Clear();
+            }
+            
         }
     }
 }
