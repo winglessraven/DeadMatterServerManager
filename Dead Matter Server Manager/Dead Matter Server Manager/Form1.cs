@@ -170,7 +170,14 @@ namespace Dead_Matter_Server_Manager
                     if (s.StartsWith("TimerRestartTime"))
                     {
                         String[] temp = s.Split('=');
-                        restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]) * 60);
+                        try
+                        {
+                            restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]) * 60);
+                        }
+                        catch
+                        {
+                            //do nowt
+                        }
                     }
                     
                     if (s.StartsWith("MinsTimerRestartTime"))
