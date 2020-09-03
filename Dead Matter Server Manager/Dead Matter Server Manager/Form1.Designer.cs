@@ -756,7 +756,7 @@
             this.restartServerTimelbl.Name = "restartServerTimelbl";
             this.restartServerTimelbl.Size = new System.Drawing.Size(152, 30);
             this.restartServerTimelbl.TabIndex = 32;
-            this.restartServerTimelbl.Text = "Restart Server Time (Hrs)";
+            this.restartServerTimelbl.Text = "Restart Server Time (Mins)";
             this.restartServerTimelbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // restartServerTime

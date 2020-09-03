@@ -165,13 +165,21 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         restartServerTimeOption.Checked = Convert.ToBoolean(temp[1]);
-                        restartServerTimeOption_CheckedChanged(null, null);
                     }
 
                     if (s.StartsWith("TimerRestartTime"))
                     {
                         String[] temp = s.Split('=');
-                        restartServerTime.Text = Convert.ToString(temp[1]);
+                        restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]) * 60);
+                    }
+                    
+                    if (s.StartsWith("MinsTimerRestartTime"))
+                    {
+                        String[] temp = s.Split('=');
+                        if(!Convert.ToString(temp[1]).Equals(""))
+                        {
+                            restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]));
+                        }
                     }
 
                     if (s.StartsWith("RememberPassword"))
@@ -187,7 +195,6 @@ namespace Dead_Matter_Server_Manager
                         {
                             steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
                         }
-
                     }
                 }
             }
@@ -525,7 +532,7 @@ namespace Dead_Matter_Server_Manager
                 "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
                 "LastStart=" + serverStartTime + Environment.NewLine +
                 "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
-                "TimerRestartTime=" + restartServerTime.Text + Environment.NewLine +
+                "MinsTimerRestartTime=" + restartServerTime.Text + Environment.NewLine +
                 "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
                 "SteamPassword=" + steamPass
                 );
@@ -637,7 +644,7 @@ namespace Dead_Matter_Server_Manager
                             timeSinceLastKill = DateTime.Now - killCommandSentAt;
                         }
 
-                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == uptime.Hours.ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
+                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
                             Process.Start("windows-kill.exe", "-SIGINT " + processID);
@@ -923,7 +930,7 @@ namespace Dead_Matter_Server_Manager
                 restartServerTime.Enabled = false;
             }
 
-            SaveData();
+            //SaveData();
         }
 
         private void restartServerTime_Leave(object sender, EventArgs e)
