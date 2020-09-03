@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -95,32 +96,14 @@ namespace Dead_Matter_Server_Manager
                 DialogResult result = MessageBox.Show("Update available, download now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
+                    webClient = new WebClient();
+                    webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+                    Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
                     Environment.Exit(0);
                 }
             }
         }
 
-        private void VersionCheck()
-        {
-            WebClient webClient = new WebClient();
-            string releaseVersion;
-            try
-            {
-                releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
-            }
-            catch
-            {
-                releaseVersion = this.ProductVersion.ToString();
-            }
-
-            Version version = new Version(releaseVersion);
-            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
-            if (version.CompareTo(new Version(this.ProductVersion)) > 0)
-            {
-                updateSoftware.Text = "Version " + releaseVersion + " available - click to update now";
-            }
-        }
         private void CheckAppData()
         {
             if (File.Exists(configFilePath))
@@ -608,14 +591,22 @@ namespace Dead_Matter_Server_Manager
                                 serverIP = IPAddress.Parse(GetPublicIP());
                                 serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
                                 SetText(onlinePlayers, "Online Players" + Environment.NewLine + serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
-                                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
-                                SetOnlinePlayers(playersOnlineDGV, playerInfo);
-
                             }
                             catch
                             {
                                 SetText(onlinePlayers, "", Color.Black, true);
                             }
+
+                            try
+                            {
+                                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
+                                SetOnlinePlayers(playersOnlineDGV, playerInfo);
+                            }
+                            catch
+                            {
+                                SetOnlinePlayers(playersOnlineDGV, null);
+                            }
+
                         }
                         
 
@@ -793,12 +784,15 @@ namespace Dead_Matter_Server_Manager
             else
             {
                 dGV.Rows.Clear();
-                    
-                foreach(A2S_PLAYER.Player player in playerInfo.Players)
+
+                if(playerInfo != null)
                 {
-                    TimeSpan time = TimeSpan.FromSeconds(player.Duration);
-                    dGV.Rows.Add(player.Name, time.ToString(@"hh\:mm\:ss"));
-                }
+                    foreach (A2S_PLAYER.Player player in playerInfo.Players)
+                    {
+                        TimeSpan time = TimeSpan.FromSeconds(player.Duration);
+                        dGV.Rows.Add(player.Name, time.ToString(@"hh\:mm\:ss"));
+                    }
+                } 
             }
         }
 
@@ -1212,6 +1206,7 @@ namespace Dead_Matter_Server_Manager
             {
                 UdpClient udp = new UdpClient();
                 udp.Send(REQUEST, REQUEST.Length, ep); // Request Challenge.
+                udp.Client.ReceiveTimeout = 60;
                 byte[] challenge_response = udp.Receive(ref ep);
                 if (challenge_response.Length == 9 && challenge_response[4] == 0x41) //B
                 {
@@ -1255,9 +1250,9 @@ namespace Dead_Matter_Server_Manager
         {
             serverIP = IPAddress.Parse(GetPublicIP());
             serverIP = IPAddress.Parse("45.157.190.235");
-            playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
             try
             {
+                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
                 SetOnlinePlayers(playersOnlineDGV, playerInfo);
             }
             catch

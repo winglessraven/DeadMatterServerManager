@@ -76,7 +76,12 @@
             this.serverTagsDGV = new System.Windows.Forms.DataGridView();
             this.serverTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
+            this.playersOnlineTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.playersOnlineDGV = new System.Windows.Forms.DataGridView();
+            this.playerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.connectionDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.refreshOnlinePlayerList = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -91,12 +96,7 @@
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.restartsThisSessionTxt = new System.Windows.Forms.Label();
             this.lastRestartTxt = new System.Windows.Forms.Label();
-            this.playersOnlineTabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.playersOnlineDGV = new System.Windows.Forms.DataGridView();
-            this.playerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.connectionDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.refreshOnlinePlayerList = new System.Windows.Forms.Button();
+            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -503,7 +503,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 346F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 369F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 369);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -611,17 +611,70 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
-            // checkUpdateOnStart
+            // playersOnlineTabPage
             // 
-            this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(3, 583);
-            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
-            this.checkUpdateOnStart.Size = new System.Drawing.Size(94, 17);
-            this.checkUpdateOnStart.TabIndex = 15;
-            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
-            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
-            this.checkUpdateOnStart.Visible = false;
-            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
+            this.playersOnlineTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
+            this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
+            this.playersOnlineTabPage.Name = "playersOnlineTabPage";
+            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 375);
+            this.playersOnlineTabPage.TabIndex = 3;
+            this.playersOnlineTabPage.Text = "Online Players";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.playersOnlineDGV, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.refreshOnlinePlayerList, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 375);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // playersOnlineDGV
+            // 
+            this.playersOnlineDGV.AllowUserToAddRows = false;
+            this.playersOnlineDGV.AllowUserToDeleteRows = false;
+            this.playersOnlineDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.playersOnlineDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.playersOnlineDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.playerName,
+            this.connectionDuration});
+            this.playersOnlineDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playersOnlineDGV.Location = new System.Drawing.Point(3, 3);
+            this.playersOnlineDGV.Name = "playersOnlineDGV";
+            this.playersOnlineDGV.ReadOnly = true;
+            this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
+            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 369);
+            this.playersOnlineDGV.TabIndex = 0;
+            // 
+            // playerName
+            // 
+            this.playerName.HeaderText = "Player Name";
+            this.playerName.Name = "playerName";
+            this.playerName.ReadOnly = true;
+            // 
+            // connectionDuration
+            // 
+            this.connectionDuration.HeaderText = "Connection Duration";
+            this.connectionDuration.Name = "connectionDuration";
+            this.connectionDuration.ReadOnly = true;
+            // 
+            // refreshOnlinePlayerList
+            // 
+            this.refreshOnlinePlayerList.Location = new System.Drawing.Point(568, 3);
+            this.refreshOnlinePlayerList.Name = "refreshOnlinePlayerList";
+            this.refreshOnlinePlayerList.Size = new System.Drawing.Size(75, 23);
+            this.refreshOnlinePlayerList.TabIndex = 1;
+            this.refreshOnlinePlayerList.Text = "Refresh";
+            this.refreshOnlinePlayerList.UseVisualStyleBackColor = true;
+            this.refreshOnlinePlayerList.Click += new System.EventHandler(this.refreshOnlinePlayerList_Click);
             // 
             // linkLabel1
             // 
@@ -786,70 +839,17 @@
             this.lastRestartTxt.Text = "Last Restart\r\n00/00/0000 00:00:00";
             this.lastRestartTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // playersOnlineTabPage
+            // checkUpdateOnStart
             // 
-            this.playersOnlineTabPage.BackColor = System.Drawing.Color.Transparent;
-            this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
-            this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
-            this.playersOnlineTabPage.Name = "playersOnlineTabPage";
-            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 375);
-            this.playersOnlineTabPage.TabIndex = 3;
-            this.playersOnlineTabPage.Text = "Online Players";
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.playersOnlineDGV, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.refreshOnlinePlayerList, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 375);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // playersOnlineDGV
-            // 
-            this.playersOnlineDGV.AllowUserToAddRows = false;
-            this.playersOnlineDGV.AllowUserToDeleteRows = false;
-            this.playersOnlineDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.playersOnlineDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.playersOnlineDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.playerName,
-            this.connectionDuration});
-            this.playersOnlineDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.playersOnlineDGV.Location = new System.Drawing.Point(3, 3);
-            this.playersOnlineDGV.Name = "playersOnlineDGV";
-            this.playersOnlineDGV.ReadOnly = true;
-            this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
-            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 369);
-            this.playersOnlineDGV.TabIndex = 0;
-            // 
-            // playerName
-            // 
-            this.playerName.HeaderText = "Player Name";
-            this.playerName.Name = "playerName";
-            this.playerName.ReadOnly = true;
-            // 
-            // connectionDuration
-            // 
-            this.connectionDuration.HeaderText = "Connection Duration";
-            this.connectionDuration.Name = "connectionDuration";
-            this.connectionDuration.ReadOnly = true;
-            // 
-            // refreshOnlinePlayerList
-            // 
-            this.refreshOnlinePlayerList.Location = new System.Drawing.Point(568, 3);
-            this.refreshOnlinePlayerList.Name = "refreshOnlinePlayerList";
-            this.refreshOnlinePlayerList.Size = new System.Drawing.Size(75, 23);
-            this.refreshOnlinePlayerList.TabIndex = 1;
-            this.refreshOnlinePlayerList.Text = "Refresh";
-            this.refreshOnlinePlayerList.UseVisualStyleBackColor = true;
-            this.refreshOnlinePlayerList.Click += new System.EventHandler(this.refreshOnlinePlayerList_Click);
+            this.checkUpdateOnStart.AutoSize = true;
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(3, 583);
+            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
+            this.checkUpdateOnStart.Size = new System.Drawing.Size(94, 17);
+            this.checkUpdateOnStart.TabIndex = 15;
+            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
+            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
+            this.checkUpdateOnStart.Visible = false;
+            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
             // 
             // Form1
             // 
