@@ -8,6 +8,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -42,6 +43,9 @@ namespace Dead_Matter_Server_Manager
         private bool sessionStarted;
         private DateTime lastRestart;
         private int killAttempts;
+
+        [DllImport("User32.dll")]
+        static extern int SetForegroundWindow(IntPtr point);
 
         public Form1()
         {
@@ -654,8 +658,13 @@ namespace Dead_Matter_Server_Manager
                         if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
-                            Process.Start("windows-kill.exe", "-SIGINT " + processID);
-                            //uptime = new TimeSpan(0, 0, 0);
+
+                            Process p = Process.GetProcessById(processID);
+
+                            IntPtr h = p.MainWindowHandle;
+                            SetForegroundWindow(h);
+                            SendKeys.SendWait("^(c)");
+
                             killSent = true;
                             killAttempts += 1;
                             killCommandSentAt = DateTime.Now;
@@ -874,7 +883,11 @@ namespace Dead_Matter_Server_Manager
             if (dmServer.Length != 0)
             {
                 int processID = dmServer[0].Id;
-                Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                Process p = Process.GetProcessById(processID);
+
+                IntPtr h = p.MainWindowHandle;
+                SetForegroundWindow(h);
+                SendKeys.SendWait("^(c)");
             }
             serverStarted = false;
             firstTimeServerStarted = false;
