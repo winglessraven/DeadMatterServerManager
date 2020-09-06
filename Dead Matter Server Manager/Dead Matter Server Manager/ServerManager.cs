@@ -18,7 +18,7 @@ using Microsoft.Win32;
 
 namespace Dead_Matter_Server_Manager
 {
-    public partial class Form1 : Form
+    public partial class ServerManager : Form
     {
         private static List<Settings> settings = new List<Settings>();
         private static string configFilePath;
@@ -47,7 +47,10 @@ namespace Dead_Matter_Server_Manager
         [DllImport("User32.dll")]
         static extern int SetForegroundWindow(IntPtr point);
 
-        public Form1()
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr OpenInputDesktop(uint dwFlags, bool fInherit, uint dwDesiredAccess);
+
+        public ServerManager()
         {
             InitializeComponent();
             VersionCheckOnStart();
@@ -237,7 +240,7 @@ namespace Dead_Matter_Server_Manager
             settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "SteamQueryIP", Value = "0.0.0.0", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query host, use your server IP address (internal).", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[/Script/DeadMatter.ServerInfoProxy]", Tooltip = "Change the Steam query port.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "GameServerQueryPort", Value = "27016", Script = "[OnlineSubsystemSteam]", Tooltip = "Change the Steam query port.", IniFile = "Engine.ini" });
             settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
@@ -659,11 +662,21 @@ namespace Dead_Matter_Server_Manager
                         {
                             int processID = dmServerShipping[0].Id;
 
-                            Process p = Process.GetProcessById(processID);
+                            var handle = OpenInputDesktop(0, false, 0);
 
-                            IntPtr h = p.MainWindowHandle;
-                            SetForegroundWindow(h);
-                            SendKeys.SendWait("^(c)");
+                            if(handle.ToString().Equals("0"))
+                            {
+                                //desktop is locked
+                                //need to use windows-kill because we cannot set and active window and send Ctrl+C
+                                Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                            }
+                            else
+                            {
+                                Process p = Process.GetProcessById(processID);
+                                IntPtr h = p.MainWindowHandle;
+                                SetForegroundWindow(h);
+                                SendKeys.SendWait("^(c)");
+                            }
 
                             killSent = true;
                             killAttempts += 1;
@@ -1276,7 +1289,6 @@ namespace Dead_Matter_Server_Manager
         private void refreshOnlinePlayerList_Click(object sender, EventArgs e)
         {
             serverIP = IPAddress.Parse(GetPublicIP());
-            serverIP = IPAddress.Parse("45.157.190.235");
             try
             {
                 playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
