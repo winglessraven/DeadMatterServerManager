@@ -1,6 +1,12 @@
 # DeadMatterServerManager
 Server manager for Dead Matter
 
+## Installer File
+* Installation file can be found under [releases](https://github.com/winglessraven/DeadMatterServerManager/releases)
+* Grab the latest .msi file and run to install the application
+* If you are greeted with a 'Windows Smart Screen' pop-up, click 'more info' and 'run anyway'.  Only way for me to get rid of this pop-up is to pay a fortune to get certified
+* Once the application is installed follow the 'first run steps' to get up and running
+
 ## First run steps
 
 <b>If you plan to install via SteamCMD</b>
@@ -27,7 +33,6 @@ Server manager for Dead Matter
 * Starting the server will launch a new window with the server output.
 * If the server crashes for any reason the application will automatically start it again.
 * If you want to stop the server, click *Stop Server*
-
 
 ![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
 
