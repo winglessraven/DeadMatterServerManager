@@ -1,5 +1,7 @@
-# DeadMatterServerManager
-Server manager for Dead Matter
+# Dead Matter Server Manager
+A GUI server manager for Dead Matter dedicated servers.  Idea was to create a simple and clean interface for managing dedicated servers and the associated configurations withouth manually needing to locate and edit different ini files.  The application is constantly being updated and I welcome any ideas/suggestions for improvements along with bug reports.
+
+You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
 ## Installer File
 * Installation file can be found under [releases](https://github.com/winglessraven/DeadMatterServerManager/releases)
