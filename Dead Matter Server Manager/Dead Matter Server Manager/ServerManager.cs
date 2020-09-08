@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Microsoft.Win32;
 
 namespace Dead_Matter_Server_Manager
@@ -222,6 +223,18 @@ namespace Dead_Matter_Server_Manager
                         {
                             steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
                         }
+                    }
+
+                    if(s.StartsWith("ChangeLaunchParams"))
+                    {
+                        String[] temp = s.Split('=');
+                        changeLaunchParams.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("LaunchParams"))
+                    {
+                        String[] temp = s.Split('=');
+                        launchParameters.Text = Convert.ToString(temp[1]);
                     }
                 }
             }
@@ -566,8 +579,10 @@ namespace Dead_Matter_Server_Manager
                 "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
                 "MinsTimerRestartTime=" + restartServerTime.Text + Environment.NewLine +
                 "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
-                "SteamPassword=" + steamPass
-                );
+                "SteamPassword=" + steamPass + Environment.NewLine +
+                "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
+                "LaunchParams=" + launchParameters.Text
+                ); 
 
 
         }
@@ -727,14 +742,14 @@ namespace Dead_Matter_Server_Manager
                             //not currently used
                             updateServer_Click(this, null);
                             string serverExe = serverFolderPath.Text + @"\deadmatterServer.exe";
-                            Process.Start(serverExe, "-USEALLAVAILABLECORES -log");
+                            Process.Start(serverExe, launchParameters.Text);
                         }
                         else
                         {
                             SetText(startServer, "Start Server", Color.Black, false);
                             Process dmServerExe = new Process();
                             dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
-                            dmServerExe.StartInfo.Arguments = "-USEALLAVAILABLECORES -log";
+                            dmServerExe.StartInfo.Arguments = launchParameters.Text;
                             dmServerExe.Start();
                             Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
@@ -1318,6 +1333,26 @@ namespace Dead_Matter_Server_Manager
                 playersOnlineDGV.Rows.Clear();
             }
             
+        }
+
+        private void changeLaunchParams_CheckedChanged(object sender, EventArgs e)
+        {
+            if(changeLaunchParams.Checked)
+            {
+                launchParameters.ReadOnly = false;
+            }
+            else
+            {
+                launchParameters.ReadOnly = true;
+                launchParameters.Text = "-USEALLAVAILABLECORES -log";
+            }
+
+            SaveData();
+        }
+
+        private void launchParameters_Leave(object sender, EventArgs e)
+        {
+            SaveData();
         }
     }
 }

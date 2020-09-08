@@ -97,6 +97,9 @@
             this.restartsThisSessionTxt = new System.Windows.Forms.Label();
             this.lastRestartTxt = new System.Windows.Forms.Label();
             this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
+            this.changeLaunchParams = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.launchParameters = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -117,7 +120,7 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
@@ -161,6 +164,9 @@
             this.tableLayoutPanel1.Controls.Add(this.restartsThisSessionTxt, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.lastRestartTxt, 3, 7);
             this.tableLayoutPanel1.Controls.Add(this.checkUpdateOnStart, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.changeLaunchParams, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.launchParameters, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -168,7 +174,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -185,7 +191,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 30);
+            this.label2.Size = new System.Drawing.Size(112, 30);
             this.label2.TabIndex = 1;
             this.label2.Text = "Steam CMD Path";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -196,7 +202,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 55);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 30);
+            this.label3.Size = new System.Drawing.Size(112, 30);
             this.label3.TabIndex = 2;
             this.label3.Text = "Server Folder Path";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -226,17 +232,17 @@
             // steamCMDPath
             // 
             this.steamCMDPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamCMDPath.Location = new System.Drawing.Point(103, 28);
+            this.steamCMDPath.Location = new System.Drawing.Point(121, 28);
             this.steamCMDPath.Name = "steamCMDPath";
-            this.steamCMDPath.Size = new System.Drawing.Size(351, 20);
+            this.steamCMDPath.Size = new System.Drawing.Size(333, 20);
             this.steamCMDPath.TabIndex = 5;
             // 
             // serverFolderPath
             // 
             this.serverFolderPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverFolderPath.Location = new System.Drawing.Point(103, 58);
+            this.serverFolderPath.Location = new System.Drawing.Point(121, 58);
             this.serverFolderPath.Name = "serverFolderPath";
-            this.serverFolderPath.Size = new System.Drawing.Size(351, 20);
+            this.serverFolderPath.Size = new System.Drawing.Size(333, 20);
             this.serverFolderPath.TabIndex = 6;
             // 
             // updateSteamCMD
@@ -385,7 +391,7 @@
             this.serverStatus.ForeColor = System.Drawing.Color.Red;
             this.serverStatus.Location = new System.Drawing.Point(3, 520);
             this.serverStatus.Name = "serverStatus";
-            this.serverStatus.Size = new System.Drawing.Size(94, 30);
+            this.serverStatus.Size = new System.Drawing.Size(112, 30);
             this.serverStatus.TabIndex = 23;
             this.serverStatus.Text = "SERVER OFFLINE";
             this.serverStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -393,9 +399,9 @@
             // memoryUsedProgressBar
             // 
             this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsedProgressBar.Location = new System.Drawing.Point(103, 523);
+            this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 523);
             this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
-            this.memoryUsedProgressBar.Size = new System.Drawing.Size(351, 24);
+            this.memoryUsedProgressBar.Size = new System.Drawing.Size(333, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
             // 
             // tabControl1
@@ -406,11 +412,11 @@
             this.tabControl1.Controls.Add(this.serverTagsTabPage);
             this.tabControl1.Controls.Add(this.playersOnlineTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 116);
+            this.tabControl1.Location = new System.Drawing.Point(3, 111);
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 401);
+            this.tabControl1.Size = new System.Drawing.Size(1139, 406);
             this.tabControl1.TabIndex = 25;
             // 
             // settingsTabPage
@@ -420,7 +426,7 @@
             this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.settingsTabPage.Name = "settingsTabPage";
             this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsTabPage.Size = new System.Drawing.Size(1131, 375);
+            this.settingsTabPage.Size = new System.Drawing.Size(1131, 380);
             this.settingsTabPage.TabIndex = 1;
             this.settingsTabPage.Text = "Settings";
             // 
@@ -438,7 +444,7 @@
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1125, 369);
+            this.configSettings.Size = new System.Drawing.Size(1125, 374);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
@@ -693,7 +699,7 @@
             // 
             this.uptimeLbl.AutoSize = true;
             this.uptimeLbl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.uptimeLbl.Location = new System.Drawing.Point(20, 550);
+            this.uptimeLbl.Location = new System.Drawing.Point(38, 550);
             this.uptimeLbl.Name = "uptimeLbl";
             this.uptimeLbl.Size = new System.Drawing.Size(77, 30);
             this.uptimeLbl.TabIndex = 27;
@@ -704,9 +710,9 @@
             // 
             this.serverUptime.AutoSize = true;
             this.serverUptime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverUptime.Location = new System.Drawing.Point(103, 550);
+            this.serverUptime.Location = new System.Drawing.Point(121, 550);
             this.serverUptime.Name = "serverUptime";
-            this.serverUptime.Size = new System.Drawing.Size(351, 30);
+            this.serverUptime.Size = new System.Drawing.Size(333, 30);
             this.serverUptime.TabIndex = 28;
             this.serverUptime.Text = "00:00:00";
             this.serverUptime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -788,7 +794,7 @@
             this.rememberSteamPass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rememberSteamPass.Location = new System.Drawing.Point(962, 88);
             this.rememberSteamPass.Name = "rememberSteamPass";
-            this.rememberSteamPass.Size = new System.Drawing.Size(180, 22);
+            this.rememberSteamPass.Size = new System.Drawing.Size(180, 17);
             this.rememberSteamPass.TabIndex = 35;
             this.rememberSteamPass.Text = "Remember Steam Password";
             this.rememberSteamPass.UseVisualStyleBackColor = true;
@@ -844,12 +850,47 @@
             this.checkUpdateOnStart.AutoSize = true;
             this.checkUpdateOnStart.Location = new System.Drawing.Point(3, 583);
             this.checkUpdateOnStart.Name = "checkUpdateOnStart";
-            this.checkUpdateOnStart.Size = new System.Drawing.Size(94, 17);
+            this.checkUpdateOnStart.Size = new System.Drawing.Size(112, 17);
             this.checkUpdateOnStart.TabIndex = 15;
             this.checkUpdateOnStart.Text = "Check for Update on Server Start";
             this.checkUpdateOnStart.UseVisualStyleBackColor = true;
             this.checkUpdateOnStart.Visible = false;
             this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
+            // 
+            // changeLaunchParams
+            // 
+            this.changeLaunchParams.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.changeLaunchParams, 2);
+            this.changeLaunchParams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.changeLaunchParams.Location = new System.Drawing.Point(460, 88);
+            this.changeLaunchParams.Name = "changeLaunchParams";
+            this.changeLaunchParams.Size = new System.Drawing.Size(236, 17);
+            this.changeLaunchParams.TabIndex = 40;
+            this.changeLaunchParams.Text = "Change Launch Parameters";
+            this.changeLaunchParams.UseVisualStyleBackColor = true;
+            this.changeLaunchParams.CheckedChanged += new System.EventHandler(this.changeLaunchParams_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(3, 85);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(112, 23);
+            this.label7.TabIndex = 41;
+            this.label7.Text = "Launch Parameters";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // launchParameters
+            // 
+            this.launchParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.launchParameters.Location = new System.Drawing.Point(121, 88);
+            this.launchParameters.Name = "launchParameters";
+            this.launchParameters.ReadOnly = true;
+            this.launchParameters.Size = new System.Drawing.Size(333, 20);
+            this.launchParameters.TabIndex = 42;
+            this.launchParameters.Text = "-USEALLAVAILABLECORES -log";
+            this.launchParameters.Leave += new System.EventHandler(this.launchParameters_Leave);
             // 
             // ServerManager
             // 
@@ -947,6 +988,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn playerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn connectionDuration;
         private System.Windows.Forms.Button refreshOnlinePlayerList;
+        private System.Windows.Forms.CheckBox changeLaunchParams;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox launchParameters;
     }
 }
 
