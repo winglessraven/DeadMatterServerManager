@@ -3,6 +3,8 @@ A GUI server manager for Dead Matter dedicated servers.  Idea was to create a si
 
 You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
+![GitHub All Releases](https://img.shields.io/github/downloads/winglessraven/deadmatterservermanager/total?style=social)
+
 ## Installer File
 * Installation file can be found under [releases](https://github.com/winglessraven/DeadMatterServerManager/releases)
 * Grab the latest .msi file and run to install the application
