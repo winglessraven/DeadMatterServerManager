@@ -115,8 +115,21 @@ namespace Dead_Matter_Server_Manager
                     //download and run the msi
                     webClient = new WebClient();
                     webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
-                    Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
-                    Environment.Exit(0);
+                    try
+                    {
+                        Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+                        Environment.Exit(0);
+                    }
+                    catch
+                    {
+                        //can't find installer
+                        DialogResult result1 = MessageBox.Show("Download failed, visit github now?", "Download Failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        if (result1 == DialogResult.Yes)
+                        {
+                            Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
+                        }
+                    }
+                    
                 }
             }
         }
@@ -981,8 +994,20 @@ namespace Dead_Matter_Server_Manager
         {
             WebClient webClient = new WebClient();
             webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
-            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
-            Environment.Exit(0);
+            try
+            {
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
+                Environment.Exit(0);
+            }
+            catch
+            {
+                //can't find installer
+                DialogResult result = MessageBox.Show("Download failed, visit github now?","Download Failed",MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+                if(result == DialogResult.Yes)
+                {
+                    Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
+                }
+            }
         }
 
         private void restartServerTimeOption_CheckedChanged(object sender, EventArgs e)
