@@ -55,8 +55,10 @@ namespace Dead_Matter_Server_Manager
             InitializeComponent();
             VersionCheckOnStart();
 
+            //set form title to include version number
             this.Text = "Dead Matter Server Manager || " + this.ProductVersion;
 
+            //set config file path
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             AddConfigRows();
             CheckAppData();
@@ -65,6 +67,7 @@ namespace Dead_Matter_Server_Manager
             Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
             if (dmServerShipping.Length != 0)
             {
+                //server is running
                 serverStarted = true;
                 firstTimeServerStarted = true;
                 sessionStarted = true;
@@ -73,6 +76,7 @@ namespace Dead_Matter_Server_Manager
             MonitorServer(maxServerMemory.Text);
             if (autoStartServer.Checked)
             {
+                //auto start server is ticked, so set the flags to start the server
                 startServer_Click(this, null);
             }
 
@@ -80,15 +84,18 @@ namespace Dead_Matter_Server_Manager
 
         private void VersionCheckOnStart()
         {
+            //check if previous update file exists
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi"))
             {
+                //delete it
                 File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
             }
-            WebClient webClient = new WebClient();
 
+            WebClient webClient = new WebClient();
             string releaseVersion;
             try
             {
+                //try to get the latest release version
                 releaseVersion = webClient.DownloadString("https://www.winglessraven.com/DMSM.html");
             }
             catch
@@ -97,12 +104,14 @@ namespace Dead_Matter_Server_Manager
                 releaseVersion = this.ProductVersion.ToString();
             }
             Version version = new Version(releaseVersion);
-            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
+
             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
             {
+                //newer version is available, prompt for update
                 DialogResult result = MessageBox.Show("Update available, download now?", "Update Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
+                    //download and run the msi
                     webClient = new WebClient();
                     webClient.DownloadFile("https://github.com/winglessraven/DeadMatterServerManager/releases/latest/download/DeadMatterServerManager.msi", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
                     Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DeadMatterServerManager.msi");
@@ -119,6 +128,7 @@ namespace Dead_Matter_Server_Manager
 
                 foreach (string s in cfg)
                 {
+                    //read in the config and set saved settings
                     if (s.StartsWith("SteamCMDPath"))
                     {
                         String[] temp = s.Split('=');
@@ -129,7 +139,10 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         serverFolderPath.Text = temp[1];
-                        getConfig_Click(null, null);
+                        if(!temp[1].Equals(""))
+                        {
+                            getConfig_Click(null, null);
+                        }
                     }
 
                     if (s.StartsWith("SteamID"))
@@ -214,6 +227,7 @@ namespace Dead_Matter_Server_Manager
             }
             else
             {
+                //config doesn't exist, create it
                 string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 string specificFolder = Path.Combine(folder, "DeadMatterServerManager");
                 Directory.CreateDirectory(specificFolder);
@@ -224,6 +238,7 @@ namespace Dead_Matter_Server_Manager
 
         private void AddConfigRows()
         {
+            //add rows for server settings
             settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
@@ -251,6 +266,7 @@ namespace Dead_Matter_Server_Manager
 
             foreach (Settings s in settings)
             {
+                //add the settings to the DGV
                 configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.Tooltip, s.IniFile);
             }
 
@@ -333,6 +349,7 @@ namespace Dead_Matter_Server_Manager
         {
             if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
             {
+                //can't find the game.ini file
                 MessageBox.Show("Game.ini not found, try running the server once to initialize the config files", "Game.ini not found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -340,6 +357,7 @@ namespace Dead_Matter_Server_Manager
             string[] configGame = File.ReadAllLines(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
             string[] configEngine = File.ReadAllLines(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
 
+            //clear existing data before reading in
             whitelistDGV.Rows.Clear();
             adminDGV.Rows.Clear();
             superAdminDGV.Rows.Clear();
@@ -418,11 +436,11 @@ namespace Dead_Matter_Server_Manager
             {
                 if (dataGridViewRow.Cells[4].Value.ToString().Equals("Game.ini"))
                 {
-                    if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
+                    if (writeConfigs.Exists(p => p.Script.Equals(dataGridViewRow.Cells[2].Value)))
                     {
                         if (dataGridViewRow.Cells[1].Value != null)
                         {
-                            writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                            writeConfigs.Find(p => p.Script.Equals(dataGridViewRow.Cells[2].Value)).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
                         }
                     }
                     else
@@ -667,7 +685,7 @@ namespace Dead_Matter_Server_Manager
                             if(handle.ToString().Equals("0"))
                             {
                                 //desktop is locked
-                                //need to use windows-kill because we cannot set and active window and send Ctrl+C
+                                //need to use windows-kill because we cannot set an active window and send Ctrl+C
                                 Process.Start("windows-kill.exe", "-SIGINT " + processID);
                             }
                             else

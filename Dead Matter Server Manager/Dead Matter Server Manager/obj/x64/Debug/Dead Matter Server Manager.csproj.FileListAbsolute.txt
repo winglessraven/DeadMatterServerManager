@@ -13,3 +13,17 @@ C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\De
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\defaultEngine.txt
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\windows-kill.exe
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead_Matter_Server_Manager.ServerManager.resources
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\CoreRCON.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Buffers.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.IO.Pipelines.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Memory.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Numerics.Vectors.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Buffers.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.IO.Pipelines.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Memory.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Numerics.Vectors.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
