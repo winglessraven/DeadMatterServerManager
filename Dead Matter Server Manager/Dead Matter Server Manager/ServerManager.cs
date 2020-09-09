@@ -378,6 +378,11 @@ namespace Dead_Matter_Server_Manager
             steamCMD.StartInfo.Arguments = "+login " + steamID.Text + " " + steamPassword.Text + @" +force_install_dir """ + serverFolderPath.Text + @""" +app_update 1110990 +quit";
             steamCMD.Start();
             steamCMD.WaitForExit();
+            if(steamCMD.ExitCode.Equals(5))
+            {
+                MessageBox.Show("Steam login error!" + Environment.NewLine + "Username or Password could be incorrect", "Steam Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private void getConfig_Click(object sender, EventArgs e)
