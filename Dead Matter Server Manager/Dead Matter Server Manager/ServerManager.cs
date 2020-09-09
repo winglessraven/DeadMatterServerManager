@@ -726,22 +726,7 @@ namespace Dead_Matter_Server_Manager
                         if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
-
-                            var handle = OpenInputDesktop(0, false, 0);
-
-                            if(handle.ToString().Equals("0"))
-                            {
-                                //desktop is locked
-                                //need to use windows-kill because we cannot set an active window and send Ctrl+C
-                                Process.Start("windows-kill.exe", "-SIGINT " + processID);
-                            }
-                            else
-                            {
-                                Process p = Process.GetProcessById(processID);
-                                IntPtr h = p.MainWindowHandle;
-                                SetForegroundWindow(h);
-                                SendKeys.SendWait("^(c)");
-                            }
+                            Process.Start("windows-kill.exe", "-SIGINT " + processID);
 
                             killSent = true;
                             killAttempts += 1;
@@ -960,13 +945,9 @@ namespace Dead_Matter_Server_Manager
             Process[] dmServer;
             dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
             if (dmServer.Length != 0)
-            {
+            { 
                 int processID = dmServer[0].Id;
-                Process p = Process.GetProcessById(processID);
-
-                IntPtr h = p.MainWindowHandle;
-                SetForegroundWindow(h);
-                SendKeys.SendWait("^(c)");
+                Process.Start("windows-kill.exe", "-SIGINT " + processID);
             }
             serverStarted = false;
             firstTimeServerStarted = false;
@@ -1412,11 +1393,7 @@ namespace Dead_Matter_Server_Manager
             if (dmServer.Length != 0)
             {
                 int processID = dmServer[0].Id;
-                Process p = Process.GetProcessById(processID);
-
-                IntPtr h = p.MainWindowHandle;
-                SetForegroundWindow(h);
-                SendKeys.SendWait("^(c)");
+                Process.Start("windows-kill.exe", "-SIGINT " + processID);
             }
         }
     }
