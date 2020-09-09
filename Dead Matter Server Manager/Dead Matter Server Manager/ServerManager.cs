@@ -249,6 +249,12 @@ namespace Dead_Matter_Server_Manager
                         String[] temp = s.Split('=');
                         launchParameters.Text = Convert.ToString(temp[1]);
                     }
+
+                    if (s.StartsWith("SaveConfigOnStart"))
+                    {
+                        String[] temp = s.Split('=');
+                        saveConfigOnStart.Checked = Convert.ToBoolean(temp[1]);
+                    }
                 }
             }
             else
@@ -573,7 +579,10 @@ namespace Dead_Matter_Server_Manager
 
             File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini", defaultEngine);
             fileInfo.IsReadOnly = true;
-            MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if(!saveConfigOnStart.Checked)
+            {
+                MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void SaveData()
@@ -597,7 +606,8 @@ namespace Dead_Matter_Server_Manager
                 "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
                 "SteamPassword=" + steamPass + Environment.NewLine +
                 "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
-                "LaunchParams=" + launchParameters.Text
+                "LaunchParams=" + launchParameters.Text + Environment.NewLine +
+                "SaveConfigOnStart=" + saveConfigOnStart.Checked
                 ); 
 
 
@@ -605,6 +615,11 @@ namespace Dead_Matter_Server_Manager
 
         private void startServer_Click(object sender, EventArgs e)
         {
+            if(saveConfigOnStart.Checked)
+            {
+                saveConfig_Click(this, null);
+            }
+
             //check for steam_appid.txt
             if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
             {
@@ -642,6 +657,7 @@ namespace Dead_Matter_Server_Manager
                         SetReadOnly(restartServerTimeOption, false);
                         SetReadOnly(restartServerTime, false);
                         SetReadOnly(maxServerMemory, false);
+                        SetReadOnly(restartServer, true);
                         string maxMem = ReadControl(maxServerMemory);
                         if (maxMem == "")
                         {
@@ -750,6 +766,7 @@ namespace Dead_Matter_Server_Manager
                     SetReadOnly(restartServerTimeOption, true);
                     SetReadOnly(restartServerTime, true);
                     SetReadOnly(maxServerMemory, true);
+                    SetReadOnly(restartServer, false);
                     SetText(onlinePlayers, "", Color.Black, true);
                     if (serverStarted && firstTimeServerStarted)
                     {
@@ -1381,6 +1398,26 @@ namespace Dead_Matter_Server_Manager
         private void launchParameters_Leave(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void saveConfigOnStart_CheckedChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void restartServer_Click(object sender, EventArgs e)
+        {
+            Process[] dmServer;
+            dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+            if (dmServer.Length != 0)
+            {
+                int processID = dmServer[0].Id;
+                Process p = Process.GetProcessById(processID);
+
+                IntPtr h = p.MainWindowHandle;
+                SetForegroundWindow(h);
+                SendKeys.SendWait("^(c)");
+            }
         }
     }
 }

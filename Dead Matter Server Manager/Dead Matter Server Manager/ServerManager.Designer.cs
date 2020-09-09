@@ -100,6 +100,8 @@
             this.changeLaunchParams = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.launchParameters = new System.Windows.Forms.TextBox();
+            this.saveConfigOnStart = new System.Windows.Forms.CheckBox();
+            this.restartServer = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -167,6 +169,8 @@
             this.tableLayoutPanel1.Controls.Add(this.changeLaunchParams, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.label7, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.launchParameters, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.saveConfigOnStart, 5, 8);
+            this.tableLayoutPanel1.Controls.Add(this.restartServer, 5, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -892,6 +896,31 @@
             this.launchParameters.Text = "-USEALLAVAILABLECORES -log";
             this.launchParameters.Leave += new System.EventHandler(this.launchParameters_Leave);
             // 
+            // saveConfigOnStart
+            // 
+            this.saveConfigOnStart.AutoSize = true;
+            this.saveConfigOnStart.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveConfigOnStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.saveConfigOnStart.Location = new System.Drawing.Point(804, 583);
+            this.saveConfigOnStart.Name = "saveConfigOnStart";
+            this.saveConfigOnStart.Size = new System.Drawing.Size(152, 24);
+            this.saveConfigOnStart.TabIndex = 43;
+            this.saveConfigOnStart.Text = "Save Config on Start";
+            this.saveConfigOnStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveConfigOnStart.UseVisualStyleBackColor = true;
+            this.saveConfigOnStart.CheckedChanged += new System.EventHandler(this.saveConfigOnStart_CheckedChanged);
+            // 
+            // restartServer
+            // 
+            this.restartServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartServer.Location = new System.Drawing.Point(804, 613);
+            this.restartServer.Name = "restartServer";
+            this.restartServer.Size = new System.Drawing.Size(152, 24);
+            this.restartServer.TabIndex = 44;
+            this.restartServer.Text = "Restart Server";
+            this.restartServer.UseVisualStyleBackColor = true;
+            this.restartServer.Click += new System.EventHandler(this.restartServer_Click);
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -991,6 +1020,8 @@
         private System.Windows.Forms.CheckBox changeLaunchParams;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox launchParameters;
+        private System.Windows.Forms.CheckBox saveConfigOnStart;
+        private System.Windows.Forms.Button restartServer;
     }
 }
 
