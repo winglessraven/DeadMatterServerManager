@@ -491,7 +491,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 375);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 380);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -510,7 +510,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 369F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 369);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -522,7 +522,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 363);
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 368);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -539,7 +539,7 @@
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminDGV.Location = new System.Drawing.Point(378, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 363);
+            this.adminDGV.Size = new System.Drawing.Size(369, 368);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -556,7 +556,7 @@
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 363);
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 368);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -570,7 +570,7 @@
             this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
             this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
             this.serverTagsTabPage.Name = "serverTagsTabPage";
-            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 375);
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 380);
             this.serverTagsTabPage.TabIndex = 2;
             this.serverTagsTabPage.Text = "Server Tags";
             // 
@@ -587,7 +587,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 375);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 380);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // serverTagsDGV
@@ -599,7 +599,7 @@
             this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
             this.serverTagsDGV.Name = "serverTagsDGV";
             this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
-            this.serverTagsDGV.Size = new System.Drawing.Size(842, 369);
+            this.serverTagsDGV.Size = new System.Drawing.Size(842, 374);
             this.serverTagsDGV.TabIndex = 0;
             // 
             // serverTags
@@ -613,7 +613,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(851, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 187);
+            this.label6.Size = new System.Drawing.Size(277, 190);
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
@@ -623,7 +623,7 @@
             this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
             this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
             this.playersOnlineTabPage.Name = "playersOnlineTabPage";
-            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 375);
+            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 380);
             this.playersOnlineTabPage.TabIndex = 3;
             this.playersOnlineTabPage.Text = "Online Players";
             // 
@@ -640,7 +640,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 375);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 380);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // playersOnlineDGV
@@ -657,7 +657,7 @@
             this.playersOnlineDGV.Name = "playersOnlineDGV";
             this.playersOnlineDGV.ReadOnly = true;
             this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
-            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 369);
+            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 374);
             this.playersOnlineDGV.TabIndex = 0;
             // 
             // playerName
