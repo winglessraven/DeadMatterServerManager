@@ -44,12 +44,8 @@ namespace Dead_Matter_Server_Manager
         private bool sessionStarted;
         private DateTime lastRestart;
         private int killAttempts;
-
-        [DllImport("User32.dll")]
-        static extern int SetForegroundWindow(IntPtr point);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr OpenInputDesktop(uint dwFlags, bool fInherit, uint dwDesiredAccess);
+        private int allTimeHighPlayers;
+        private TimeSpan longestUptime;
 
         public ServerManager()
         {
@@ -177,16 +173,32 @@ namespace Dead_Matter_Server_Manager
                         maxServerMemory.Text = temp[1];
                     }
 
-                    if (s.StartsWith("StartWithWindows"))
+                    if (s.StartsWith("AllTimeHighPlayers"))
                     {
                         String[] temp = s.Split('=');
-                        autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
+                        try
+                        {
+                            allTimeHighPlayers = Convert.ToInt32(temp[1]);
+                        }
+                        catch
+                        {
+                            //not a number for some reason, reset to 0
+                            allTimeHighPlayers = 0;
+                        }
                     }
 
-                    if (s.StartsWith("StartServerOnLaunch"))
+                    if (s.StartsWith("LongestUptime"))
                     {
                         String[] temp = s.Split('=');
-                        autoStartServer.Checked = Convert.ToBoolean(temp[1]);
+                        try
+                        {
+                            longestUptime = TimeSpan.Parse(Convert.ToString(temp[1]));
+                        }
+                        catch
+                        {
+                            //not a valid timespan
+                            longestUptime = new TimeSpan(0);
+                        }
                     }
 
                     if (s.StartsWith("LastStart"))
@@ -254,6 +266,18 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         saveConfigOnStart.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("StartServerOnLaunch"))
+                    {
+                        String[] temp = s.Split('=');
+                        autoStartServer.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("StartWithWindows"))
+                    {
+                        String[] temp = s.Split('=');
+                        autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
                     }
                 }
             }
@@ -606,18 +630,20 @@ namespace Dead_Matter_Server_Manager
             File.WriteAllText(configFilePath, "SteamCMDPath=" + steamCMDPath.Text + Environment.NewLine +
                 "ServerPath=" + serverFolderPath.Text + Environment.NewLine +
                 "SteamID=" + steamID.Text + Environment.NewLine +
-                "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
                 "MaxMemory=" + maxServerMemory.Text + Environment.NewLine +
-                "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine +
-                "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
                 "LastStart=" + serverStartTime + Environment.NewLine +
-                "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
                 "MinsTimerRestartTime=" + restartServerTime.Text + Environment.NewLine +
-                "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
                 "SteamPassword=" + steamPass + Environment.NewLine +
-                "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
                 "LaunchParams=" + launchParameters.Text + Environment.NewLine +
-                "SaveConfigOnStart=" + saveConfigOnStart.Checked
+                "AllTimeHighPlayers=" + allTimeHighPlayers.ToString() + Environment.NewLine +
+                "LongestUptime=" + longestUptime.ToString("c") + Environment.NewLine +
+                "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
+                "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
+                "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
+                "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
+                "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
+                "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
+                "StartWithWindows=" + autoStartWithWindows.Checked
                 ); 
 
 
@@ -670,8 +696,7 @@ namespace Dead_Matter_Server_Manager
                         serverStatus.ForeColor = Color.Green;
                         SetText(startServer, "Start Server", Color.Black, false);
                         SetText(stopServer, "Stop Server", Color.Black, true);
-                        
-                        
+
                         SetReadOnly(restartServerTimeOption, false);
                         SetReadOnly(restartServerTime, false);
                         SetReadOnly(maxServerMemory, false);
@@ -712,7 +737,21 @@ namespace Dead_Matter_Server_Manager
                             }
 
                         }
-                        
+
+                        if(uptime > longestUptime)
+                        {
+                            longestUptime = uptime;
+                        }
+
+                        if(serverInfo.Players > allTimeHighPlayers)
+                        {
+                            allTimeHighPlayers = serverInfo.Players;
+                            SaveData();
+                        }
+
+                        SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
+                        SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
+
 
                         if (uptime.Minutes % 10 == 0 && uptime.Seconds % 30 == 0)
                         {
@@ -771,6 +810,10 @@ namespace Dead_Matter_Server_Manager
                     SetReadOnly(maxServerMemory, true);
                     SetReadOnly(restartServer, false);
                     SetText(onlinePlayers, "", Color.Black, true);
+
+                    SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
+                    SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
+
                     if (serverStarted && firstTimeServerStarted)
                     {
                         if (checkUpdateOnStart.Checked)
@@ -972,6 +1015,7 @@ namespace Dead_Matter_Server_Manager
             serverUptime.Text = "00:00:00";
             sessionStarted = false;
             restartsThisSession = 0;
+            SaveData();
         }
 
         private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
