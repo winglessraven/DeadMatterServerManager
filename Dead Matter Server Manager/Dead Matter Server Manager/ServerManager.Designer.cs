@@ -58,11 +58,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.configSettings = new System.Windows.Forms.DataGridView();
-            this.Variable = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IniFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.whitelistDGV = new System.Windows.Forms.DataGridView();
@@ -102,6 +97,11 @@
             this.launchParameters = new System.Windows.Forms.TextBox();
             this.saveConfigOnStart = new System.Windows.Forms.CheckBox();
             this.restartServer = new System.Windows.Forms.Button();
+            this.Variable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IniFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Info = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -443,50 +443,13 @@
             this.Variable,
             this.Value,
             this.Script,
-            this.Info,
-            this.IniFile});
+            this.IniFile,
+            this.Info});
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
             this.configSettings.Size = new System.Drawing.Size(1125, 374);
             this.configSettings.TabIndex = 16;
-            // 
-            // Variable
-            // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Variable.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Variable.HeaderText = "Variable";
-            this.Variable.Name = "Variable";
-            this.Variable.ReadOnly = true;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            // 
-            // Script
-            // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Script.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Script.HeaderText = "Script Location";
-            this.Script.Name = "Script";
-            this.Script.ReadOnly = true;
-            // 
-            // Info
-            // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Info.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Info.HeaderText = "Info";
-            this.Info.Name = "Info";
-            this.Info.ReadOnly = true;
-            // 
-            // IniFile
-            // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.IniFile.DefaultCellStyle = dataGridViewCellStyle4;
-            this.IniFile.HeaderText = "Ini File";
-            this.IniFile.Name = "IniFile";
-            this.IniFile.ReadOnly = true;
             // 
             // userTabPage
             // 
@@ -513,7 +476,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 369F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 374F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -921,6 +884,43 @@
             this.restartServer.UseVisualStyleBackColor = true;
             this.restartServer.Click += new System.EventHandler(this.restartServer_Click);
             // 
+            // Variable
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Variable.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Variable.HeaderText = "Variable";
+            this.Variable.Name = "Variable";
+            this.Variable.ReadOnly = true;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            // 
+            // Script
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Script.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Script.HeaderText = "Script Location";
+            this.Script.Name = "Script";
+            this.Script.ReadOnly = true;
+            // 
+            // IniFile
+            // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.IniFile.DefaultCellStyle = dataGridViewCellStyle3;
+            this.IniFile.HeaderText = "Ini File";
+            this.IniFile.Name = "IniFile";
+            this.IniFile.ReadOnly = true;
+            // 
+            // Info
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Info.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Info.HeaderText = "Info";
+            this.Info.Name = "Info";
+            this.Info.ReadOnly = true;
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -992,11 +992,6 @@
         private System.Windows.Forms.Label serverUptime;
         private System.Windows.Forms.CheckBox autoStartWithWindows;
         private System.Windows.Forms.CheckBox autoStartServer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Variable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Script;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Info;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
         private System.Windows.Forms.LinkLabel updateSoftware;
         private System.Windows.Forms.Label restartServerTimelbl;
         private System.Windows.Forms.TextBox restartServerTime;
@@ -1022,6 +1017,11 @@
         private System.Windows.Forms.TextBox launchParameters;
         private System.Windows.Forms.CheckBox saveConfigOnStart;
         private System.Windows.Forms.Button restartServer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Variable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Script;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Info;
     }
 }
 

@@ -302,7 +302,7 @@ namespace Dead_Matter_Server_Manager
             foreach (Settings s in settings)
             {
                 //add the settings to the DGV
-                configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.Tooltip, s.IniFile);
+                configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.IniFile, s.Tooltip);
             }
 
             configSettings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
