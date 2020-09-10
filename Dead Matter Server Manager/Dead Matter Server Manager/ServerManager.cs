@@ -538,15 +538,16 @@ namespace Dead_Matter_Server_Manager
             }
 
             FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
-            if (fileInfo.IsReadOnly)
+            if(File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
             {
-                fileInfo.IsReadOnly = false;
+                if (fileInfo.IsReadOnly)
+                {
+                    fileInfo.IsReadOnly = false;
+                }
+                File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
+                fileInfo.IsReadOnly = true;
             }
-            File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
-            fileInfo.IsReadOnly = true;
-
-
-
+            
             //engine.ini
             writeConfigs.Clear();
 
@@ -577,13 +578,17 @@ namespace Dead_Matter_Server_Manager
             }
 
             fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
-            if (fileInfo.IsReadOnly)
+            if(File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini"))
             {
-                fileInfo.IsReadOnly = false;
-            }
+                if (fileInfo.IsReadOnly)
+                {
+                    fileInfo.IsReadOnly = false;
+                }
 
-            File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini", defaultEngine);
-            fileInfo.IsReadOnly = true;
+                File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini", defaultEngine);
+                fileInfo.IsReadOnly = true;
+            }
+            
             if(!saveConfigOnStart.Checked)
             {
                 MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -626,13 +631,21 @@ namespace Dead_Matter_Server_Manager
             }
 
             //check for steam_appid.txt
-            if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
+            try
             {
-                File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
+                if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt"))
+                {
+                    File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
+                }
+
+                firstTimeServerStarted = true;
+                serverStarted = true;
+                sessionStarted = true;
             }
-            firstTimeServerStarted = true;
-            serverStarted = true;
-            sessionStarted = true;
+            catch
+            {
+                //folder/path not found
+            }
 
         }
 
