@@ -85,7 +85,7 @@
             this.statisticsTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.enableLogging = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.logTextBox = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -108,6 +108,7 @@
             this.restartServer = new System.Windows.Forms.Button();
             this.allTimeHighPlayersLbl = new System.Windows.Forms.Label();
             this.longestUptimeLbl = new System.Windows.Forms.Label();
+            this.openLog = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -709,7 +710,7 @@
             this.statisticsTabPage.Location = new System.Drawing.Point(4, 22);
             this.statisticsTabPage.Name = "statisticsTabPage";
             this.statisticsTabPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statisticsTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.statisticsTabPage.Size = new System.Drawing.Size(1131, 376);
             this.statisticsTabPage.TabIndex = 4;
             this.statisticsTabPage.Text = "Logs";
             // 
@@ -719,14 +720,15 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.textBox1, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.openLog, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.578948F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.42105F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1131, 380);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1131, 376);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // enableLogging
@@ -735,25 +737,26 @@
             this.enableLogging.Dock = System.Windows.Forms.DockStyle.Fill;
             this.enableLogging.Location = new System.Drawing.Point(3, 3);
             this.enableLogging.Name = "enableLogging";
-            this.enableLogging.Size = new System.Drawing.Size(559, 19);
+            this.enableLogging.Size = new System.Drawing.Size(559, 18);
             this.enableLogging.TabIndex = 0;
             this.enableLogging.Text = "Enable Logging";
             this.enableLogging.UseVisualStyleBackColor = true;
+            this.enableLogging.Click += new System.EventHandler(this.enableLogging_Click);
             // 
-            // textBox1
+            // logTextBox
             // 
-            this.textBox1.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel5.SetColumnSpan(this.textBox1, 2);
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(3, 28);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(1125, 349);
-            this.textBox1.TabIndex = 1;
+            this.logTextBox.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel5.SetColumnSpan(this.logTextBox, 2);
+            this.logTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logTextBox.ForeColor = System.Drawing.Color.White;
+            this.logTextBox.Location = new System.Drawing.Point(3, 27);
+            this.logTextBox.Multiline = true;
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ReadOnly = true;
+            this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.logTextBox.Size = new System.Drawing.Size(1125, 346);
+            this.logTextBox.TabIndex = 1;
             // 
             // linkLabel1
             // 
@@ -802,6 +805,7 @@
             this.autoStartWithWindows.Text = "Auto Start with Windows";
             this.autoStartWithWindows.UseVisualStyleBackColor = true;
             this.autoStartWithWindows.CheckedChanged += new System.EventHandler(this.autoStartWithWindows_CheckedChanged);
+            this.autoStartWithWindows.Click += new System.EventHandler(this.autoStartWithWindows_Click);
             // 
             // autoStartServer
             // 
@@ -814,7 +818,7 @@
             this.autoStartServer.TabIndex = 30;
             this.autoStartServer.Text = "Auto Start Server on Launch";
             this.autoStartServer.UseVisualStyleBackColor = true;
-            this.autoStartServer.CheckedChanged += new System.EventHandler(this.autoStartServer_CheckedChanged);
+            this.autoStartServer.Click += new System.EventHandler(this.autoStartServer_Click);
             // 
             // updateSoftware
             // 
@@ -860,6 +864,7 @@
             this.restartServerTimeOption.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restartServerTimeOption.UseVisualStyleBackColor = true;
             this.restartServerTimeOption.CheckedChanged += new System.EventHandler(this.restartServerTimeOption_CheckedChanged);
+            this.restartServerTimeOption.Click += new System.EventHandler(this.restartServerTimeOption_Click);
             // 
             // rememberSteamPass
             // 
@@ -871,7 +876,7 @@
             this.rememberSteamPass.TabIndex = 35;
             this.rememberSteamPass.Text = "Remember Steam Password";
             this.rememberSteamPass.UseVisualStyleBackColor = true;
-            this.rememberSteamPass.CheckedChanged += new System.EventHandler(this.rememberSteamPass_CheckedChanged);
+            this.rememberSteamPass.Click += new System.EventHandler(this.rememberSteamPass_Click);
             // 
             // onlinePlayers
             // 
@@ -943,6 +948,7 @@
             this.changeLaunchParams.Text = "Change Launch Parameters";
             this.changeLaunchParams.UseVisualStyleBackColor = true;
             this.changeLaunchParams.CheckedChanged += new System.EventHandler(this.changeLaunchParams_CheckedChanged);
+            this.changeLaunchParams.Click += new System.EventHandler(this.changeLaunchParams_Click);
             // 
             // label7
             // 
@@ -979,7 +985,7 @@
             this.saveConfigOnStart.Text = "Save Config on Start";
             this.saveConfigOnStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveConfigOnStart.UseVisualStyleBackColor = true;
-            this.saveConfigOnStart.CheckedChanged += new System.EventHandler(this.saveConfigOnStart_CheckedChanged);
+            this.saveConfigOnStart.Click += new System.EventHandler(this.saveConfigOnStart_Click);
             // 
             // restartServer
             // 
@@ -1013,6 +1019,19 @@
             this.longestUptimeLbl.TabIndex = 46;
             this.longestUptimeLbl.Text = "Longest Uptime\r\n00:00:00";
             this.longestUptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // openLog
+            // 
+            this.openLog.AutoSize = true;
+            this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openLog.Location = new System.Drawing.Point(568, 0);
+            this.openLog.Name = "openLog";
+            this.openLog.Size = new System.Drawing.Size(560, 24);
+            this.openLog.TabIndex = 2;
+            this.openLog.TabStop = true;
+            this.openLog.Text = "Open Log File";
+            this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
             // 
             // ServerManager
             // 
@@ -1121,9 +1140,10 @@
         private System.Windows.Forms.TabPage statisticsTabPage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.CheckBox enableLogging;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.Label allTimeHighPlayersLbl;
         private System.Windows.Forms.Label longestUptimeLbl;
+        private System.Windows.Forms.LinkLabel openLog;
     }
 }
 

@@ -25,6 +25,7 @@ namespace Dead_Matter_Server_Manager
         private static string configFilePath;
         private List<String> scripts = new List<String>();
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
+        delegate void AppendTextOnControl(TextBox controlToChange, string message);
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
         delegate string ReadControls(Control control);
         delegate void SetReadOnlyControl(Control control, bool enabled);
@@ -46,6 +47,8 @@ namespace Dead_Matter_Server_Manager
         private int killAttempts;
         private int allTimeHighPlayers;
         private TimeSpan longestUptime;
+        private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
+        TimeSpan uptime;
 
         public ServerManager()
         {
@@ -278,6 +281,12 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("EnableLogging"))
+                    {
+                        String[] temp = s.Split('=');
+                        enableLogging.Checked = Convert.ToBoolean(temp[1]);
                     }
                 }
             }
@@ -637,6 +646,7 @@ namespace Dead_Matter_Server_Manager
                 "LaunchParams=" + launchParameters.Text + Environment.NewLine +
                 "AllTimeHighPlayers=" + allTimeHighPlayers.ToString() + Environment.NewLine +
                 "LongestUptime=" + longestUptime.ToString("c") + Environment.NewLine +
+                "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
                 "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
                 "StartServerOnLaunch=" + autoStartServer.Checked + Environment.NewLine +
@@ -663,6 +673,8 @@ namespace Dead_Matter_Server_Manager
                 {
                     File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
                 }
+
+                WriteLog("SERVER START REQUEST SENT BY USER");
 
                 firstTimeServerStarted = true;
                 serverStarted = true;
@@ -709,7 +721,7 @@ namespace Dead_Matter_Server_Manager
 
                         SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
 
-                        TimeSpan uptime = DateTime.Now - serverStartTime;
+                        uptime = DateTime.Now - serverStartTime;
 
                         SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
@@ -743,11 +755,15 @@ namespace Dead_Matter_Server_Manager
                             longestUptime = uptime;
                         }
 
-                        if(serverInfo.Players > allTimeHighPlayers)
+                        if(serverInfo != null)
                         {
-                            allTimeHighPlayers = serverInfo.Players;
-                            SaveData();
+                            if (serverInfo.Players > allTimeHighPlayers)
+                            {
+                                allTimeHighPlayers = serverInfo.Players;
+                                SaveData();
+                            }
                         }
+                        
 
                         SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
                         SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
@@ -788,12 +804,26 @@ namespace Dead_Matter_Server_Manager
                             killSent = true;
                             killAttempts += 1;
                             killCommandSentAt = DateTime.Now;
+
+                            if(Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
+                            {
+                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem));
+                            }
+
+                            if(restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
+                            {
+                                WriteLog("SERVER UPTIME LIMIT REACHED");
+                            }
+
+                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"));
                         }
                         else
                         {
                             if(killSent && timeSinceLastKill.Minutes >= 1)
                             {
                                 dmServerShipping[0].CloseMainWindow();
+
+                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated");
                             }
                         }
                     }
@@ -826,12 +856,25 @@ namespace Dead_Matter_Server_Manager
                         else
                         {
                             SetText(startServer, "Start Server", Color.Black, false);
+
+                            int players = 0;
+                            if(playerInfo != null)
+                            {
+                                players = serverInfo.Players;
+                            }
+
+                            if(uptime.Ticks != 0)
+                            {
+                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players);
+                            }
+
                             Process dmServerExe = new Process();
                             dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
                             dmServerExe.StartInfo.Arguments = launchParameters.Text;
                             dmServerExe.Start();
                             Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
+
                             SaveData();
 
                             if(sessionStarted)
@@ -879,6 +922,19 @@ namespace Dead_Matter_Server_Manager
             else
             {
                 control.Enabled = enabled;
+            }
+        }
+
+        public void AppendText(TextBox controlToChange, string message)
+        {
+            if (controlToChange.InvokeRequired)
+            {
+                AppendTextOnControl DDD = new AppendTextOnControl(AppendText);
+                controlToChange.Invoke(DDD, controlToChange, message);
+            }
+            else
+            {
+                controlToChange.AppendText(Environment.NewLine + message);
             }
         }
 
@@ -1015,6 +1071,7 @@ namespace Dead_Matter_Server_Manager
             serverUptime.Text = "00:00:00";
             sessionStarted = false;
             restartsThisSession = 0;
+            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER");
             SaveData();
         }
 
@@ -1044,13 +1101,6 @@ namespace Dead_Matter_Server_Manager
                     key.DeleteValue("Dead Matter Server Manager", false);
                 }
             }
-
-            SaveData();
-        }
-
-        private void autoStartServer_CheckedChanged(object sender, EventArgs e)
-        {
-            SaveData();
         }
 
         private void updateSoftware_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1083,8 +1133,6 @@ namespace Dead_Matter_Server_Manager
             {
                 restartServerTime.Enabled = false;
             }
-
-            //SaveData();
         }
 
         private void restartServerTime_Leave(object sender, EventArgs e)
@@ -1434,16 +1482,9 @@ namespace Dead_Matter_Server_Manager
                 launchParameters.ReadOnly = true;
                 launchParameters.Text = "-USEALLAVAILABLECORES -log";
             }
-
-            SaveData();
         }
 
         private void launchParameters_Leave(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void saveConfigOnStart_CheckedChanged(object sender, EventArgs e)
         {
             SaveData();
         }
@@ -1456,6 +1497,72 @@ namespace Dead_Matter_Server_Manager
             {
                 int processID = dmServer[0].Id;
                 Process.Start("windows-kill.exe", "-SIGINT " + processID);
+            }
+        }
+
+        private void WriteLog(string logText)
+        {
+            if(enableLogging.Checked)
+            {
+                if(!File.Exists(logFilePath))
+                {
+                    var file = File.Create(logFilePath);
+                    file.Close();
+                }
+
+                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText);
+                
+                using (StreamWriter sw = File.AppendText(logFilePath))
+                {
+                    sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
+                }
+            }
+        }
+
+        private void enableLogging_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void rememberSteamPass_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void changeLaunchParams_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void restartServerTimeOption_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void saveConfigOnStart_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void autoStartWithWindows_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void autoStartServer_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void openLog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if(File.Exists(logFilePath))
+            {
+                Process.Start(logFilePath);
+            }
+            else
+            {
+                MessageBox.Show("No log exists yet.  Run with logging enabled to create the file", "No Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
