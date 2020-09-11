@@ -51,7 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.maxServerMemory = new System.Windows.Forms.TextBox();
             this.startServer = new System.Windows.Forms.Button();
-            this.memoryUsed = new System.Windows.Forms.Label();
             this.stopServer = new System.Windows.Forms.Button();
             this.serverStatus = new System.Windows.Forms.Label();
             this.memoryUsedProgressBar = new System.Windows.Forms.ProgressBar();
@@ -86,6 +85,7 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.enableLogging = new System.Windows.Forms.CheckBox();
             this.logTextBox = new System.Windows.Forms.TextBox();
+            this.openLog = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -96,19 +96,19 @@
             this.restartServerTime = new System.Windows.Forms.TextBox();
             this.restartServerTimeOption = new System.Windows.Forms.CheckBox();
             this.rememberSteamPass = new System.Windows.Forms.CheckBox();
-            this.onlinePlayers = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.restartsThisSessionTxt = new System.Windows.Forms.Label();
-            this.lastRestartTxt = new System.Windows.Forms.Label();
-            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
             this.changeLaunchParams = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.launchParameters = new System.Windows.Forms.TextBox();
             this.saveConfigOnStart = new System.Windows.Forms.CheckBox();
             this.restartServer = new System.Windows.Forms.Button();
+            this.checkUpdateOnStart = new System.Windows.Forms.CheckBox();
+            this.onlinePlayers = new System.Windows.Forms.Label();
+            this.restartsThisSessionTxt = new System.Windows.Forms.Label();
+            this.lastRestartTxt = new System.Windows.Forms.Label();
+            this.memoryUsed = new System.Windows.Forms.Label();
             this.allTimeHighPlayersLbl = new System.Windows.Forms.Label();
             this.longestUptimeLbl = new System.Windows.Forms.Label();
-            this.openLog = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -380,17 +380,6 @@
             this.startServer.UseVisualStyleBackColor = true;
             this.startServer.Click += new System.EventHandler(this.startServer_Click);
             // 
-            // memoryUsed
-            // 
-            this.memoryUsed.AutoSize = true;
-            this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsed.Location = new System.Drawing.Point(362, 516);
-            this.memoryUsed.Name = "memoryUsed";
-            this.memoryUsed.Size = new System.Drawing.Size(143, 30);
-            this.memoryUsed.TabIndex = 21;
-            this.memoryUsed.Text = "memused";
-            this.memoryUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // stopServer
             // 
             this.stopServer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -512,7 +501,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 376);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -530,8 +519,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 374F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 374);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 370);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -543,7 +532,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 368);
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 364);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -560,7 +549,7 @@
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminDGV.Location = new System.Drawing.Point(378, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 368);
+            this.adminDGV.Size = new System.Drawing.Size(369, 364);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -577,7 +566,7 @@
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 368);
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 364);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -591,7 +580,7 @@
             this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
             this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
             this.serverTagsTabPage.Name = "serverTagsTabPage";
-            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 376);
             this.serverTagsTabPage.TabIndex = 2;
             this.serverTagsTabPage.Text = "Server Tags";
             // 
@@ -608,7 +597,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 380);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 376);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // serverTagsDGV
@@ -620,7 +609,7 @@
             this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
             this.serverTagsDGV.Name = "serverTagsDGV";
             this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
-            this.serverTagsDGV.Size = new System.Drawing.Size(842, 374);
+            this.serverTagsDGV.Size = new System.Drawing.Size(842, 370);
             this.serverTagsDGV.TabIndex = 0;
             // 
             // serverTags
@@ -634,7 +623,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(851, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 190);
+            this.label6.Size = new System.Drawing.Size(277, 188);
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
@@ -644,7 +633,7 @@
             this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
             this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
             this.playersOnlineTabPage.Name = "playersOnlineTabPage";
-            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 380);
+            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 376);
             this.playersOnlineTabPage.TabIndex = 3;
             this.playersOnlineTabPage.Text = "Online Players";
             // 
@@ -661,7 +650,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 380);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 376);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // playersOnlineDGV
@@ -678,7 +667,7 @@
             this.playersOnlineDGV.Name = "playersOnlineDGV";
             this.playersOnlineDGV.ReadOnly = true;
             this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
-            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 374);
+            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 370);
             this.playersOnlineDGV.TabIndex = 0;
             // 
             // playerName
@@ -757,6 +746,19 @@
             this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logTextBox.Size = new System.Drawing.Size(1125, 346);
             this.logTextBox.TabIndex = 1;
+            // 
+            // openLog
+            // 
+            this.openLog.AutoSize = true;
+            this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openLog.Location = new System.Drawing.Point(568, 0);
+            this.openLog.Name = "openLog";
+            this.openLog.Size = new System.Drawing.Size(560, 24);
+            this.openLog.TabIndex = 2;
+            this.openLog.TabStop = true;
+            this.openLog.Text = "Open Log File";
+            this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
             // 
             // linkLabel1
             // 
@@ -878,17 +880,6 @@
             this.rememberSteamPass.UseVisualStyleBackColor = true;
             this.rememberSteamPass.Click += new System.EventHandler(this.rememberSteamPass_Click);
             // 
-            // onlinePlayers
-            // 
-            this.onlinePlayers.AutoSize = true;
-            this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlinePlayers.Location = new System.Drawing.Point(511, 516);
-            this.onlinePlayers.Name = "onlinePlayers";
-            this.onlinePlayers.Size = new System.Drawing.Size(148, 30);
-            this.onlinePlayers.TabIndex = 36;
-            this.onlinePlayers.Text = "Online Players\r\n0/0";
-            this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
@@ -901,40 +892,6 @@
             this.linkLabel2.Text = "Change log";
             this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
-            // 
-            // restartsThisSessionTxt
-            // 
-            this.restartsThisSessionTxt.AutoSize = true;
-            this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartsThisSessionTxt.Location = new System.Drawing.Point(362, 546);
-            this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
-            this.restartsThisSessionTxt.Size = new System.Drawing.Size(143, 30);
-            this.restartsThisSessionTxt.TabIndex = 38;
-            this.restartsThisSessionTxt.Text = "Restarts This Session\r\n0";
-            this.restartsThisSessionTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lastRestartTxt
-            // 
-            this.lastRestartTxt.AutoSize = true;
-            this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lastRestartTxt.Location = new System.Drawing.Point(511, 546);
-            this.lastRestartTxt.Name = "lastRestartTxt";
-            this.lastRestartTxt.Size = new System.Drawing.Size(148, 30);
-            this.lastRestartTxt.TabIndex = 39;
-            this.lastRestartTxt.Text = "Last Restart\r\n00/00/0000 00:00:00";
-            this.lastRestartTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // checkUpdateOnStart
-            // 
-            this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(807, 639);
-            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
-            this.checkUpdateOnStart.Size = new System.Drawing.Size(141, 17);
-            this.checkUpdateOnStart.TabIndex = 15;
-            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
-            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
-            this.checkUpdateOnStart.Visible = false;
-            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
             // 
             // changeLaunchParams
             // 
@@ -998,6 +955,62 @@
             this.restartServer.UseVisualStyleBackColor = true;
             this.restartServer.Click += new System.EventHandler(this.restartServer_Click);
             // 
+            // checkUpdateOnStart
+            // 
+            this.checkUpdateOnStart.AutoSize = true;
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(807, 639);
+            this.checkUpdateOnStart.Name = "checkUpdateOnStart";
+            this.checkUpdateOnStart.Size = new System.Drawing.Size(141, 17);
+            this.checkUpdateOnStart.TabIndex = 15;
+            this.checkUpdateOnStart.Text = "Check for Update on Server Start";
+            this.checkUpdateOnStart.UseVisualStyleBackColor = true;
+            this.checkUpdateOnStart.Visible = false;
+            this.checkUpdateOnStart.CheckedChanged += new System.EventHandler(this.checkUpdateOnStart_CheckedChanged);
+            // 
+            // onlinePlayers
+            // 
+            this.onlinePlayers.AutoSize = true;
+            this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.onlinePlayers.Location = new System.Drawing.Point(511, 516);
+            this.onlinePlayers.Name = "onlinePlayers";
+            this.onlinePlayers.Size = new System.Drawing.Size(148, 30);
+            this.onlinePlayers.TabIndex = 36;
+            this.onlinePlayers.Text = "Online Players\r\n0/0";
+            this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // restartsThisSessionTxt
+            // 
+            this.restartsThisSessionTxt.AutoSize = true;
+            this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restartsThisSessionTxt.Location = new System.Drawing.Point(362, 546);
+            this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
+            this.restartsThisSessionTxt.Size = new System.Drawing.Size(143, 30);
+            this.restartsThisSessionTxt.TabIndex = 38;
+            this.restartsThisSessionTxt.Text = "Restarts This Session\r\n0";
+            this.restartsThisSessionTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lastRestartTxt
+            // 
+            this.lastRestartTxt.AutoSize = true;
+            this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lastRestartTxt.Location = new System.Drawing.Point(511, 546);
+            this.lastRestartTxt.Name = "lastRestartTxt";
+            this.lastRestartTxt.Size = new System.Drawing.Size(148, 30);
+            this.lastRestartTxt.TabIndex = 39;
+            this.lastRestartTxt.Text = "Last Restart\r\n00/00/0000 00:00:00";
+            this.lastRestartTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // memoryUsed
+            // 
+            this.memoryUsed.AutoSize = true;
+            this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryUsed.Location = new System.Drawing.Point(362, 516);
+            this.memoryUsed.Name = "memoryUsed";
+            this.memoryUsed.Size = new System.Drawing.Size(143, 30);
+            this.memoryUsed.TabIndex = 21;
+            this.memoryUsed.Text = "memused";
+            this.memoryUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // allTimeHighPlayersLbl
             // 
             this.allTimeHighPlayersLbl.AutoSize = true;
@@ -1019,19 +1032,6 @@
             this.longestUptimeLbl.TabIndex = 46;
             this.longestUptimeLbl.Text = "Longest Uptime\r\n00:00:00";
             this.longestUptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // openLog
-            // 
-            this.openLog.AutoSize = true;
-            this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openLog.Location = new System.Drawing.Point(568, 0);
-            this.openLog.Name = "openLog";
-            this.openLog.Size = new System.Drawing.Size(560, 24);
-            this.openLog.TabIndex = 2;
-            this.openLog.TabStop = true;
-            this.openLog.Text = "Open Log File";
-            this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
             // 
             // ServerManager
             // 

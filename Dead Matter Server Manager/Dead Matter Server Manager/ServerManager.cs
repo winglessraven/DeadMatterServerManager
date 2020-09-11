@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -8,13 +7,11 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using Microsoft.Win32;
 
 namespace Dead_Matter_Server_Manager
@@ -376,6 +373,11 @@ namespace Dead_Matter_Server_Manager
                 return;
             }
 
+            if(!Directory.Exists(steamCMDPath.Text))
+            {
+                Directory.CreateDirectory(steamCMDPath.Text);
+            }
+
             WebClient downloader = new WebClient();
             downloader.DownloadFile("https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip", String.Join("\\", steamCMDPath.Text, "steamcmd.zip"));
             using (ZipArchive zipFile = ZipFile.OpenRead(String.Join("\\", steamCMDPath.Text, "steamcmd.zip")))
@@ -406,6 +408,20 @@ namespace Dead_Matter_Server_Manager
                 MessageBox.Show("Enter Steam password first!", "No Steam Password", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if(!File.Exists(steamCMDPath.Text + "\\steamcmd.exe"))
+            {
+                DialogResult result = MessageBox.Show("SteamCMD not found - get it now?", "No SteamCMD", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(result == DialogResult.Yes)
+                {
+                    updateSteamCMD_Click(this, null);
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             Process steamCMD = new Process();
             steamCMD.StartInfo.FileName = steamCMDPath.Text + "\\steamcmd.exe";
             steamCMD.StartInfo.Arguments = "+login " + steamID.Text + " " + steamPassword.Text + @" +force_install_dir """ + serverFolderPath.Text + @""" +app_update 1110990 +quit";
