@@ -1073,9 +1073,9 @@
             this.logTextBox.Location = new System.Drawing.Point(3, 33);
             this.logTextBox.Name = "logTextBox";
             this.logTextBox.ReadOnly = true;
-            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 8);
+            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
             this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(969, 315);
+            this.logTextBox.Size = new System.Drawing.Size(969, 340);
             this.logTextBox.TabIndex = 3;
             this.logTextBox.Text = "";
             // 
@@ -1215,7 +1215,7 @@
             this.webhookURL.Name = "webhookURL";
             this.webhookURL.Size = new System.Drawing.Size(856, 20);
             this.webhookURL.TabIndex = 48;
-            this.webhookURL.Text = "[URL]";
+            this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
             // 
             // discordTabPage

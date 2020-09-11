@@ -26,7 +26,6 @@ C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\De
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Numerics.Vectors.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Threading.Tasks.Extensions.xml
-C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Core.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Rest.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Webhook.dll
