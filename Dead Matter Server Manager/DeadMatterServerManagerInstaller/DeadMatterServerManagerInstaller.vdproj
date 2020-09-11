@@ -2429,11 +2429,6 @@
             "AssemblyAsmDisplayName" = "8:Discord.Net.Webhook, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1C25A73BFE594B581DB504C81A60A85F"
-                    {
-                    "Name" = "8:Discord.Net.Webhook.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Discord.Net.Webhook.dll"
             "TargetName" = "8:"
@@ -4856,11 +4851,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B515D60791E5CE7E91E03213175BBBB9"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -6311,15 +6301,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Dead Matter Server Manager"
-        "ProductCode" = "8:{D356C2A4-1C9E-4DB6-A6F9-8374A1896565}"
-        "PackageCode" = "8:{08D8A95F-BD1B-448E-A275-1B4547FE9505}"
+        "ProductCode" = "8:{7D10D51D-FCF3-483F-B016-AC7E49B433E3}"
+        "PackageCode" = "8:{7C2EC14B-2D4C-4DC5-AF17-BBE04BA86F90}"
         "UpgradeCode" = "8:{BC345328-E944-4F2F-9559-E95043070B11}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.8.3"
+        "ProductVersion" = "8:1.8.4"
         "Manufacturer" = "8:winglessraven"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

@@ -28,7 +28,6 @@ C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\De
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Core.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Rest.dll
-C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Webhook.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Newtonsoft.Json.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Collections.Immutable.dll
@@ -36,10 +35,16 @@ C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\De
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Linq.Async.dll
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Core.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Rest.xml
-C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Discord.Net.Webhook.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Newtonsoft.Json.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Collections.Immutable.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Interactive.Async.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Linq.Async.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\discord-webhook-client.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\notifique-me.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Polly.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Net.Http.Formatting.dll
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Polly.pdb
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\Polly.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Net.Http.Formatting.xml

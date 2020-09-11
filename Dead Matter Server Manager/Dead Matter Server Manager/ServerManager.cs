@@ -12,8 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Discord;
-using Discord.Webhook;
+using JNogueira.Discord.Webhook.Client;
 using Microsoft.Win32;
 using Color = System.Drawing.Color;
 
@@ -1814,12 +1813,12 @@ namespace Dead_Matter_Server_Manager
             {
                 try
                 {
-                    using (var client = new DiscordWebhookClient(webhookURL.Text))
-                    {
-                        await client.SendMessageAsync(text: message);
-                    }
+                    var client = new DiscordWebhookClient(webhookURL.Text);
+                    var messageTxt = new DiscordMessage(message);
+                    await client.SendToDiscord(messageTxt);
+                    
                 }
-                catch
+                catch(Exception ex)
                 {
                     //fail!!
                 }
