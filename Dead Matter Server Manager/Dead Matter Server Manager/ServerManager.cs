@@ -12,7 +12,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Discord;
+using Discord.Webhook;
 using Microsoft.Win32;
+using Color = System.Drawing.Color;
 
 namespace Dead_Matter_Server_Manager
 {
@@ -22,7 +25,7 @@ namespace Dead_Matter_Server_Manager
         private static string configFilePath;
         private List<String> scripts = new List<String>();
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
-        delegate void AppendTextOnControl(RichTextBox controlToChange, string message, string type);
+        delegate void AppendTextOnControl(RichTextBox controlToChange, string message, string type, string discordColour);
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
         delegate string ReadControls(Control control);
         delegate void SetReadOnlyControl(Control control, bool enabled);
@@ -316,6 +319,54 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         serverCrashColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                    }
+
+                    if (s.StartsWith("WebhookURL"))
+                    {
+                        String[] temp = s.Split('=');
+                        webhookURL.Text = temp[1];
+                    }
+
+                    if (s.StartsWith("DiscordIntegration"))
+                    {
+                        String[] temp = s.Split('=');
+                        discordWebHook.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("NotifyOnMemoryLimit"))
+                    {
+                        String[] temp = s.Split('=');
+                        notifyOnMemoryLimit.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("NotifiyOnTimedRestart"))
+                    {
+                        String[] temp = s.Split('=');
+                        notifyOnTimedRestart.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("NotifyOnCrash"))
+                    {
+                        String[] temp = s.Split('=');
+                        notifiyOnCrash.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("DiscordTxtMemoryLimit"))
+                    {
+                        String[] temp = s.Split('=');
+                        memoryLimitDiscordTxt.Text = temp[1];
+                    }
+
+                    if (s.StartsWith("DiscordTxtCrash"))
+                    {
+                        String[] temp = s.Split('=');
+                        serverCrashedDiscordTxt.Text = temp[1];
+                    }
+
+                    if (s.StartsWith("DiscordTxtMemoryLimit"))
+                    {
+                        String[] temp = s.Split('=');
+                        memoryLimitDiscordTxt.Text = temp[1];
                     }
                 }
             }
@@ -700,6 +751,14 @@ namespace Dead_Matter_Server_Manager
                 "RestartTimerColour=" + ColorTranslator.ToHtml(timedRestartColour.BackColor) + Environment.NewLine +
                 "ServerCrashColour=" + ColorTranslator.ToHtml(serverCrashColour.BackColor) + Environment.NewLine +
                 "BackgroundColour=" + ColorTranslator.ToHtml(backgroundColour.BackColor) + Environment.NewLine +
+                "WebhookURL=" + webhookURL.Text + Environment.NewLine +
+                "DiscordIntegration=" + discordWebHook.Checked + Environment.NewLine +
+                "NotifyOnMemoryLimit=" + notifyOnMemoryLimit.Checked + Environment.NewLine +
+                "NotifiyOnTimedRestart=" + notifyOnTimedRestart.Checked + Environment.NewLine +
+                "NotifyOnCrash=" + notifiyOnCrash.Checked + Environment.NewLine +
+                "DiscordTxtMemoryLimit=" + memoryLimitDiscordTxt.Text + Environment.NewLine +
+                "DiscordTxtCrash=" + serverCrashedDiscordTxt.Text + Environment.NewLine +
+                "DiscordTxtMemoryLimit=" + memoryLimitDiscordTxt.Text + Environment.NewLine +
                 "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
                 "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
@@ -730,7 +789,7 @@ namespace Dead_Matter_Server_Manager
                     File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
                 }
 
-                WriteLog("SERVER START REQUEST SENT BY USER","INFO");
+                WriteLog("SERVER START REQUEST SENT BY USER","INFO",null);
 
                 firstTimeServerStarted = true;
                 serverStarted = true;
@@ -863,15 +922,25 @@ namespace Dead_Matter_Server_Manager
 
                             if(Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
                             {
-                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem),"MEM LIMIT");
+                                string tmp = null;
+                                if(notifyOnMemoryLimit.Checked)
+                                {
+                                    tmp = memoryLimitDiscordTxt.Text;
+                                }
+                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem),"MEM LIMIT",tmp);
                             }
 
                             if(restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
                             {
-                                WriteLog("SERVER UPTIME LIMIT REACHED","UPTIME LIMIT");
+                                string tmp = null;
+                                if(notifyOnTimedRestart.Checked)
+                                {
+                                    tmp = timedRestartDiscordTxt.Text;
+                                }
+                                WriteLog("SERVER UPTIME LIMIT REACHED","UPTIME LIMIT",tmp);
                             }
 
-                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"),"INFO");
+                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"),"INFO",null);
                             plannedShutdown = true;
                         }
                         else
@@ -880,7 +949,7 @@ namespace Dead_Matter_Server_Manager
                             {
                                 dmServerShipping[0].CloseMainWindow();
 
-                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated","ERROR");
+                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated","ERROR",null);
                             }
                         }
                     }
@@ -922,11 +991,16 @@ namespace Dead_Matter_Server_Manager
 
                             if(uptime.Ticks != 0 && !plannedShutdown)
                             {
-                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players,"ERROR");
+                                string tmp = null;
+                                if(notifiyOnCrash.Checked)
+                                {
+                                    tmp = serverCrashedDiscordTxt.Text;
+                                }
+                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players,"ERROR",tmp);
                             }
                             if(uptime.Ticks != 0 && plannedShutdown)
                             {
-                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO");
+                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO",null);
                             }
 
                             Process dmServerExe = new Process();
@@ -988,12 +1062,12 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void AppendText(RichTextBox controlToChange, string message,string type)
+        public void AppendText(RichTextBox controlToChange, string message,string type,string discordMessage)
         {
             if (controlToChange.InvokeRequired)
             {
                 AppendTextOnControl DDD = new AppendTextOnControl(AppendText);
-                controlToChange.Invoke(DDD, controlToChange, message, type);
+                controlToChange.Invoke(DDD, controlToChange, message, type,discordMessage);
             }
             else
             {
@@ -1022,6 +1096,7 @@ namespace Dead_Matter_Server_Manager
 
                 controlToChange.AppendText(Environment.NewLine + message);
                 controlToChange.SelectionColor = controlToChange.ForeColor;
+                SendDiscordWebHook(discordMessage);
             }
         }
 
@@ -1158,7 +1233,7 @@ namespace Dead_Matter_Server_Manager
             serverUptime.Text = "00:00:00";
             sessionStarted = false;
             restartsThisSession = 0;
-            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER","INFO");
+            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER","INFO",null);
             SaveData();
         }
 
@@ -1587,7 +1662,7 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void WriteLog(string logText,string type)
+        private void WriteLog(string logText,string type, string discordMessage)
         {
             if(enableLogging.Checked)
             {
@@ -1597,7 +1672,7 @@ namespace Dead_Matter_Server_Manager
                     file.Close();
                 }
 
-                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText,type);
+                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText,type,discordMessage);
                 
                 using (StreamWriter sw = File.AppendText(logFilePath))
                 {
@@ -1702,6 +1777,100 @@ namespace Dead_Matter_Server_Manager
                 serverCrashColour.BackColor = colorDialog1.Color;
             }
 
+            SaveData();
+        }
+
+        private void discordWebHook_CheckedChanged(object sender, EventArgs e)
+        {
+            if(discordWebHook.Checked)
+            {
+                webhookURL.Enabled = true;
+            }
+            else
+            {
+                webhookURL.Enabled = false;
+                webhookURL.Text = "";
+            }
+        }
+
+        private void discordWebHook_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private async void SendDiscordWebHook(string message)
+        {
+            if(message != null)
+            {
+                try
+                {
+                    using (var client = new DiscordWebhookClient(webhookURL.Text))
+                    {
+                        await client.SendMessageAsync(text: message);
+                    }
+                }
+                catch
+                {
+                    //fail!!
+                }
+            }
+            
+        }
+
+        private void webhookURL_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void notifyOnMemoryLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            if(notifyOnMemoryLimit.Checked)
+            {
+                memoryLimitDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                memoryLimitDiscordTxt.Enabled = false;
+            }
+            
+        }
+
+        private void notifyOnTimedRestart_CheckedChanged(object sender, EventArgs e)
+        {
+            if(notifyOnTimedRestart.Checked)
+            {
+                timedRestartDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                timedRestartDiscordTxt.Enabled = false;
+            }
+        }
+
+        private void notifiyOnCrash_CheckedChanged(object sender, EventArgs e)
+        {
+            if(notifiyOnCrash.Checked)
+            {
+                serverCrashedDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                serverCrashedDiscordTxt.Enabled = false;
+            }
+        }
+
+        private void notifyOnMemoryLimit_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void notifyOnTimedRestart_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void notifiyOnCrash_Click(object sender, EventArgs e)
+        {
             SaveData();
         }
     }
