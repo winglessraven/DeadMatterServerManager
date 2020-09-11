@@ -42,3 +42,4 @@ C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\De
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Collections.Immutable.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Interactive.Async.xml
 C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\bin\x64\Debug\System.Linq.Async.xml
+C:\Users\Dave\Source\Repos\DeadMatterServerManager\Dead Matter Server Manager\Dead Matter Server Manager\obj\x64\Debug\Dead Matter Server Manager.csprojAssemblyReference.cache

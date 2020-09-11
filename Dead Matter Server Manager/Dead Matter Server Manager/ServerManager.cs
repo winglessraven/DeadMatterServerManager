@@ -363,11 +363,20 @@ namespace Dead_Matter_Server_Manager
                         serverCrashedDiscordTxt.Text = temp[1];
                     }
 
-                    if (s.StartsWith("DiscordTxtMemoryLimit"))
+                    if (s.StartsWith("DiscordTxtTimedRestart"))
                     {
                         String[] temp = s.Split('=');
-                        memoryLimitDiscordTxt.Text = temp[1];
+                        timedRestartDiscordTxt.Text = temp[1];
                     }
+
+                    if (s.StartsWith("DiscordWebhookTest"))
+                    {
+                        String[] temp = s.Split('=');
+                        webhookTestMsg.Text = temp[1];
+                    }
+
+
+                    
                 }
             }
             else
@@ -758,7 +767,8 @@ namespace Dead_Matter_Server_Manager
                 "NotifyOnCrash=" + notifiyOnCrash.Checked + Environment.NewLine +
                 "DiscordTxtMemoryLimit=" + memoryLimitDiscordTxt.Text + Environment.NewLine +
                 "DiscordTxtCrash=" + serverCrashedDiscordTxt.Text + Environment.NewLine +
-                "DiscordTxtMemoryLimit=" + memoryLimitDiscordTxt.Text + Environment.NewLine +
+                "DiscordTxtTimedRestart=" + timedRestartDiscordTxt.Text + Environment.NewLine +
+                "DiscordWebhookTest=" + webhookTestMsg.Text + Environment.NewLine +
                 "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
                 "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
@@ -1870,6 +1880,32 @@ namespace Dead_Matter_Server_Manager
         }
 
         private void notifiyOnCrash_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void testWebhook_Click(object sender, EventArgs e)
+        {
+            SaveData();
+            SendDiscordWebHook(webhookTestMsg.Text);
+        }
+
+        private void webhookTestMsg_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void memoryLimitDiscordTxt_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void timedRestartDiscordTxt_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void serverCrashedDiscordTxt_Leave(object sender, EventArgs e)
         {
             SaveData();
         }

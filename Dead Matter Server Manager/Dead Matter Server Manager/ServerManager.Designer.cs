@@ -130,6 +130,8 @@
             this.memoryLimitDiscordTxt = new System.Windows.Forms.TextBox();
             this.timedRestartDiscordTxt = new System.Windows.Forms.TextBox();
             this.serverCrashedDiscordTxt = new System.Windows.Forms.TextBox();
+            this.testWebhook = new System.Windows.Forms.Button();
+            this.webhookTestMsg = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -1244,6 +1246,8 @@
             this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 3);
             this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 6);
+            this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 6);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -1307,6 +1311,7 @@
             this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(856, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
+            this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
             // 
             // timedRestartDiscordTxt
             // 
@@ -1317,6 +1322,7 @@
             this.timedRestartDiscordTxt.Size = new System.Drawing.Size(856, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
+            this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
             // 
             // serverCrashedDiscordTxt
             // 
@@ -1327,6 +1333,28 @@
             this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(856, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
+            this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
+            // 
+            // testWebhook
+            // 
+            this.testWebhook.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testWebhook.Location = new System.Drawing.Point(3, 153);
+            this.testWebhook.Name = "testWebhook";
+            this.testWebhook.Size = new System.Drawing.Size(202, 19);
+            this.testWebhook.TabIndex = 55;
+            this.testWebhook.Text = "Test Webhook";
+            this.testWebhook.UseVisualStyleBackColor = true;
+            this.testWebhook.Click += new System.EventHandler(this.testWebhook_Click);
+            // 
+            // webhookTestMsg
+            // 
+            this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webhookTestMsg.Location = new System.Drawing.Point(211, 153);
+            this.webhookTestMsg.Name = "webhookTestMsg";
+            this.webhookTestMsg.Size = new System.Drawing.Size(856, 20);
+            this.webhookTestMsg.TabIndex = 56;
+            this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
+            this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
             // 
             // ServerManager
             // 
@@ -1463,6 +1491,8 @@
         private System.Windows.Forms.TextBox memoryLimitDiscordTxt;
         private System.Windows.Forms.TextBox timedRestartDiscordTxt;
         private System.Windows.Forms.TextBox serverCrashedDiscordTxt;
+        private System.Windows.Forms.Button testWebhook;
+        private System.Windows.Forms.TextBox webhookTestMsg;
     }
 }
 
