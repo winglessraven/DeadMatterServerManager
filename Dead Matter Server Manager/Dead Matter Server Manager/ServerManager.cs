@@ -22,7 +22,7 @@ namespace Dead_Matter_Server_Manager
         private static string configFilePath;
         private List<String> scripts = new List<String>();
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
-        delegate void AppendTextOnControl(TextBox controlToChange, string message);
+        delegate void AppendTextOnControl(RichTextBox controlToChange, string message, string type);
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
         delegate string ReadControls(Control control);
         delegate void SetReadOnlyControl(Control control, bool enabled);
@@ -46,6 +46,7 @@ namespace Dead_Matter_Server_Manager
         private TimeSpan longestUptime;
         private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
         TimeSpan uptime;
+        bool plannedShutdown;
 
         public ServerManager()
         {
@@ -284,6 +285,37 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         enableLogging.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("BackgroundColour"))
+                    {
+                        String[] temp = s.Split('=');
+                        backgroundColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        logTextBox.BackColor = ColorTranslator.FromHtml(temp[1]);
+                    }
+
+                    if (s.StartsWith("UserEventColour"))
+                    {
+                        String[] temp = s.Split('=');
+                        userEventColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                    }
+
+                    if (s.StartsWith("MemoryLimitColour"))
+                    {
+                        String[] temp = s.Split('=');
+                        memoryLimitColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                    }
+
+                    if (s.StartsWith("RestartTimerColour"))
+                    {
+                        String[] temp = s.Split('=');
+                        timedRestartColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                    }
+
+                    if (s.StartsWith("ServerCrashColour"))
+                    {
+                        String[] temp = s.Split('=');
+                        serverCrashColour.BackColor = ColorTranslator.FromHtml(temp[1]);
                     }
                 }
             }
@@ -662,6 +694,12 @@ namespace Dead_Matter_Server_Manager
                 "LaunchParams=" + launchParameters.Text + Environment.NewLine +
                 "AllTimeHighPlayers=" + allTimeHighPlayers.ToString() + Environment.NewLine +
                 "LongestUptime=" + longestUptime.ToString("c") + Environment.NewLine +
+                "BackgroundColour=" + ColorTranslator.ToHtml(backgroundColour.BackColor) + Environment.NewLine +
+                "UserEventColour=" + ColorTranslator.ToHtml(userEventColour.BackColor) + Environment.NewLine +
+                "MemoryLimitColour=" + ColorTranslator.ToHtml(memoryLimitColour.BackColor) + Environment.NewLine +
+                "RestartTimerColour=" + ColorTranslator.ToHtml(timedRestartColour.BackColor) + Environment.NewLine +
+                "ServerCrashColour=" + ColorTranslator.ToHtml(serverCrashColour.BackColor) + Environment.NewLine +
+                "BackgroundColour=" + ColorTranslator.ToHtml(backgroundColour.BackColor) + Environment.NewLine +
                 "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
                 "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
@@ -682,6 +720,8 @@ namespace Dead_Matter_Server_Manager
                 saveConfig_Click(this, null);
             }
 
+            uptime = new TimeSpan(0);
+
             //check for steam_appid.txt
             try
             {
@@ -690,7 +730,7 @@ namespace Dead_Matter_Server_Manager
                     File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
                 }
 
-                WriteLog("SERVER START REQUEST SENT BY USER");
+                WriteLog("SERVER START REQUEST SENT BY USER","INFO");
 
                 firstTimeServerStarted = true;
                 serverStarted = true;
@@ -823,15 +863,16 @@ namespace Dead_Matter_Server_Manager
 
                             if(Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
                             {
-                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem));
+                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem),"MEM LIMIT");
                             }
 
                             if(restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
                             {
-                                WriteLog("SERVER UPTIME LIMIT REACHED");
+                                WriteLog("SERVER UPTIME LIMIT REACHED","UPTIME LIMIT");
                             }
 
-                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"));
+                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"),"INFO");
+                            plannedShutdown = true;
                         }
                         else
                         {
@@ -839,7 +880,7 @@ namespace Dead_Matter_Server_Manager
                             {
                                 dmServerShipping[0].CloseMainWindow();
 
-                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated");
+                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated","ERROR");
                             }
                         }
                     }
@@ -879,9 +920,13 @@ namespace Dead_Matter_Server_Manager
                                 players = serverInfo.Players;
                             }
 
-                            if(uptime.Ticks != 0)
+                            if(uptime.Ticks != 0 && !plannedShutdown)
                             {
-                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players);
+                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players,"ERROR");
+                            }
+                            if(uptime.Ticks != 0 && plannedShutdown)
+                            {
+                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO");
                             }
 
                             Process dmServerExe = new Process();
@@ -890,6 +935,8 @@ namespace Dead_Matter_Server_Manager
                             dmServerExe.Start();
                             Thread.Sleep(500);
                             serverStartTime = DateTime.Now;
+
+                            plannedShutdown = false;
 
                             SaveData();
 
@@ -941,16 +988,40 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void AppendText(TextBox controlToChange, string message)
+        public void AppendText(RichTextBox controlToChange, string message,string type)
         {
             if (controlToChange.InvokeRequired)
             {
                 AppendTextOnControl DDD = new AppendTextOnControl(AppendText);
-                controlToChange.Invoke(DDD, controlToChange, message);
+                controlToChange.Invoke(DDD, controlToChange, message, type);
             }
             else
             {
+                controlToChange.SelectionStart = controlToChange.TextLength;
+                controlToChange.SelectionLength = 0;
+
+                if(type.Equals("INFO"))
+                {
+                    controlToChange.SelectionColor = userEventColour.BackColor;
+                }
+
+                if (type.Equals("UPTIME LIMIT"))
+                {
+                    controlToChange.SelectionColor = timedRestartColour.BackColor;
+                }
+
+                if (type.Equals("MEM LIMIT"))
+                {
+                    controlToChange.SelectionColor = memoryLimitColour.BackColor;
+                }
+
+                if (type.Equals("ERROR"))
+                {
+                    controlToChange.SelectionColor = serverCrashColour.BackColor;
+                }
+
                 controlToChange.AppendText(Environment.NewLine + message);
+                controlToChange.SelectionColor = controlToChange.ForeColor;
             }
         }
 
@@ -1087,7 +1158,7 @@ namespace Dead_Matter_Server_Manager
             serverUptime.Text = "00:00:00";
             sessionStarted = false;
             restartsThisSession = 0;
-            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER");
+            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER","INFO");
             SaveData();
         }
 
@@ -1516,7 +1587,7 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void WriteLog(string logText)
+        private void WriteLog(string logText,string type)
         {
             if(enableLogging.Checked)
             {
@@ -1526,7 +1597,7 @@ namespace Dead_Matter_Server_Manager
                     file.Close();
                 }
 
-                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText);
+                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText,type);
                 
                 using (StreamWriter sw = File.AppendText(logFilePath))
                 {
@@ -1580,6 +1651,58 @@ namespace Dead_Matter_Server_Manager
             {
                 MessageBox.Show("No log exists yet.  Run with logging enabled to create the file", "No Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void backgroundColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                backgroundColour.BackColor = colorDialog1.Color;
+            }
+
+            logTextBox.BackColor = backgroundColour.BackColor;
+
+            SaveData();
+        }
+
+        private void userEventColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                userEventColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        private void memoryLimitColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                memoryLimitColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        private void timedRestartColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                timedRestartColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        private void serverCrashColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                serverCrashColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
         }
     }
 }
