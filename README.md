@@ -4,6 +4,7 @@ A GUI server manager for Dead Matter dedicated servers.  Idea was to create a si
 You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/winglessraven/deadmatterservermanager/total?style=social)
+![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
 
 ## Installer File
 * Installation file can be found under [releases](https://github.com/winglessraven/DeadMatterServerManager/releases)
@@ -48,8 +49,5 @@ You can submit requests and/or issues [here](https://github.com/winglessraven/De
 * Paste your URL into the appropriate box in the application
 * Click *Test Webhook* and you should see the test message appear in your channel
 * Configure which alerts you want to see and change the text if required
-
-![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
-
 
 [https://www.winglessraven.com/DMSM/](https://www.winglessraven.com/DMSM/)
