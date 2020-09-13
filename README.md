@@ -50,4 +50,6 @@ You can submit requests and/or issues [here](https://github.com/winglessraven/De
 * Click *Test Webhook* and you should see the test message appear in your channel
 * Configure which alerts you want to see and change the text if required
 
+![Screenshot](https://i.imgur.com/ZN1IlgJ.png)
+
 [https://www.winglessraven.com/DMSM/](https://www.winglessraven.com/DMSM/)
