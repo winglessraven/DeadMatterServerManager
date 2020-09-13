@@ -997,7 +997,7 @@ namespace Dead_Matter_Server_Manager
                             SetText(startServer, "Start Server", Color.Black, false);
 
                             int players = 0;
-                            if(playerInfo != null)
+                            if(serverInfo != null)
                             {
                                 players = serverInfo.Players;
                             }
