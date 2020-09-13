@@ -4,6 +4,7 @@ A GUI server manager for Dead Matter dedicated servers.  Idea was to create a si
 You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/winglessraven/deadmatterservermanager/total?style=social)
+![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
 
 ## Installer File
 * Installation file can be found under [releases](https://github.com/winglessraven/DeadMatterServerManager/releases)
@@ -38,7 +39,15 @@ You can submit requests and/or issues [here](https://github.com/winglessraven/De
 * If the server crashes for any reason the application will automatically start it again.
 * If you want to stop the server, click *Stop Server*
 
-![Screenshot](https://www.winglessraven.com/DMSM/images/servermanager.png)
-
+## How to Configure Discord Integration
+* In your Discord server, go to *Server Settings -> Integrations -> Webhooks*
+* Create a new Webhook and call it what you want your bot to be called, e.g.
+![Screenshot](https://www.winglessraven.com/DMSM/images/discord-webhook.png)
+* Choose which channel you want the bot to post in
+* Save your changes in Discord
+* Click *Copy Webhook URL*
+* Paste your URL into the appropriate box in the application
+* Click *Test Webhook* and you should see the test message appear in your channel
+* Configure which alerts you want to see and change the text if required
 
 [https://www.winglessraven.com/DMSM/](https://www.winglessraven.com/DMSM/)
