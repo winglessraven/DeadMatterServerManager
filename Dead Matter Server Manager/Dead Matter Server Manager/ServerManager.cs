@@ -374,8 +374,11 @@ namespace Dead_Matter_Server_Manager
                         webhookTestMsg.Text = temp[1];
                     }
 
-
-                    
+                    if (s.StartsWith("DiscordIncludeAdditionalInfo"))
+                    {
+                        String[] temp = s.Split('=');
+                        discordIncludeAdditional.Checked = Convert.ToBoolean(temp[1]);
+                    }
                 }
             }
             else
@@ -768,6 +771,7 @@ namespace Dead_Matter_Server_Manager
                 "DiscordTxtCrash=" + serverCrashedDiscordTxt.Text + Environment.NewLine +
                 "DiscordTxtTimedRestart=" + timedRestartDiscordTxt.Text + Environment.NewLine +
                 "DiscordWebhookTest=" + webhookTestMsg.Text + Environment.NewLine +
+                "DiscordIncludeAdditionalInfo=" + discordIncludeAdditional.Checked + Environment.NewLine +
                 "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
                 "SaveConfigOnStart=" + saveConfigOnStart.Checked + Environment.NewLine +
                 "UpdateServer=" + checkUpdateOnStart.Checked + Environment.NewLine +
@@ -847,7 +851,7 @@ namespace Dead_Matter_Server_Manager
 
                         uptime = DateTime.Now - serverStartTime;
 
-                        SetText(serverUptime, uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
+                        SetText(serverUptime, uptime.Days.ToString("0") + "." + uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
                         if(uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
                         {
@@ -1080,32 +1084,43 @@ namespace Dead_Matter_Server_Manager
             }
             else
             {
-                controlToChange.SelectionStart = controlToChange.TextLength;
-                controlToChange.SelectionLength = 0;
-
-                if(type.Equals("INFO"))
+                if(enableLogging.Checked)
                 {
-                    controlToChange.SelectionColor = userEventColour.BackColor;
-                }
+                    controlToChange.SelectionStart = controlToChange.TextLength;
+                    controlToChange.SelectionLength = 0;
 
-                if (type.Equals("UPTIME LIMIT"))
+                    if (type.Equals("INFO"))
+                    {
+                        controlToChange.SelectionColor = userEventColour.BackColor;
+                        SendDiscordWebHook(discordMessage, userEventColour.BackColor);
+                    }
+
+                    if (type.Equals("UPTIME LIMIT"))
+                    {
+                        controlToChange.SelectionColor = timedRestartColour.BackColor;
+                        SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
+                    }
+
+                    if (type.Equals("MEM LIMIT"))
+                    {
+                        controlToChange.SelectionColor = memoryLimitColour.BackColor;
+                        SendDiscordWebHook(discordMessage, memoryLimitColour.BackColor);
+                    }
+
+                    if (type.Equals("ERROR"))
+                    {
+                        controlToChange.SelectionColor = serverCrashColour.BackColor;
+                        SendDiscordWebHook(discordMessage, serverCrashColour.BackColor);
+                    }
+
+                    controlToChange.AppendText(Environment.NewLine + message);
+                    controlToChange.SelectionColor = controlToChange.ForeColor;
+                }
+                else
                 {
-                    controlToChange.SelectionColor = timedRestartColour.BackColor;
+                    SendDiscordWebHook(discordMessage, controlToChange.ForeColor);
                 }
-
-                if (type.Equals("MEM LIMIT"))
-                {
-                    controlToChange.SelectionColor = memoryLimitColour.BackColor;
-                }
-
-                if (type.Equals("ERROR"))
-                {
-                    controlToChange.SelectionColor = serverCrashColour.BackColor;
-                }
-
-                controlToChange.AppendText(Environment.NewLine + message);
-                controlToChange.SelectionColor = controlToChange.ForeColor;
-                SendDiscordWebHook(discordMessage);
+                
             }
         }
 
@@ -1688,6 +1703,10 @@ namespace Dead_Matter_Server_Manager
                     sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
                 }
             }
+            else
+            {
+                AppendText(logTextBox, null, type, discordMessage);
+            }
         }
 
         private void enableLogging_Click(object sender, EventArgs e)
@@ -1807,14 +1826,56 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
 
-        private async void SendDiscordWebHook(string message)
+        private async void SendDiscordWebHook(string message,Color colour)
         {
             if(message != null)
             {
                 try
                 {
+                    int players = 0;
+                    int maxPlayers = 0;
+                    if (serverInfo != null)
+                    {
+                        players = serverInfo.Players;
+                        maxPlayers = serverInfo.MaxPlayers;
+                    }
+
                     var client = new DiscordWebhookClient(webhookURL.Text);
-                    var messageTxt = new DiscordMessage(message);
+                    DiscordMessage messageTxt;
+                    if(discordIncludeAdditional.Checked)
+                    {
+                        messageTxt = new DiscordMessage(
+                        " ",
+                        embeds: new[]
+                        {
+                            new DiscordMessageEmbed(
+                                message,
+                                color: HexConverter(colour),
+                                fields: new[]
+                                {
+                                    new DiscordMessageEmbedField("Previous Player Count", players + "/" + maxPlayers),
+                                    new DiscordMessageEmbedField("Previous Uptime", uptime.ToString(@"d\.hh\:mm\:ss"))
+                                },
+                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
+                            )
+                        }
+                        );
+                    }
+                    else
+                    {
+                        messageTxt = new DiscordMessage(
+                        " ",
+                        embeds: new[]
+                        {
+                            new DiscordMessageEmbed(
+                                message,
+                                color: HexConverter(colour),
+                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
+                            )
+                        }
+                        );
+                    }
+                    
                     await client.SendToDiscord(messageTxt);
                     
                 }
@@ -1824,6 +1885,11 @@ namespace Dead_Matter_Server_Manager
                 }
             }
             
+        }
+        private static int HexConverter(Color c)
+        {
+            string hex = c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+            return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
         }
 
         private void webhookURL_Leave(object sender, EventArgs e)
@@ -1886,7 +1952,7 @@ namespace Dead_Matter_Server_Manager
         private void testWebhook_Click(object sender, EventArgs e)
         {
             SaveData();
-            SendDiscordWebHook(webhookTestMsg.Text);
+            SendDiscordWebHook(webhookTestMsg.Text,Color.Gold);
         }
 
         private void webhookTestMsg_Leave(object sender, EventArgs e)
@@ -1905,6 +1971,11 @@ namespace Dead_Matter_Server_Manager
         }
 
         private void serverCrashedDiscordTxt_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void discordIncludeAdditional_Click(object sender, EventArgs e)
         {
             SaveData();
         }

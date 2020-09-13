@@ -85,6 +85,31 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.enableLogging = new System.Windows.Forms.CheckBox();
             this.openLog = new System.Windows.Forms.LinkLabel();
+            this.logTextBox = new System.Windows.Forms.RichTextBox();
+            this.backgroundColour = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.userEventColour = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.memoryLimitColour = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.timedRestartColour = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.serverCrashColour = new System.Windows.Forms.Button();
+            this.discordTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.discordWebHook = new System.Windows.Forms.CheckBox();
+            this.webhookURL = new System.Windows.Forms.TextBox();
+            this.notifyOnMemoryLimit = new System.Windows.Forms.CheckBox();
+            this.notifyOnTimedRestart = new System.Windows.Forms.CheckBox();
+            this.notifiyOnCrash = new System.Windows.Forms.CheckBox();
+            this.memoryLimitDiscordTxt = new System.Windows.Forms.TextBox();
+            this.timedRestartDiscordTxt = new System.Windows.Forms.TextBox();
+            this.serverCrashedDiscordTxt = new System.Windows.Forms.TextBox();
+            this.testWebhook = new System.Windows.Forms.Button();
+            this.webhookTestMsg = new System.Windows.Forms.TextBox();
+            this.discordIncludeAdditional = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -108,30 +133,7 @@
             this.memoryUsed = new System.Windows.Forms.Label();
             this.allTimeHighPlayersLbl = new System.Windows.Forms.Label();
             this.longestUptimeLbl = new System.Windows.Forms.Label();
-            this.logTextBox = new System.Windows.Forms.RichTextBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.backgroundColour = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.userEventColour = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.memoryLimitColour = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.timedRestartColour = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.serverCrashColour = new System.Windows.Forms.Button();
-            this.discordWebHook = new System.Windows.Forms.CheckBox();
-            this.webhookURL = new System.Windows.Forms.TextBox();
-            this.discordTabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.notifyOnMemoryLimit = new System.Windows.Forms.CheckBox();
-            this.notifyOnTimedRestart = new System.Windows.Forms.CheckBox();
-            this.notifiyOnCrash = new System.Windows.Forms.CheckBox();
-            this.memoryLimitDiscordTxt = new System.Windows.Forms.TextBox();
-            this.timedRestartDiscordTxt = new System.Windows.Forms.TextBox();
-            this.serverCrashedDiscordTxt = new System.Windows.Forms.TextBox();
-            this.testWebhook = new System.Windows.Forms.Button();
-            this.webhookTestMsg = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -735,7 +737,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.33333F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.66666F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.openLog, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
@@ -792,6 +794,326 @@
             this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
             // 
+            // logTextBox
+            // 
+            this.logTextBox.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel5.SetColumnSpan(this.logTextBox, 2);
+            this.logTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logTextBox.ForeColor = System.Drawing.Color.White;
+            this.logTextBox.Location = new System.Drawing.Point(3, 33);
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ReadOnly = true;
+            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
+            this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.logTextBox.Size = new System.Drawing.Size(969, 340);
+            this.logTextBox.TabIndex = 3;
+            this.logTextBox.Text = "";
+            // 
+            // backgroundColour
+            // 
+            this.backgroundColour.BackColor = System.Drawing.Color.Black;
+            this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backgroundColour.Location = new System.Drawing.Point(1104, 33);
+            this.backgroundColour.Name = "backgroundColour";
+            this.backgroundColour.Size = new System.Drawing.Size(24, 19);
+            this.backgroundColour.TabIndex = 4;
+            this.backgroundColour.UseVisualStyleBackColor = false;
+            this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(978, 30);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(120, 25);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Background Colour";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(978, 55);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(120, 25);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "User Event Colour";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // userEventColour
+            // 
+            this.userEventColour.BackColor = System.Drawing.Color.White;
+            this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.userEventColour.Location = new System.Drawing.Point(1104, 58);
+            this.userEventColour.Name = "userEventColour";
+            this.userEventColour.Size = new System.Drawing.Size(24, 19);
+            this.userEventColour.TabIndex = 7;
+            this.userEventColour.UseVisualStyleBackColor = false;
+            this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Location = new System.Drawing.Point(978, 80);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(120, 25);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Memory Limit Colour";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // memoryLimitColour
+            // 
+            this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.memoryLimitColour.Location = new System.Drawing.Point(1104, 83);
+            this.memoryLimitColour.Name = "memoryLimitColour";
+            this.memoryLimitColour.Size = new System.Drawing.Size(24, 19);
+            this.memoryLimitColour.TabIndex = 9;
+            this.memoryLimitColour.UseVisualStyleBackColor = false;
+            this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Location = new System.Drawing.Point(978, 105);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(120, 25);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Timed Restart Colour";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // timedRestartColour
+            // 
+            this.timedRestartColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
+            this.timedRestartColour.Name = "timedRestartColour";
+            this.timedRestartColour.Size = new System.Drawing.Size(24, 19);
+            this.timedRestartColour.TabIndex = 11;
+            this.timedRestartColour.UseVisualStyleBackColor = false;
+            this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Location = new System.Drawing.Point(978, 130);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(120, 25);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Server Crash Colour";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // serverCrashColour
+            // 
+            this.serverCrashColour.BackColor = System.Drawing.Color.Red;
+            this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.serverCrashColour.Location = new System.Drawing.Point(1104, 133);
+            this.serverCrashColour.Name = "serverCrashColour";
+            this.serverCrashColour.Size = new System.Drawing.Size(24, 19);
+            this.serverCrashColour.TabIndex = 13;
+            this.serverCrashColour.UseVisualStyleBackColor = false;
+            this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
+            // 
+            // discordTabPage
+            // 
+            this.discordTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.discordTabPage.Controls.Add(this.tableLayoutPanel6);
+            this.discordTabPage.Location = new System.Drawing.Point(4, 22);
+            this.discordTabPage.Name = "discordTabPage";
+            this.discordTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.discordTabPage.TabIndex = 5;
+            this.discordTabPage.Text = "Discord Webhook";
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 5;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.43925F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnTimedRestart, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 8);
+            this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 8);
+            this.tableLayoutPanel6.Controls.Add(this.discordIncludeAdditional, 0, 5);
+            this.tableLayoutPanel6.Controls.Add(this.label13, 1, 5);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 11;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // discordWebHook
+            // 
+            this.discordWebHook.AutoSize = true;
+            this.discordWebHook.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.discordWebHook.Location = new System.Drawing.Point(3, 3);
+            this.discordWebHook.Name = "discordWebHook";
+            this.discordWebHook.Size = new System.Drawing.Size(201, 19);
+            this.discordWebHook.TabIndex = 47;
+            this.discordWebHook.Text = "Enable Discord Webhook Integration";
+            this.discordWebHook.UseVisualStyleBackColor = true;
+            this.discordWebHook.CheckedChanged += new System.EventHandler(this.discordWebHook_CheckedChanged);
+            this.discordWebHook.Click += new System.EventHandler(this.discordWebHook_Click);
+            // 
+            // webhookURL
+            // 
+            this.webhookURL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webhookURL.Enabled = false;
+            this.webhookURL.Location = new System.Drawing.Point(210, 3);
+            this.webhookURL.Name = "webhookURL";
+            this.webhookURL.Size = new System.Drawing.Size(855, 20);
+            this.webhookURL.TabIndex = 48;
+            this.webhookURL.Text = "[Webhook URL]";
+            this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
+            // 
+            // notifyOnMemoryLimit
+            // 
+            this.notifyOnMemoryLimit.AutoSize = true;
+            this.notifyOnMemoryLimit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notifyOnMemoryLimit.Location = new System.Drawing.Point(3, 53);
+            this.notifyOnMemoryLimit.Name = "notifyOnMemoryLimit";
+            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(201, 19);
+            this.notifyOnMemoryLimit.TabIndex = 49;
+            this.notifyOnMemoryLimit.Text = "Notify on Memory Limit";
+            this.notifyOnMemoryLimit.UseVisualStyleBackColor = true;
+            this.notifyOnMemoryLimit.CheckedChanged += new System.EventHandler(this.notifyOnMemoryLimit_CheckedChanged);
+            this.notifyOnMemoryLimit.Click += new System.EventHandler(this.notifyOnMemoryLimit_Click);
+            // 
+            // notifyOnTimedRestart
+            // 
+            this.notifyOnTimedRestart.AutoSize = true;
+            this.notifyOnTimedRestart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notifyOnTimedRestart.Location = new System.Drawing.Point(3, 78);
+            this.notifyOnTimedRestart.Name = "notifyOnTimedRestart";
+            this.notifyOnTimedRestart.Size = new System.Drawing.Size(201, 19);
+            this.notifyOnTimedRestart.TabIndex = 50;
+            this.notifyOnTimedRestart.Text = "Notify on Timed Restart";
+            this.notifyOnTimedRestart.UseVisualStyleBackColor = true;
+            this.notifyOnTimedRestart.CheckedChanged += new System.EventHandler(this.notifyOnTimedRestart_CheckedChanged);
+            this.notifyOnTimedRestart.Click += new System.EventHandler(this.notifyOnTimedRestart_Click);
+            // 
+            // notifiyOnCrash
+            // 
+            this.notifiyOnCrash.AutoSize = true;
+            this.notifiyOnCrash.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 103);
+            this.notifiyOnCrash.Name = "notifiyOnCrash";
+            this.notifiyOnCrash.Size = new System.Drawing.Size(201, 19);
+            this.notifiyOnCrash.TabIndex = 51;
+            this.notifiyOnCrash.Text = "Notify on Crash";
+            this.notifiyOnCrash.UseVisualStyleBackColor = true;
+            this.notifiyOnCrash.CheckedChanged += new System.EventHandler(this.notifiyOnCrash_CheckedChanged);
+            this.notifiyOnCrash.Click += new System.EventHandler(this.notifiyOnCrash_Click);
+            // 
+            // memoryLimitDiscordTxt
+            // 
+            this.memoryLimitDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryLimitDiscordTxt.Enabled = false;
+            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(210, 53);
+            this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(855, 20);
+            this.memoryLimitDiscordTxt.TabIndex = 52;
+            this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
+            this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
+            // 
+            // timedRestartDiscordTxt
+            // 
+            this.timedRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timedRestartDiscordTxt.Enabled = false;
+            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(210, 78);
+            this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(855, 20);
+            this.timedRestartDiscordTxt.TabIndex = 53;
+            this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
+            this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
+            // 
+            // serverCrashedDiscordTxt
+            // 
+            this.serverCrashedDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverCrashedDiscordTxt.Enabled = false;
+            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(210, 103);
+            this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(855, 20);
+            this.serverCrashedDiscordTxt.TabIndex = 54;
+            this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
+            this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
+            // 
+            // testWebhook
+            // 
+            this.testWebhook.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testWebhook.Location = new System.Drawing.Point(3, 203);
+            this.testWebhook.Name = "testWebhook";
+            this.testWebhook.Size = new System.Drawing.Size(201, 24);
+            this.testWebhook.TabIndex = 55;
+            this.testWebhook.Text = "Test Webhook";
+            this.testWebhook.UseVisualStyleBackColor = true;
+            this.testWebhook.Click += new System.EventHandler(this.testWebhook_Click);
+            // 
+            // webhookTestMsg
+            // 
+            this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webhookTestMsg.Location = new System.Drawing.Point(210, 203);
+            this.webhookTestMsg.Name = "webhookTestMsg";
+            this.webhookTestMsg.Size = new System.Drawing.Size(855, 20);
+            this.webhookTestMsg.TabIndex = 56;
+            this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
+            this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
+            // 
+            // discordIncludeAdditional
+            // 
+            this.discordIncludeAdditional.AutoSize = true;
+            this.discordIncludeAdditional.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.discordIncludeAdditional.Location = new System.Drawing.Point(3, 128);
+            this.discordIncludeAdditional.Name = "discordIncludeAdditional";
+            this.discordIncludeAdditional.Size = new System.Drawing.Size(201, 19);
+            this.discordIncludeAdditional.TabIndex = 57;
+            this.discordIncludeAdditional.Text = "Include Additional Info";
+            this.discordIncludeAdditional.UseVisualStyleBackColor = true;
+            this.discordIncludeAdditional.Click += new System.EventHandler(this.discordIncludeAdditional_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(210, 125);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(855, 25);
+            this.label13.TabIndex = 58;
+            this.label13.Text = "Player count and previous uptime";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -824,7 +1146,7 @@
             this.serverUptime.Name = "serverUptime";
             this.serverUptime.Size = new System.Drawing.Size(86, 30);
             this.serverUptime.TabIndex = 28;
-            this.serverUptime.Text = "00:00:00";
+            this.serverUptime.Text = "0.00:00:00";
             this.serverUptime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // autoStartWithWindows
@@ -1062,299 +1384,8 @@
             this.longestUptimeLbl.Name = "longestUptimeLbl";
             this.longestUptimeLbl.Size = new System.Drawing.Size(148, 30);
             this.longestUptimeLbl.TabIndex = 46;
-            this.longestUptimeLbl.Text = "Longest Uptime\r\n00:00:00";
+            this.longestUptimeLbl.Text = "Longest Uptime\r\n0.00:00:00";
             this.longestUptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // logTextBox
-            // 
-            this.logTextBox.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel5.SetColumnSpan(this.logTextBox, 2);
-            this.logTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logTextBox.ForeColor = System.Drawing.Color.White;
-            this.logTextBox.Location = new System.Drawing.Point(3, 33);
-            this.logTextBox.Name = "logTextBox";
-            this.logTextBox.ReadOnly = true;
-            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
-            this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(969, 340);
-            this.logTextBox.TabIndex = 3;
-            this.logTextBox.Text = "";
-            // 
-            // backgroundColour
-            // 
-            this.backgroundColour.BackColor = System.Drawing.Color.Black;
-            this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backgroundColour.Location = new System.Drawing.Point(1104, 33);
-            this.backgroundColour.Name = "backgroundColour";
-            this.backgroundColour.Size = new System.Drawing.Size(24, 19);
-            this.backgroundColour.TabIndex = 4;
-            this.backgroundColour.UseVisualStyleBackColor = false;
-            this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(978, 30);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(120, 25);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Background Colour";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(978, 55);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(120, 25);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "User Event Colour";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // userEventColour
-            // 
-            this.userEventColour.BackColor = System.Drawing.Color.White;
-            this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.userEventColour.Location = new System.Drawing.Point(1104, 58);
-            this.userEventColour.Name = "userEventColour";
-            this.userEventColour.Size = new System.Drawing.Size(24, 19);
-            this.userEventColour.TabIndex = 7;
-            this.userEventColour.UseVisualStyleBackColor = false;
-            this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(978, 80);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 25);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Memory Limit Colour";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // memoryLimitColour
-            // 
-            this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryLimitColour.Location = new System.Drawing.Point(1104, 83);
-            this.memoryLimitColour.Name = "memoryLimitColour";
-            this.memoryLimitColour.Size = new System.Drawing.Size(24, 19);
-            this.memoryLimitColour.TabIndex = 9;
-            this.memoryLimitColour.UseVisualStyleBackColor = false;
-            this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(978, 105);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(120, 25);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Timed Restart Colour";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // timedRestartColour
-            // 
-            this.timedRestartColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
-            this.timedRestartColour.Name = "timedRestartColour";
-            this.timedRestartColour.Size = new System.Drawing.Size(24, 19);
-            this.timedRestartColour.TabIndex = 11;
-            this.timedRestartColour.UseVisualStyleBackColor = false;
-            this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(978, 130);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(120, 25);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Server Crash Colour";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // serverCrashColour
-            // 
-            this.serverCrashColour.BackColor = System.Drawing.Color.Red;
-            this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverCrashColour.Location = new System.Drawing.Point(1104, 133);
-            this.serverCrashColour.Name = "serverCrashColour";
-            this.serverCrashColour.Size = new System.Drawing.Size(24, 19);
-            this.serverCrashColour.TabIndex = 13;
-            this.serverCrashColour.UseVisualStyleBackColor = false;
-            this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
-            // 
-            // discordWebHook
-            // 
-            this.discordWebHook.AutoSize = true;
-            this.discordWebHook.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discordWebHook.Location = new System.Drawing.Point(3, 3);
-            this.discordWebHook.Name = "discordWebHook";
-            this.discordWebHook.Size = new System.Drawing.Size(202, 19);
-            this.discordWebHook.TabIndex = 47;
-            this.discordWebHook.Text = "Enable Discord Webhook Integration";
-            this.discordWebHook.UseVisualStyleBackColor = true;
-            this.discordWebHook.CheckedChanged += new System.EventHandler(this.discordWebHook_CheckedChanged);
-            this.discordWebHook.Click += new System.EventHandler(this.discordWebHook_Click);
-            // 
-            // webhookURL
-            // 
-            this.webhookURL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webhookURL.Enabled = false;
-            this.webhookURL.Location = new System.Drawing.Point(211, 3);
-            this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(856, 20);
-            this.webhookURL.TabIndex = 48;
-            this.webhookURL.Text = "[Webhook URL]";
-            this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
-            // 
-            // discordTabPage
-            // 
-            this.discordTabPage.BackColor = System.Drawing.Color.Transparent;
-            this.discordTabPage.Controls.Add(this.tableLayoutPanel6);
-            this.discordTabPage.Location = new System.Drawing.Point(4, 22);
-            this.discordTabPage.Name = "discordTabPage";
-            this.discordTabPage.Size = new System.Drawing.Size(1131, 376);
-            this.discordTabPage.TabIndex = 5;
-            this.discordTabPage.Text = "Discord Webhook";
-            // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 5;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.43925F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.notifyOnTimedRestart, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 4);
-            this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 6);
-            this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 6);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 8;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1131, 376);
-            this.tableLayoutPanel6.TabIndex = 0;
-            // 
-            // notifyOnMemoryLimit
-            // 
-            this.notifyOnMemoryLimit.AutoSize = true;
-            this.notifyOnMemoryLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifyOnMemoryLimit.Location = new System.Drawing.Point(3, 53);
-            this.notifyOnMemoryLimit.Name = "notifyOnMemoryLimit";
-            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(202, 19);
-            this.notifyOnMemoryLimit.TabIndex = 49;
-            this.notifyOnMemoryLimit.Text = "Notify on Memory Limit";
-            this.notifyOnMemoryLimit.UseVisualStyleBackColor = true;
-            this.notifyOnMemoryLimit.CheckedChanged += new System.EventHandler(this.notifyOnMemoryLimit_CheckedChanged);
-            this.notifyOnMemoryLimit.Click += new System.EventHandler(this.notifyOnMemoryLimit_Click);
-            // 
-            // notifyOnTimedRestart
-            // 
-            this.notifyOnTimedRestart.AutoSize = true;
-            this.notifyOnTimedRestart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifyOnTimedRestart.Location = new System.Drawing.Point(3, 78);
-            this.notifyOnTimedRestart.Name = "notifyOnTimedRestart";
-            this.notifyOnTimedRestart.Size = new System.Drawing.Size(202, 19);
-            this.notifyOnTimedRestart.TabIndex = 50;
-            this.notifyOnTimedRestart.Text = "Notify on Timed Restart";
-            this.notifyOnTimedRestart.UseVisualStyleBackColor = true;
-            this.notifyOnTimedRestart.CheckedChanged += new System.EventHandler(this.notifyOnTimedRestart_CheckedChanged);
-            this.notifyOnTimedRestart.Click += new System.EventHandler(this.notifyOnTimedRestart_Click);
-            // 
-            // notifiyOnCrash
-            // 
-            this.notifiyOnCrash.AutoSize = true;
-            this.notifiyOnCrash.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 103);
-            this.notifiyOnCrash.Name = "notifiyOnCrash";
-            this.notifiyOnCrash.Size = new System.Drawing.Size(202, 19);
-            this.notifiyOnCrash.TabIndex = 51;
-            this.notifiyOnCrash.Text = "Notify on Crash";
-            this.notifiyOnCrash.UseVisualStyleBackColor = true;
-            this.notifiyOnCrash.CheckedChanged += new System.EventHandler(this.notifiyOnCrash_CheckedChanged);
-            this.notifiyOnCrash.Click += new System.EventHandler(this.notifiyOnCrash_Click);
-            // 
-            // memoryLimitDiscordTxt
-            // 
-            this.memoryLimitDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryLimitDiscordTxt.Enabled = false;
-            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(211, 53);
-            this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(856, 20);
-            this.memoryLimitDiscordTxt.TabIndex = 52;
-            this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
-            this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
-            // 
-            // timedRestartDiscordTxt
-            // 
-            this.timedRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timedRestartDiscordTxt.Enabled = false;
-            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(211, 78);
-            this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(856, 20);
-            this.timedRestartDiscordTxt.TabIndex = 53;
-            this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
-            this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
-            // 
-            // serverCrashedDiscordTxt
-            // 
-            this.serverCrashedDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverCrashedDiscordTxt.Enabled = false;
-            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(211, 103);
-            this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(856, 20);
-            this.serverCrashedDiscordTxt.TabIndex = 54;
-            this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
-            this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
-            // 
-            // testWebhook
-            // 
-            this.testWebhook.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.testWebhook.Location = new System.Drawing.Point(3, 153);
-            this.testWebhook.Name = "testWebhook";
-            this.testWebhook.Size = new System.Drawing.Size(202, 19);
-            this.testWebhook.TabIndex = 55;
-            this.testWebhook.Text = "Test Webhook";
-            this.testWebhook.UseVisualStyleBackColor = true;
-            this.testWebhook.Click += new System.EventHandler(this.testWebhook_Click);
-            // 
-            // webhookTestMsg
-            // 
-            this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webhookTestMsg.Location = new System.Drawing.Point(211, 153);
-            this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(856, 20);
-            this.webhookTestMsg.TabIndex = 56;
-            this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
-            this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
             // 
             // ServerManager
             // 
@@ -1493,6 +1524,8 @@
         private System.Windows.Forms.TextBox serverCrashedDiscordTxt;
         private System.Windows.Forms.Button testWebhook;
         private System.Windows.Forms.TextBox webhookTestMsg;
+        private System.Windows.Forms.CheckBox discordIncludeAdditional;
+        private System.Windows.Forms.Label label13;
     }
 }
 
