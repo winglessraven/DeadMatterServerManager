@@ -698,11 +698,11 @@ namespace Dead_Matter_Server_Manager
             {
                 if (dataGridViewRow.Cells[3].Value.ToString().Equals("Engine.ini"))
                 {
-                    if (writeConfigs.Exists(p => p.Script == dataGridViewRow.Cells[2].Value))
+                    if (writeConfigs.Exists(p => p.Script.Equals(dataGridViewRow.Cells[2].Value)))
                     {
                         if (dataGridViewRow.Cells[1].Value != null)
                         {
-                            writeConfigs.Find(p => p.Script == dataGridViewRow.Cells[2].Value).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
+                            writeConfigs.Find(p => p.Script.Equals(dataGridViewRow.Cells[2].Value)).Values += Environment.NewLine + dataGridViewRow.Cells[0].Value.ToString() + "=" + dataGridViewRow.Cells[1].Value.ToString();
                         }
                     }
                     else
@@ -818,7 +818,7 @@ namespace Dead_Matter_Server_Manager
         private async void MonitorServer(string maxMemory)
         {
             SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
-
+            await Task.Delay(500);
             await Task.Run(() =>
             {
                 long memory;
@@ -1042,9 +1042,14 @@ namespace Dead_Matter_Server_Manager
                 }
             });
 
-            Thread.Sleep(30);
+            await Monitor(maxServerMemory.Text);
 
-            MonitorServer(maxServerMemory.Text);
+        }
+
+        public Task Monitor(string maxMemory)
+        {
+            MonitorServer(maxMemory);
+            return Task.CompletedTask;
         }
 
         public string ReadControl(Control control)
@@ -1879,7 +1884,7 @@ namespace Dead_Matter_Server_Manager
                     await client.SendToDiscord(messageTxt);
                     
                 }
-                catch(Exception ex)
+                catch
                 {
                     //fail!!
                 }
