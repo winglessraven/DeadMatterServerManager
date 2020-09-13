@@ -555,7 +555,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         if(configVariable[0].Equals("SteamQueryPort"))
                         {
-                            steamQueryPort = Convert.ToInt16(configVariable[1]);
+                            steamQueryPort = Convert.ToInt32(configVariable[1]);
                         }
 
                         if (configVariable[0].Equals("SteamQueryIP"))
@@ -635,7 +635,7 @@ namespace Dead_Matter_Server_Manager
 
                 if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryPort"))
                 {
-                    steamQueryPort = Convert.ToInt16(dataGridViewRow.Cells[1].Value.ToString());
+                    steamQueryPort = Convert.ToInt32(dataGridViewRow.Cells[1].Value.ToString());
                 }
 
                 if (dataGridViewRow.Cells[0].Value.ToString().Equals("SteamQueryIP"))
@@ -1493,8 +1493,8 @@ namespace Dead_Matter_Server_Manager
             public ulong SteamID { get; set; }          //0x10
             public string Keywords { get; set; }        //0x20
             public string Spectator { get; set; }       //0x40
-            public short SpectatorPort { get; set; }   //0x40
-            public short Port { get; set; }             //0x80
+            public long SpectatorPort { get; set; }   //0x40
+            public long Port { get; set; }             //0x80
             #endregion
             public A2S_INFO(IPEndPoint ep)
             {
@@ -1522,12 +1522,12 @@ namespace Dead_Matter_Server_Manager
                 ExtraDataFlag = (ExtraDataFlags)br.ReadByte();
                 #region These EDF readers have to be in this order because that's the way they are reported
                 if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
-                    Port = br.ReadInt16();
+                    Port = br.ReadInt32();
                 if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
                     SteamID = br.ReadUInt64();
                 if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
                 {
-                    SpectatorPort = br.ReadInt16();
+                    SpectatorPort = br.ReadInt32();
                     Spectator = ReadNullTerminatedString(ref br);
                 }
                 if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
