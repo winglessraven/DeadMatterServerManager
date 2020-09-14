@@ -1,5 +1,12 @@
 # Dead Matter Server Manager
-A GUI server manager for Dead Matter dedicated servers.  Idea was to create a simple and clean interface for managing dedicated servers and the associated configurations withouth manually needing to locate and edit different ini files.  The application is constantly being updated and I welcome any ideas/suggestions for improvements along with bug reports.
+A GUI server manager for Dead Matter dedicated servers.  Idea was to create a simple and clean interface for managing dedicated servers and the associated configurations without manually needing to locate and edit different ini files.  The application is constantly being updated and I welcome any ideas/suggestions for improvements along with bug reports.
+
+## Features
+* Configure server settings from within the application - no manual editing of ini files required
+* Set your maximum memory limit - if the server goes above your limit the application will restart your server
+* Set up timer based restarts
+* Log each time your server restarts and record the previous uptimes and player counts
+* Integrate with Discord web hooks to notify your community when the server is restarting
 
 You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
