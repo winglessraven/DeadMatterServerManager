@@ -858,10 +858,11 @@ namespace Dead_Matter_Server_Manager
                             try
                             {
                                 serverIP = IPAddress.Parse(GetPublicIP());
+                                serverInfo = null;
                                 serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
                                 SetText(onlinePlayers, "Online Players" + Environment.NewLine + serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
                             }
-                            catch
+                            catch (Exception ex)
                             {
                                 SetText(onlinePlayers, "", Color.Black, true);
                             }
@@ -1500,7 +1501,7 @@ namespace Dead_Matter_Server_Manager
             {
                 UdpClient udp = new UdpClient();
                 udp.Send(REQUEST, REQUEST.Length, ep);
-                udp.Client.ReceiveTimeout = 60;
+                udp.Client.ReceiveTimeout = 300;
                 MemoryStream ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
                 BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
                 ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
@@ -1520,21 +1521,21 @@ namespace Dead_Matter_Server_Manager
                 VAC = (VACFlags)br.ReadByte();
                 Version = ReadNullTerminatedString(ref br);
                 ExtraDataFlag = (ExtraDataFlags)br.ReadByte();
-                #region These EDF readers have to be in this order because that's the way they are reported
-                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
-                    Port = br.ReadInt32();
-                if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
-                    SteamID = br.ReadUInt64();
-                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
-                {
-                    SpectatorPort = br.ReadInt32();
-                    Spectator = ReadNullTerminatedString(ref br);
-                }
-                if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
-                    Keywords = ReadNullTerminatedString(ref br);
-                if (ExtraDataFlag.HasFlag(ExtraDataFlags.GameID))
-                    GameID = br.ReadUInt64();
-                #endregion
+                //#region These EDF readers have to be in this order because that's the way they are reported
+                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
+                //    Port = br.ReadInt32();
+                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
+                //    SteamID = br.ReadUInt64();
+                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
+                //{
+                //    SpectatorPort = br.ReadInt32();
+                //    Spectator = ReadNullTerminatedString(ref br);
+                //}
+                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
+                //    Keywords = ReadNullTerminatedString(ref br);
+                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.GameID))
+                //    GameID = br.ReadUInt64();
+                //#endregion
                 br.Close();
                 ms.Close();
                 udp.Close();
@@ -1606,7 +1607,7 @@ namespace Dead_Matter_Server_Manager
             {
                 UdpClient udp = new UdpClient();
                 udp.Send(REQUEST, REQUEST.Length, ep); // Request Challenge.
-                udp.Client.ReceiveTimeout = 60;
+                udp.Client.ReceiveTimeout = 300;
                 byte[] challenge_response = udp.Receive(ref ep);
                 if (challenge_response.Length == 9 && challenge_response[4] == 0x41) //B
                 {
