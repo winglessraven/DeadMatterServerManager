@@ -29,6 +29,7 @@ namespace Dead_Matter_Server_Manager
         delegate string ReadControls(Control control);
         delegate void SetReadOnlyControl(Control control, bool enabled);
         delegate void SetOnlinePlayersDGV(DataGridView dGV, A2S_PLAYER onlinePlayers);
+        delegate void SetListControlItems(ListBox controlToChange, bool addItem, string itemName);
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
         private bool serverStarted;
         private bool firstTimeServerStarted;
@@ -49,6 +50,7 @@ namespace Dead_Matter_Server_Manager
         private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
         TimeSpan uptime;
         bool plannedShutdown;
+        private DateTime lastBackup;
 
         public ServerManager()
         {
@@ -62,6 +64,7 @@ namespace Dead_Matter_Server_Manager
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             AddConfigRows();
             CheckAppData();
+            CheckBackups();
 
             //check if server is already running
             Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
@@ -378,6 +381,48 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         discordIncludeAdditional.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("EnableBackups"))
+                    {
+                        String[] temp = s.Split('=');
+                        enableBackups.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("RestoreGameIni"))
+                    {
+                        String[] temp = s.Split('=');
+                        restoreGameIni.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("RestoreEngineIni"))
+                    {
+                        String[] temp = s.Split('=');
+                        restoreEngineIni.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("RestoreWorld"))
+                    {
+                        String[] temp = s.Split('=');
+                        restoreWorldSave.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("BackupDestinationFolder"))
+                    {
+                        String[] temp = s.Split('=');
+                        backupDestinationFolder.Text = Convert.ToString(temp[1]);
+                    }
+
+                    if (s.StartsWith("BackupSchedule"))
+                    {
+                        String[] temp = s.Split('=');
+                        backupScheduleMinutes.Value = Convert.ToDecimal(temp[1]);
+                    }
+
+                    if (s.StartsWith("BackupRetention"))
+                    {
+                        String[] temp = s.Split('=');
+                        backupRetentionQty.Value = Convert.ToDecimal(temp[1]);
                     }
                 }
             }
@@ -778,7 +823,14 @@ namespace Dead_Matter_Server_Manager
                 "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
                 "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
                 "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
-                "StartWithWindows=" + autoStartWithWindows.Checked
+                "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine + 
+                "EnableBackups=" + enableBackups.Checked + Environment.NewLine + 
+                "BackupDestinationFolder=" + backupDestinationFolder.Text + Environment.NewLine +
+                "BackupSchedule=" + backupScheduleMinutes.Value + Environment.NewLine +
+                "BackupRetention=" + backupRetentionQty.Value + Environment.NewLine +
+                "RestoreGameIni=" + restoreGameIni.Checked + Environment.NewLine +
+                "RestoreEngineIni=" + restoreEngineIni.Checked + Environment.NewLine +
+                "RestoreWorld=" + restoreWorldSave.Checked
                 ); 
 
 
@@ -840,6 +892,7 @@ namespace Dead_Matter_Server_Manager
                         SetReadOnly(restartServerTime, false);
                         SetReadOnly(maxServerMemory, false);
                         SetReadOnly(restartServer, true);
+                        SetReadOnly(restoreNow, false);
                         string maxMem = ReadControl(maxServerMemory);
                         if (maxMem == "")
                         {
@@ -978,6 +1031,7 @@ namespace Dead_Matter_Server_Manager
                     SetReadOnly(restartServerTime, true);
                     SetReadOnly(maxServerMemory, true);
                     SetReadOnly(restartServer, false);
+                    SetReadOnly(restoreNow, true);
                     SetText(onlinePlayers, "", Color.Black, true);
 
                     SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
@@ -1040,6 +1094,13 @@ namespace Dead_Matter_Server_Manager
                         killAttempts = 0;
                     }
                 }
+
+                //backup schedule
+                if(enableBackups.Checked && lastBackup.AddMinutes(Convert.ToDouble(backupScheduleMinutes.Value)) < DateTime.Now)
+                {
+                    backupNow_Click(this, null);
+                }
+
             });
 
             await Monitor(maxServerMemory.Text);
@@ -1231,6 +1292,12 @@ namespace Dead_Matter_Server_Manager
             public string Script { get; set; }
             public string Values { get; set; }
             public bool AlreadyExists { get; set; }
+        }
+
+        public class BackupFiles
+        {
+            public string FileName { get; set; }
+            public DateTime CreatedDateTime { get; set; }
         }
 
         private void steamID_Leave(object sender, EventArgs e)
@@ -1983,6 +2050,289 @@ namespace Dead_Matter_Server_Manager
         private void discordIncludeAdditional_Click(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void enableBackups_MouseClick(object sender, MouseEventArgs e)
+        {
+            SaveData();
+        }
+
+        private void enableBackups_CheckedChanged(object sender, EventArgs e)
+        {
+            if(enableBackups.Checked)
+            {
+                backupDestinationFolder.ReadOnly = false;
+                browseBackupDestinationFolder.Enabled = true;
+                backupScheduleMinutes.Enabled = true;
+                backupRetentionQty.Enabled = true;
+                backupNow.Enabled = true;
+            }
+            else
+            {
+                backupDestinationFolder.ReadOnly = true;
+                browseBackupDestinationFolder.Enabled = false;
+                backupScheduleMinutes.Enabled = false;
+                backupRetentionQty.Enabled = false;
+                backupNow.Enabled = false;
+            }
+        }
+
+        private void enableBackups_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupDestinationFolder_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void browseBackupDestinationFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.Description = "Select Backup Folder Location";
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                backupDestinationFolder.Text = folderBrowserDialog.SelectedPath;
+            }
+
+            SaveData();
+        }
+
+        private void backupScheduleMinutes_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupScheduleMinutes_Scroll(object sender, ScrollEventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupScheduleMinutes_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupRetentionQty_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupRetentionQty_Scroll(object sender, ScrollEventArgs e)
+        {
+            SaveData();
+        }
+
+        private void backupRetentionQty_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private async void backupNow_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    lastBackup = DateTime.Now;
+
+                    var backupFile = ZipFile.Open(backupDestinationFolder.Text + "\\" + @"DM-Backup-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".zip", ZipArchiveMode.Create);
+
+                    string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
+                    string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
+                    string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\SaveData_v02.db";
+
+                    backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
+                    backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
+                    backupFile.CreateEntryFromFile(worldSave, Path.GetFileName(worldSave), CompressionLevel.Optimal);
+
+                    backupFile.Dispose();
+
+                    CheckBackups();
+                }
+                catch
+                {
+                    //file already exists for this second - don't dooo eeeeet
+                }
+            });
+        }
+
+        private void restoreGameIni_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void restoreEngineIni_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void restoreNow_Click(object sender, EventArgs e)
+        {
+            SaveData();
+
+            if(backupList.SelectedItem != null)
+            {
+                string backupFile = backupList.SelectedItem.ToString();
+                string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager";
+
+                string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
+                string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
+                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\SaveData_v02.db";
+
+                string extractGameIni = tempExtractPath + @"\\Game.ini";
+                string extractEngineIni = tempExtractPath + @"\\Engine.ini";
+                string extractWorldSave = tempExtractPath + @"\\SaveData_v02.db";
+
+                if(File.Exists(extractGameIni))
+                {
+                    File.Delete(extractGameIni);
+                }
+
+                if(File.Exists(extractEngineIni))
+                {
+                    File.Delete(extractEngineIni);
+                }
+
+                if(File.Exists(extractWorldSave))
+                {
+                    File.Delete(extractWorldSave);
+                }
+
+                ZipFile.ExtractToDirectory(backupFile, tempExtractPath);
+                if(restoreGameIni.Checked)
+                {
+                    if(File.Exists(gameIni))
+                    {
+                        FileInfo fileInfo = new FileInfo(gameIni);
+                        fileInfo.IsReadOnly = false;
+                        File.Delete(gameIni);
+                    }
+                    File.Move(extractGameIni, gameIni);
+
+                    FileInfo file = new FileInfo(gameIni);
+                    file.IsReadOnly = true;
+                }
+
+                if (restoreEngineIni.Checked)
+                {
+                    if (File.Exists(engineIni))
+                    {
+                        FileInfo fileInfo = new FileInfo(engineIni);
+                        fileInfo.IsReadOnly = false;
+                        File.Delete(engineIni);
+                    }
+                    File.Move(extractEngineIni, engineIni);
+
+                    FileInfo file = new FileInfo(engineIni);
+                    file.IsReadOnly = true;
+                }
+
+                if (restoreWorldSave.Checked)
+                {
+                    if (File.Exists(worldSave))
+                    {
+                        FileInfo fileInfo = new FileInfo(worldSave);
+                        fileInfo.IsReadOnly = false;
+                        File.Delete(worldSave);
+                    }
+                    File.Move(extractWorldSave, worldSave);
+
+                    FileInfo file = new FileInfo(worldSave);
+                    file.IsReadOnly = true;
+                }
+
+                MessageBox.Show("Backup restored!", "Restored", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Select Backup to Restore First", "Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        private void CheckBackups()
+        {
+            if (backupDestinationFolder.Text != "")
+            {
+                ListControl(backupList, false, null);
+
+                try
+                {
+                    if(Directory.Exists(backupDestinationFolder.Text))
+                    {
+                        string[] backupFiles = Directory.GetFiles(backupDestinationFolder.Text);
+
+                        //filter down so we just get the files we want
+                        List<BackupFiles> backupsList = new List<BackupFiles>();
+
+                        DateTime mostRecent = new DateTime(0);
+                        foreach (string s in backupFiles)
+                        {
+                            if (s.EndsWith(".zip") && s.StartsWith(backupDestinationFolder.Text + "\\" + @"DM-Backup"))
+                            {
+                                FileInfo fileInfo = new FileInfo(s);
+                                if (fileInfo.LastWriteTime > mostRecent)
+                                {
+                                    mostRecent = fileInfo.LastWriteTime;
+                                }
+                                backupsList.Add(new BackupFiles(){ FileName = s, CreatedDateTime = fileInfo.LastWriteTime });
+                            }
+                        }
+
+
+                        //check qty of backups
+                        if (backupsList.Count > backupRetentionQty.Value)
+                        {
+                            backupsList.OrderBy(o => o.CreatedDateTime).ToList();
+                            decimal qtyToRemove = backupsList.Count - backupRetentionQty.Value;
+                            for(int i = 1;i <= qtyToRemove;i++)
+                            {
+                                File.Delete(backupsList[0].FileName);
+                                backupsList.RemoveAt(0);
+                            }
+                        }
+
+                        foreach(BackupFiles files in backupsList)
+                        {
+                            ListControl(backupList, true, files.FileName);
+                        }
+
+                        if(mostRecent != new DateTime(0))
+                        {
+                            SetText(lastBackupTime, mostRecent.ToString(), Color.Black, true);
+                            lastBackup = mostRecent;
+                        }
+                        
+                    }
+                }
+                catch
+                {
+                    SetText(lastBackupTime, "No Backup Found", Color.Black, true);
+                }
+
+            }
+        }
+
+        public void ListControl(ListBox controlToChange,bool addItem, string itemName)
+        {
+            if (controlToChange.InvokeRequired)
+            {
+                SetListControlItems DDD = new SetListControlItems(ListControl);
+                controlToChange.Invoke(DDD, controlToChange, addItem, itemName);
+            }
+            else
+            {
+                if(addItem)
+                {
+                    controlToChange.Items.Add(itemName);
+                }
+                else
+                {
+                    controlToChange.Items.Clear();
+                }
+            }
         }
     }
 }

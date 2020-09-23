@@ -134,6 +134,25 @@
             this.allTimeHighPlayersLbl = new System.Windows.Forms.Label();
             this.longestUptimeLbl = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.backupsTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.enableBackups = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.backupDestinationFolder = new System.Windows.Forms.TextBox();
+            this.browseBackupDestinationFolder = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.backupScheduleMinutes = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.backupRetentionQty = new System.Windows.Forms.NumericUpDown();
+            this.backupNow = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lastBackupTime = new System.Windows.Forms.Label();
+            this.backupList = new System.Windows.Forms.ListBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.restoreGameIni = new System.Windows.Forms.CheckBox();
+            this.restoreEngineIni = new System.Windows.Forms.CheckBox();
+            this.restoreWorldSave = new System.Windows.Forms.CheckBox();
+            this.restoreNow = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -153,6 +172,10 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.discordTabPage.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.backupsTabPage.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -449,6 +472,7 @@
             this.tabControl1.Controls.Add(this.playersOnlineTabPage);
             this.tabControl1.Controls.Add(this.statisticsTabPage);
             this.tabControl1.Controls.Add(this.discordTabPage);
+            this.tabControl1.Controls.Add(this.backupsTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 111);
             this.tabControl1.Name = "tabControl1";
@@ -942,7 +966,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
@@ -992,7 +1016,7 @@
             this.webhookURL.Enabled = false;
             this.webhookURL.Location = new System.Drawing.Point(210, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(852, 20);
+            this.webhookURL.Size = new System.Drawing.Size(851, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1042,7 +1066,7 @@
             this.memoryLimitDiscordTxt.Enabled = false;
             this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(210, 53);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(852, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(851, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
@@ -1053,7 +1077,7 @@
             this.timedRestartDiscordTxt.Enabled = false;
             this.timedRestartDiscordTxt.Location = new System.Drawing.Point(210, 78);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(852, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(851, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
@@ -1064,7 +1088,7 @@
             this.serverCrashedDiscordTxt.Enabled = false;
             this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(210, 103);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(852, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(851, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1085,7 +1109,7 @@
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookTestMsg.Location = new System.Drawing.Point(210, 203);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(852, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(851, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1109,7 +1133,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(210, 125);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(852, 25);
+            this.label13.Size = new System.Drawing.Size(851, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1387,6 +1411,273 @@
             this.longestUptimeLbl.Text = "Longest Uptime\r\n0.00:00:00";
             this.longestUptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // backupsTabPage
+            // 
+            this.backupsTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.backupsTabPage.Controls.Add(this.tableLayoutPanel7);
+            this.backupsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.backupsTabPage.Name = "backupsTabPage";
+            this.backupsTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.backupsTabPage.TabIndex = 6;
+            this.backupsTabPage.Text = "Backup / Restore";
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 6;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 143F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Controls.Add(this.enableBackups, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.label14, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.backupDestinationFolder, 1, 1);
+            this.tableLayoutPanel7.Controls.Add(this.browseBackupDestinationFolder, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label15, 0, 2);
+            this.tableLayoutPanel7.Controls.Add(this.backupScheduleMinutes, 1, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label16, 0, 3);
+            this.tableLayoutPanel7.Controls.Add(this.backupRetentionQty, 1, 3);
+            this.tableLayoutPanel7.Controls.Add(this.label17, 0, 4);
+            this.tableLayoutPanel7.Controls.Add(this.lastBackupTime, 1, 4);
+            this.tableLayoutPanel7.Controls.Add(this.backupNow, 1, 5);
+            this.tableLayoutPanel7.Controls.Add(this.backupList, 5, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label19, 3, 0);
+            this.tableLayoutPanel7.Controls.Add(this.restoreGameIni, 4, 1);
+            this.tableLayoutPanel7.Controls.Add(this.restoreEngineIni, 4, 2);
+            this.tableLayoutPanel7.Controls.Add(this.restoreWorldSave, 4, 3);
+            this.tableLayoutPanel7.Controls.Add(this.restoreNow, 4, 5);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 11;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel7.TabIndex = 0;
+            // 
+            // enableBackups
+            // 
+            this.enableBackups.AutoSize = true;
+            this.enableBackups.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.enableBackups.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enableBackups.Location = new System.Drawing.Point(3, 3);
+            this.enableBackups.Name = "enableBackups";
+            this.enableBackups.Size = new System.Drawing.Size(194, 24);
+            this.enableBackups.TabIndex = 0;
+            this.enableBackups.Text = "Enable Backups";
+            this.enableBackups.UseVisualStyleBackColor = true;
+            this.enableBackups.CheckedChanged += new System.EventHandler(this.enableBackups_CheckedChanged);
+            this.enableBackups.Click += new System.EventHandler(this.enableBackups_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label14.Location = new System.Drawing.Point(3, 30);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(194, 30);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Backup Destination Folder";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // backupDestinationFolder
+            // 
+            this.backupDestinationFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backupDestinationFolder.Location = new System.Drawing.Point(203, 33);
+            this.backupDestinationFolder.Name = "backupDestinationFolder";
+            this.backupDestinationFolder.ReadOnly = true;
+            this.backupDestinationFolder.Size = new System.Drawing.Size(224, 20);
+            this.backupDestinationFolder.TabIndex = 2;
+            this.backupDestinationFolder.Leave += new System.EventHandler(this.backupDestinationFolder_Leave);
+            // 
+            // browseBackupDestinationFolder
+            // 
+            this.browseBackupDestinationFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.browseBackupDestinationFolder.Enabled = false;
+            this.browseBackupDestinationFolder.Location = new System.Drawing.Point(433, 33);
+            this.browseBackupDestinationFolder.Name = "browseBackupDestinationFolder";
+            this.browseBackupDestinationFolder.Size = new System.Drawing.Size(117, 24);
+            this.browseBackupDestinationFolder.TabIndex = 3;
+            this.browseBackupDestinationFolder.Text = "Browse";
+            this.browseBackupDestinationFolder.UseVisualStyleBackColor = true;
+            this.browseBackupDestinationFolder.Click += new System.EventHandler(this.browseBackupDestinationFolder_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(3, 60);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(194, 30);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Backup Schedule (minutes)";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // backupScheduleMinutes
+            // 
+            this.backupScheduleMinutes.Dock = System.Windows.Forms.DockStyle.Left;
+            this.backupScheduleMinutes.Enabled = false;
+            this.backupScheduleMinutes.Location = new System.Drawing.Point(203, 63);
+            this.backupScheduleMinutes.Name = "backupScheduleMinutes";
+            this.backupScheduleMinutes.Size = new System.Drawing.Size(120, 20);
+            this.backupScheduleMinutes.TabIndex = 5;
+            this.backupScheduleMinutes.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.backupScheduleMinutes.Scroll += new System.Windows.Forms.ScrollEventHandler(this.backupScheduleMinutes_Scroll);
+            this.backupScheduleMinutes.Click += new System.EventHandler(this.backupScheduleMinutes_Click);
+            this.backupScheduleMinutes.Leave += new System.EventHandler(this.backupScheduleMinutes_Leave);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Location = new System.Drawing.Point(3, 90);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(194, 30);
+            this.label16.TabIndex = 6;
+            this.label16.Text = "Retention (number of backups to keep)";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // backupRetentionQty
+            // 
+            this.backupRetentionQty.Dock = System.Windows.Forms.DockStyle.Left;
+            this.backupRetentionQty.Enabled = false;
+            this.backupRetentionQty.Location = new System.Drawing.Point(203, 93);
+            this.backupRetentionQty.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.backupRetentionQty.Name = "backupRetentionQty";
+            this.backupRetentionQty.Size = new System.Drawing.Size(120, 20);
+            this.backupRetentionQty.TabIndex = 7;
+            this.backupRetentionQty.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.backupRetentionQty.Scroll += new System.Windows.Forms.ScrollEventHandler(this.backupRetentionQty_Scroll);
+            this.backupRetentionQty.Click += new System.EventHandler(this.backupRetentionQty_Click);
+            this.backupRetentionQty.Leave += new System.EventHandler(this.backupRetentionQty_Leave);
+            // 
+            // backupNow
+            // 
+            this.backupNow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backupNow.Enabled = false;
+            this.backupNow.Location = new System.Drawing.Point(203, 153);
+            this.backupNow.Name = "backupNow";
+            this.backupNow.Size = new System.Drawing.Size(224, 24);
+            this.backupNow.TabIndex = 8;
+            this.backupNow.Text = "Backup Now";
+            this.backupNow.UseVisualStyleBackColor = true;
+            this.backupNow.Click += new System.EventHandler(this.backupNow_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Location = new System.Drawing.Point(3, 120);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(194, 30);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "Last Backup Time";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lastBackupTime
+            // 
+            this.lastBackupTime.AutoSize = true;
+            this.lastBackupTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lastBackupTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lastBackupTime.Location = new System.Drawing.Point(203, 120);
+            this.lastBackupTime.Name = "lastBackupTime";
+            this.lastBackupTime.Size = new System.Drawing.Size(224, 30);
+            this.lastBackupTime.TabIndex = 10;
+            this.lastBackupTime.Text = "No Backup Found";
+            this.lastBackupTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // backupList
+            // 
+            this.backupList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backupList.FormattingEnabled = true;
+            this.backupList.Location = new System.Drawing.Point(707, 33);
+            this.backupList.Name = "backupList";
+            this.tableLayoutPanel7.SetRowSpan(this.backupList, 9);
+            this.backupList.Size = new System.Drawing.Size(421, 264);
+            this.backupList.TabIndex = 11;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Silver;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label19.Location = new System.Drawing.Point(556, 0);
+            this.label19.Name = "label19";
+            this.tableLayoutPanel7.SetRowSpan(this.label19, 11);
+            this.label19.Size = new System.Drawing.Size(2, 376);
+            this.label19.TabIndex = 12;
+            // 
+            // restoreGameIni
+            // 
+            this.restoreGameIni.AutoSize = true;
+            this.restoreGameIni.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restoreGameIni.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restoreGameIni.Location = new System.Drawing.Point(564, 33);
+            this.restoreGameIni.Name = "restoreGameIni";
+            this.restoreGameIni.Size = new System.Drawing.Size(137, 24);
+            this.restoreGameIni.TabIndex = 13;
+            this.restoreGameIni.Text = "Restore Game.ini";
+            this.restoreGameIni.UseVisualStyleBackColor = true;
+            this.restoreGameIni.Click += new System.EventHandler(this.restoreGameIni_Click);
+            // 
+            // restoreEngineIni
+            // 
+            this.restoreEngineIni.AutoSize = true;
+            this.restoreEngineIni.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restoreEngineIni.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restoreEngineIni.Location = new System.Drawing.Point(564, 63);
+            this.restoreEngineIni.Name = "restoreEngineIni";
+            this.restoreEngineIni.Size = new System.Drawing.Size(137, 24);
+            this.restoreEngineIni.TabIndex = 14;
+            this.restoreEngineIni.Text = "Restore Engine.ini";
+            this.restoreEngineIni.UseVisualStyleBackColor = true;
+            this.restoreEngineIni.Click += new System.EventHandler(this.restoreEngineIni_Click);
+            // 
+            // restoreWorldSave
+            // 
+            this.restoreWorldSave.AutoSize = true;
+            this.restoreWorldSave.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restoreWorldSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restoreWorldSave.Location = new System.Drawing.Point(564, 93);
+            this.restoreWorldSave.Name = "restoreWorldSave";
+            this.restoreWorldSave.Size = new System.Drawing.Size(137, 24);
+            this.restoreWorldSave.TabIndex = 15;
+            this.restoreWorldSave.Text = "Restore World Save";
+            this.restoreWorldSave.UseVisualStyleBackColor = true;
+            // 
+            // restoreNow
+            // 
+            this.restoreNow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.restoreNow.Location = new System.Drawing.Point(564, 153);
+            this.restoreNow.Name = "restoreNow";
+            this.restoreNow.Size = new System.Drawing.Size(137, 24);
+            this.restoreNow.TabIndex = 16;
+            this.restoreNow.Text = "Restore Now";
+            this.restoreNow.UseVisualStyleBackColor = true;
+            this.restoreNow.Click += new System.EventHandler(this.restoreNow_Click);
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1419,6 +1710,11 @@
             this.discordTabPage.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            this.backupsTabPage.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1526,6 +1822,25 @@
         private System.Windows.Forms.TextBox webhookTestMsg;
         private System.Windows.Forms.CheckBox discordIncludeAdditional;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TabPage backupsTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.CheckBox enableBackups;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox backupDestinationFolder;
+        private System.Windows.Forms.Button browseBackupDestinationFolder;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown backupScheduleMinutes;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown backupRetentionQty;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lastBackupTime;
+        private System.Windows.Forms.Button backupNow;
+        private System.Windows.Forms.ListBox backupList;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.CheckBox restoreGameIni;
+        private System.Windows.Forms.CheckBox restoreEngineIni;
+        private System.Windows.Forms.CheckBox restoreWorldSave;
+        private System.Windows.Forms.Button restoreNow;
     }
 }
 
