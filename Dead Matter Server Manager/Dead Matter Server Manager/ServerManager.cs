@@ -780,10 +780,12 @@ namespace Dead_Matter_Server_Manager
                 fileInfo.IsReadOnly = true;
             }
             
-            if(!saveConfigOnStart.Checked)
+            if(e != null)
             {
                 MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            WriteLog("Config file saved", "INFO", null);
         }
 
         private void SaveData()
@@ -2153,10 +2155,20 @@ namespace Dead_Matter_Server_Manager
                     //get all db files (in case version updates change them)
                     string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
 
+                    DateTime mostRecent = new DateTime(1990,1,1);
+                    string mostRecentFile = "";
+
                     foreach(string s in saveDB)
                     {
-                        backupFile.CreateEntryFromFile(s, Path.GetFileName(s), CompressionLevel.Optimal);
+                        FileInfo file = new FileInfo(s);
+                        if(file.LastWriteTime > mostRecent)
+                        {
+                            mostRecent = file.LastWriteTime;
+                            mostRecentFile = s;
+                        }
                     }
+
+                    backupFile.CreateEntryFromFile(mostRecentFile, Path.GetFileName(mostRecentFile), CompressionLevel.Optimal);
 
                     backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
                     backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
@@ -2167,10 +2179,10 @@ namespace Dead_Matter_Server_Manager
 
                     CheckBackups();
                 }
-                catch
+                catch (Exception ex)
                 {
                     //file already exists for this second - don't dooo eeeeet
-                    WriteLog("Backup Failed!", "ERROR", null);
+                    WriteLog("Backup Failed! " + ex.Message, "ERROR", null);
                 }
             });
         }
@@ -2250,21 +2262,21 @@ namespace Dead_Matter_Server_Manager
 
                 if (restoreWorldSave.Checked)
                 {
-                    string[] saveDBCurrent = Directory.GetFiles(worldSave, "*.db", SearchOption.AllDirectories);
                     string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
-
-                    foreach(string s in saveDBCurrent)
-                    {
-                        _ = new FileInfo(s)
-                        {
-                            IsReadOnly = false
-                        };
-                        File.Delete(s);
-                    }
 
                     foreach (string s in saveDB)
                     {
                         FileInfo file = new FileInfo(s);
+
+                        if(File.Exists(worldSave + file.Name))
+                        {
+                            _ = new FileInfo(worldSave + file.Name)
+                            {
+                                IsReadOnly = false
+                            };
+                            File.Delete(worldSave + file.Name);
+                        }
+
                         File.Move(s, worldSave + file.Name);
                     }
                 }
