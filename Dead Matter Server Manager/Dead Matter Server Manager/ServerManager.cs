@@ -478,8 +478,10 @@ namespace Dead_Matter_Server_Manager
 
         private void steamCMDBrowse_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            folderBrowserDialog.Description = "SteamCMD Folder";
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "SteamCMD Folder"
+            };
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -492,8 +494,10 @@ namespace Dead_Matter_Server_Manager
 
         private void serverFolderBrowse_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            folderBrowserDialog.Description = "Dead Matter Server Folder";
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "Dead Matter Server Folder"
+            };
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -2089,8 +2093,10 @@ namespace Dead_Matter_Server_Manager
 
         private void browseBackupDestinationFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            folderBrowserDialog.Description = "Select Backup Folder Location";
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "Select Backup Folder Location"
+            };
             DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -2142,19 +2148,29 @@ namespace Dead_Matter_Server_Manager
 
                     string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
                     string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-                    string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\SaveData_v02.db";
+
+
+                    //get all db files (in case version updates change them)
+                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
+
+                    foreach(string s in saveDB)
+                    {
+                        backupFile.CreateEntryFromFile(s, Path.GetFileName(s), CompressionLevel.Optimal);
+                    }
 
                     backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
                     backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
-                    backupFile.CreateEntryFromFile(worldSave, Path.GetFileName(worldSave), CompressionLevel.Optimal);
 
                     backupFile.Dispose();
+
+                    WriteLog("Backup created successfully", "INFO", null);
 
                     CheckBackups();
                 }
                 catch
                 {
                     //file already exists for this second - don't dooo eeeeet
+                    WriteLog("Backup Failed!", "ERROR", null);
                 }
             });
         }
@@ -2169,81 +2185,91 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
 
-        private void restoreNow_Click(object sender, EventArgs e)
+        private void RestoreNow_Click(object sender, EventArgs e)
         {
             SaveData();
 
             if(backupList.SelectedItem != null)
             {
                 string backupFile = backupList.SelectedItem.ToString();
-                string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager";
+                string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\restore";
+
+                if(!Directory.Exists(tempExtractPath))
+                {
+                    Directory.CreateDirectory(tempExtractPath);
+                }
+
+                DirectoryInfo directoryInfo = new DirectoryInfo(tempExtractPath);
+
+                foreach(FileInfo file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
 
                 string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
                 string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\SaveData_v02.db";
+                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\";
 
                 string extractGameIni = tempExtractPath + @"\\Game.ini";
                 string extractEngineIni = tempExtractPath + @"\\Engine.ini";
-                string extractWorldSave = tempExtractPath + @"\\SaveData_v02.db";
-
-                if(File.Exists(extractGameIni))
-                {
-                    File.Delete(extractGameIni);
-                }
-
-                if(File.Exists(extractEngineIni))
-                {
-                    File.Delete(extractEngineIni);
-                }
-
-                if(File.Exists(extractWorldSave))
-                {
-                    File.Delete(extractWorldSave);
-                }
 
                 ZipFile.ExtractToDirectory(backupFile, tempExtractPath);
                 if(restoreGameIni.Checked)
                 {
                     if(File.Exists(gameIni))
                     {
-                        FileInfo fileInfo = new FileInfo(gameIni);
-                        fileInfo.IsReadOnly = false;
+                        _ = new FileInfo(gameIni)
+                        {
+                            IsReadOnly = false
+                        };
                         File.Delete(gameIni);
                     }
                     File.Move(extractGameIni, gameIni);
-
-                    FileInfo file = new FileInfo(gameIni);
-                    file.IsReadOnly = true;
+                    _ = new FileInfo(gameIni)
+                    {
+                        IsReadOnly = true
+                    };
                 }
 
                 if (restoreEngineIni.Checked)
                 {
                     if (File.Exists(engineIni))
                     {
-                        FileInfo fileInfo = new FileInfo(engineIni);
-                        fileInfo.IsReadOnly = false;
+                        _ = new FileInfo(engineIni)
+                        {
+                            IsReadOnly = false
+                        };
                         File.Delete(engineIni);
                     }
                     File.Move(extractEngineIni, engineIni);
-
-                    FileInfo file = new FileInfo(engineIni);
-                    file.IsReadOnly = true;
+                    _ = new FileInfo(engineIni)
+                    {
+                        IsReadOnly = true
+                    };
                 }
 
                 if (restoreWorldSave.Checked)
                 {
-                    if (File.Exists(worldSave))
-                    {
-                        FileInfo fileInfo = new FileInfo(worldSave);
-                        fileInfo.IsReadOnly = false;
-                        File.Delete(worldSave);
-                    }
-                    File.Move(extractWorldSave, worldSave);
+                    string[] saveDBCurrent = Directory.GetFiles(worldSave, "*.db", SearchOption.AllDirectories);
+                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
 
-                    FileInfo file = new FileInfo(worldSave);
-                    file.IsReadOnly = true;
+                    foreach(string s in saveDBCurrent)
+                    {
+                        _ = new FileInfo(s)
+                        {
+                            IsReadOnly = false
+                        };
+                        File.Delete(s);
+                    }
+
+                    foreach (string s in saveDB)
+                    {
+                        FileInfo file = new FileInfo(s);
+                        File.Move(s, worldSave + file.Name);
+                    }
                 }
 
+                WriteLog("Backup restored successfully", "INFO", null);
                 MessageBox.Show("Backup restored!", "Restored", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
