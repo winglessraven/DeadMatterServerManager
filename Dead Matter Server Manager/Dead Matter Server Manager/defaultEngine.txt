@@ -1,16 +1,13 @@
 ﻿[Core.System]
 Paths=../../../Engine/Content
 Paths=%GAMEDIR%Content
-Paths=../../../deadmatter/Plugins/MeshTool/Content
-Paths=../../../deadmatter/Plugins/PrefabTool/Content
-Paths=../../../deadmatter/Plugins/MORT/Content
 Paths=../../../deadmatter/Plugins/PivotTool/Content
 Paths=../../../Engine/Plugins/Runtime/SunPosition/Content
 Paths=../../../deadmatter/Plugins/DialoguePlugin/Content
-Paths=../../../deadmatter/Plugins/SplineTwistCorrect/Content
 Paths=../../../Engine/Plugins/Tests/EditorTests/Content
 Paths=../../../Engine/Plugins/Tests/RuntimeTests/Content
 Paths=../../../Engine/Plugins/FX/NiagaraExtras/Content
+Paths=../../../Engine/Plugins/Experimental/Landmass/Content
 Paths=../../../deadmatter/Plugins/AbxyxxTools/Content
 Paths=../../../deadmatter/Plugins/DiscordGameAPI/Content
 Paths=../../../deadmatter/Plugins/Steamworker/Content
@@ -24,3 +21,4 @@ Paths=../../../Engine/Plugins/Experimental/ChaosNiagara/Content
 Paths=../../../Engine/Plugins/FX/Niagara/Content
 Paths=../../../Engine/Plugins/MagicLeap/MagicLeapPassableWorld/Content
 Paths=../../../Engine/Plugins/MovieScene/MovieRenderPipeline/Content
+
