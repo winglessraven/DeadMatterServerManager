@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -55,6 +56,7 @@ namespace Dead_Matter_Server_Manager
         bool plannedShutdown;
         private DateTime lastBackup;
         public static List<DateTime> restartSchedules = new List<DateTime>();
+        public string currentDBfile = "SaveData_v04.db";
 
         public ServerManager()
         {
@@ -88,6 +90,8 @@ namespace Dead_Matter_Server_Manager
                 //auto start server is ticked, so set the flags to start the server
                 startServer_Click(this, null);
             }
+
+            GetSavedPlayers();
 
         }
 
@@ -137,7 +141,7 @@ namespace Dead_Matter_Server_Manager
                             Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
                         }
                     }
-                    
+
                 }
             }
         }
@@ -161,7 +165,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         serverFolderPath.Text = temp[1];
-                        if(!temp[1].Equals(""))
+                        if (!temp[1].Equals(""))
                         {
                             getConfig_Click(null, null);
                         }
@@ -237,11 +241,11 @@ namespace Dead_Matter_Server_Manager
                             //do nowt
                         }
                     }
-                    
+
                     if (s.StartsWith("MinsTimerRestartTime"))
                     {
                         String[] temp = s.Split('=');
-                        if(!Convert.ToString(temp[1]).Equals(""))
+                        if (!Convert.ToString(temp[1]).Equals(""))
                         {
                             restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]));
                         }
@@ -262,7 +266,7 @@ namespace Dead_Matter_Server_Manager
                         }
                     }
 
-                    if(s.StartsWith("ChangeLaunchParams"))
+                    if (s.StartsWith("ChangeLaunchParams"))
                     {
                         String[] temp = s.Split('=');
                         changeLaunchParams.Checked = Convert.ToBoolean(temp[1]);
@@ -453,7 +457,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         String[] times = temp[1].Split(',');
-                        foreach(string time in times)
+                        foreach (string time in times)
                         {
                             restartSchedules.Add(Convert.ToDateTime(time));
                         }
@@ -550,7 +554,7 @@ namespace Dead_Matter_Server_Manager
                 return;
             }
 
-            if(!Directory.Exists(steamCMDPath.Text))
+            if (!Directory.Exists(steamCMDPath.Text))
             {
                 Directory.CreateDirectory(steamCMDPath.Text);
             }
@@ -586,10 +590,10 @@ namespace Dead_Matter_Server_Manager
                 return;
             }
 
-            if(!File.Exists(steamCMDPath.Text + "\\steamcmd.exe"))
+            if (!File.Exists(steamCMDPath.Text + "\\steamcmd.exe"))
             {
                 DialogResult result = MessageBox.Show("SteamCMD not found - get it now?", "No SteamCMD", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(result == DialogResult.Yes)
+                if (result == DialogResult.Yes)
                 {
                     updateSteamCMD_Click(this, null);
                 }
@@ -604,7 +608,7 @@ namespace Dead_Matter_Server_Manager
             steamCMD.StartInfo.Arguments = "+login " + steamID.Text + " " + steamPassword.Text + @" +force_install_dir """ + serverFolderPath.Text + @""" +app_update 1110990 +quit";
             steamCMD.Start();
             steamCMD.WaitForExit();
-            if(steamCMD.ExitCode.Equals(5))
+            if (steamCMD.ExitCode.Equals(5))
             {
                 MessageBox.Show("Steam login error!" + Environment.NewLine + "Username or Password could be incorrect", "Steam Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -636,7 +640,7 @@ namespace Dead_Matter_Server_Manager
                 {
                     if (configVariable[0] == s.Variable)
                     {
-                        if(configVariable[0].Equals("SteamQueryPort"))
+                        if (configVariable[0].Equals("SteamQueryPort"))
                         {
                             steamQueryPort = Convert.ToInt32(configVariable[1]);
                         }
@@ -764,7 +768,7 @@ namespace Dead_Matter_Server_Manager
             }
 
             FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
-            if(File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
+            if (File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
             {
                 if (fileInfo.IsReadOnly)
                 {
@@ -773,7 +777,7 @@ namespace Dead_Matter_Server_Manager
                 File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini", gameIni);
                 fileInfo.IsReadOnly = true;
             }
-            
+
             //engine.ini
             writeConfigs.Clear();
 
@@ -804,7 +808,7 @@ namespace Dead_Matter_Server_Manager
             }
 
             fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
-            if(File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini"))
+            if (File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini"))
             {
                 if (fileInfo.IsReadOnly)
                 {
@@ -814,8 +818,8 @@ namespace Dead_Matter_Server_Manager
                 File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini", defaultEngine);
                 fileInfo.IsReadOnly = true;
             }
-            
-            if(e != null)
+
+            if (e != null)
             {
                 MessageBox.Show("Config file saved", "File Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -832,19 +836,19 @@ namespace Dead_Matter_Server_Manager
             }
 
             string restartTimes = "";
-            if(scheduledRestartOption.Checked)
+            if (scheduledRestartOption.Checked)
             {
-                foreach(DateTime time in restartSchedules)
+                foreach (DateTime time in restartSchedules)
                 {
                     restartTimes += time.ToString("HH:mm") + ",";
                 }
 
                 //remove last ,
-                if(restartTimes.Length != 0)
+                if (restartTimes.Length != 0)
                 {
                     restartTimes = restartTimes.Substring(0, restartTimes.Length - 1);
                 }
-                
+
             }
 
             File.WriteAllText(configFilePath, "SteamCMDPath=" + steamCMDPath.Text + Environment.NewLine +
@@ -882,22 +886,22 @@ namespace Dead_Matter_Server_Manager
                 "TimedRestart=" + restartServerTimeOption.Checked + Environment.NewLine +
                 "RememberPassword=" + rememberSteamPass.Checked + Environment.NewLine +
                 "ChangeLaunchParams=" + changeLaunchParams.Checked + Environment.NewLine +
-                "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine + 
-                "EnableBackups=" + enableBackups.Checked + Environment.NewLine + 
+                "StartWithWindows=" + autoStartWithWindows.Checked + Environment.NewLine +
+                "EnableBackups=" + enableBackups.Checked + Environment.NewLine +
                 "BackupDestinationFolder=" + backupDestinationFolder.Text + Environment.NewLine +
                 "BackupSchedule=" + backupScheduleMinutes.Value + Environment.NewLine +
                 "BackupRetention=" + backupRetentionQty.Value + Environment.NewLine +
                 "RestoreGameIni=" + restoreGameIni.Checked + Environment.NewLine +
                 "RestoreEngineIni=" + restoreEngineIni.Checked + Environment.NewLine +
-                "RestoreWorld=" + restoreWorldSave.Checked + Environment.NewLine + 
+                "RestoreWorld=" + restoreWorldSave.Checked + Environment.NewLine +
                 "ScheduledRestartOption=" + scheduledRestartOption.Checked + Environment.NewLine +
                 "ScheduledRestartTimes=" + restartTimes
-                ); 
+                );
         }
 
         private void startServer_Click(object sender, EventArgs e)
         {
-            if(saveConfigOnStart.Checked)
+            if (saveConfigOnStart.Checked)
             {
                 saveConfig_Click(this, null);
             }
@@ -912,7 +916,7 @@ namespace Dead_Matter_Server_Manager
                     File.WriteAllText(serverFolderPath.Text + "\\" + @"deadmatter\Binaries\Win64\steam_appid.txt", "575440");
                 }
 
-                WriteLog("SERVER START REQUEST SENT BY USER","INFO",null);
+                WriteLog("SERVER START REQUEST SENT BY USER", "INFO", null);
 
                 firstTimeServerStarted = true;
                 serverStarted = true;
@@ -964,7 +968,7 @@ namespace Dead_Matter_Server_Manager
 
                         SetText(serverUptime, uptime.Days.ToString("0") + "." + uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
-                        if(uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
+                        if (uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
                         {
                             try
                             {
@@ -990,12 +994,12 @@ namespace Dead_Matter_Server_Manager
 
                         }
 
-                        if(uptime > longestUptime)
+                        if (uptime > longestUptime)
                         {
                             longestUptime = uptime;
                         }
 
-                        if(serverInfo != null)
+                        if (serverInfo != null)
                         {
                             if (serverInfo.Players > allTimeHighPlayers)
                             {
@@ -1003,7 +1007,7 @@ namespace Dead_Matter_Server_Manager
                                 SaveData();
                             }
                         }
-                        
+
 
                         SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
                         SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
@@ -1031,17 +1035,17 @@ namespace Dead_Matter_Server_Manager
 
                         string restartTime = ReadControl(restartServerTime);
 
-                        if(killSent)
+                        if (killSent)
                         {
                             timeSinceLastKill = DateTime.Now - killCommandSentAt;
                         }
 
                         bool scheduleRestartTime = false;
-                        if(scheduledRestartOption.Checked)
+                        if (scheduledRestartOption.Checked)
                         {
-                            foreach(DateTime time in restartSchedules)
+                            foreach (DateTime time in restartSchedules)
                             {
-                                if(DateTime.Now.ToString("HH:mm").Equals(time.ToString("HH:mm")) && uptime.TotalMinutes > 1 )
+                                if (DateTime.Now.ToString("HH:mm").Equals(time.ToString("HH:mm")) && uptime.TotalMinutes > 1)
                                 {
                                     scheduleRestartTime = true;
                                 }
@@ -1057,46 +1061,46 @@ namespace Dead_Matter_Server_Manager
                             killAttempts += 1;
                             killCommandSentAt = DateTime.Now;
 
-                            if(Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
+                            if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
                             {
                                 string tmp = null;
-                                if(notifyOnMemoryLimit.Checked)
+                                if (notifyOnMemoryLimit.Checked)
                                 {
                                     tmp = memoryLimitDiscordTxt.Text;
                                 }
-                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem),"MEM LIMIT",tmp);
+                                WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem), "MEM LIMIT", tmp);
                             }
 
-                            if(restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
+                            if (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
                             {
                                 string tmp = null;
-                                if(notifyOnTimedRestart.Checked)
+                                if (notifyOnTimedRestart.Checked)
                                 {
                                     tmp = timedRestartDiscordTxt.Text;
                                 }
-                                WriteLog("SERVER UPTIME LIMIT REACHED","UPTIME LIMIT",tmp);
+                                WriteLog("SERVER UPTIME LIMIT REACHED", "UPTIME LIMIT", tmp);
                             }
 
-                            if(scheduleRestartTime)
+                            if (scheduleRestartTime)
                             {
                                 string tmp = null;
-                                if(notifyOnScheduledRestart.Checked)
+                                if (notifyOnScheduledRestart.Checked)
                                 {
                                     tmp = scheduledRestartDiscordTxt.Text;
                                 }
                                 WriteLog("SCHEDULED SERVER RESTART TIME REACHED", "SCHEDULED", tmp);
                             }
 
-                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"),"INFO",null);
+                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"), "INFO", null);
                             plannedShutdown = true;
                         }
                         else
                         {
-                            if(killSent && timeSinceLastKill.Minutes >= 1)
+                            if (killSent && timeSinceLastKill.Minutes >= 1)
                             {
                                 dmServerShipping[0].CloseMainWindow();
 
-                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated","ERROR",null);
+                                WriteLog("GRACEFUL SHUTDOWN FAIL:  Force Close Initiated", "ERROR", null);
                             }
                         }
                     }
@@ -1132,23 +1136,23 @@ namespace Dead_Matter_Server_Manager
                             SetText(startServer, "Start Server", Color.Black, false);
 
                             int players = 0;
-                            if(serverInfo != null)
+                            if (serverInfo != null)
                             {
                                 players = serverInfo.Players;
                             }
 
-                            if(uptime.Ticks != 0 && !plannedShutdown)
+                            if (uptime.Ticks != 0 && !plannedShutdown)
                             {
                                 string tmp = null;
-                                if(notifiyOnCrash.Checked)
+                                if (notifiyOnCrash.Checked)
                                 {
                                     tmp = serverCrashedDiscordTxt.Text;
                                 }
-                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players,"ERROR",tmp);
+                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "ERROR", tmp);
                             }
-                            if(uptime.Ticks != 0 && plannedShutdown)
+                            if (uptime.Ticks != 0 && plannedShutdown)
                             {
-                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO",null);
+                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO", null);
                             }
 
                             Process dmServerExe = new Process();
@@ -1162,14 +1166,14 @@ namespace Dead_Matter_Server_Manager
 
                             SaveData();
 
-                            if(sessionStarted)
+                            if (sessionStarted)
                             {
                                 lastRestart = DateTime.Now;
                                 SetText(restartsThisSessionTxt, "Restarts this Session" + Environment.NewLine + restartsThisSession, Color.Black, true);
                                 SetText(lastRestartTxt, "Last Restart" + Environment.NewLine + lastRestart.ToString(), Color.Black, true);
                                 restartsThisSession += 1;
                             }
-                            
+
                         }
                         killSent = false;
                         killAttempts = 0;
@@ -1177,7 +1181,7 @@ namespace Dead_Matter_Server_Manager
                 }
 
                 //backup schedule
-                if(enableBackups.Checked && lastBackup.AddMinutes(Convert.ToDouble(backupScheduleMinutes.Value)) < DateTime.Now)
+                if (enableBackups.Checked && lastBackup.AddMinutes(Convert.ToDouble(backupScheduleMinutes.Value)) < DateTime.Now)
                 {
                     backupNow_Click(this, null);
                 }
@@ -1222,16 +1226,16 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void AppendText(RichTextBox controlToChange, string message,string type,string discordMessage)
+        public void AppendText(RichTextBox controlToChange, string message, string type, string discordMessage)
         {
             if (controlToChange.InvokeRequired)
             {
                 AppendTextOnControl DDD = new AppendTextOnControl(AppendText);
-                controlToChange.Invoke(DDD, controlToChange, message, type,discordMessage);
+                controlToChange.Invoke(DDD, controlToChange, message, type, discordMessage);
             }
             else
             {
-                if(enableLogging.Checked)
+                if (enableLogging.Checked)
                 {
                     controlToChange.SelectionStart = controlToChange.TextLength;
                     controlToChange.SelectionLength = 0;
@@ -1273,7 +1277,7 @@ namespace Dead_Matter_Server_Manager
                 {
                     SendDiscordWebHook(discordMessage, controlToChange.ForeColor);
                 }
-                
+
             }
         }
 
@@ -1328,14 +1332,14 @@ namespace Dead_Matter_Server_Manager
             {
                 dGV.Rows.Clear();
 
-                if(playerInfo != null)
+                if (playerInfo != null)
                 {
                     foreach (A2S_PLAYER.Player player in playerInfo.Players)
                     {
                         TimeSpan time = TimeSpan.FromSeconds(player.Duration);
                         dGV.Rows.Add(player.Name, time.ToString(@"hh\:mm\:ss"));
                     }
-                } 
+                }
             }
         }
 
@@ -1407,7 +1411,7 @@ namespace Dead_Matter_Server_Manager
             Process[] dmServer;
             dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
             if (dmServer.Length != 0)
-            { 
+            {
                 int processID = dmServer[0].Id;
                 Process.Start("windows-kill.exe", "-SIGINT " + processID);
             }
@@ -1416,7 +1420,7 @@ namespace Dead_Matter_Server_Manager
             serverUptime.Text = "00:00:00";
             sessionStarted = false;
             restartsThisSession = 0;
-            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER","INFO",null);
+            WriteLog("SERVER SHUTDOWN REQUEST SENT BY USER", "INFO", null);
             SaveData();
         }
 
@@ -1460,8 +1464,8 @@ namespace Dead_Matter_Server_Manager
             catch
             {
                 //can't find installer
-                DialogResult result = MessageBox.Show("Download failed, visit github now?","Download Failed",MessageBoxButtons.YesNo,MessageBoxIcon.Error);
-                if(result == DialogResult.Yes)
+                DialogResult result = MessageBox.Show("Download failed, visit github now?", "Download Failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
                 {
                     Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
                 }
@@ -1813,12 +1817,12 @@ namespace Dead_Matter_Server_Manager
                 //no response from steam
                 playersOnlineDGV.Rows.Clear();
             }
-            
+
         }
 
         private void changeLaunchParams_CheckedChanged(object sender, EventArgs e)
         {
-            if(changeLaunchParams.Checked)
+            if (changeLaunchParams.Checked)
             {
                 launchParameters.ReadOnly = false;
             }
@@ -1845,18 +1849,18 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void WriteLog(string logText,string type, string discordMessage)
+        private void WriteLog(string logText, string type, string discordMessage)
         {
-            if(enableLogging.Checked)
+            if (enableLogging.Checked)
             {
-                if(!File.Exists(logFilePath))
+                if (!File.Exists(logFilePath))
                 {
                     var file = File.Create(logFilePath);
                     file.Close();
                 }
 
-                AppendText(logTextBox,DateTime.Now.ToString("G") + "> " + logText,type,discordMessage);
-                
+                AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + logText, type, discordMessage);
+
                 using (StreamWriter sw = File.AppendText(logFilePath))
                 {
                     sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
@@ -1905,7 +1909,7 @@ namespace Dead_Matter_Server_Manager
 
         private void openLog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if(File.Exists(logFilePath))
+            if (File.Exists(logFilePath))
             {
                 Process.Start(logFilePath);
             }
@@ -1969,7 +1973,7 @@ namespace Dead_Matter_Server_Manager
 
         private void discordWebHook_CheckedChanged(object sender, EventArgs e)
         {
-            if(discordWebHook.Checked)
+            if (discordWebHook.Checked)
             {
                 webhookURL.Enabled = true;
             }
@@ -1985,9 +1989,9 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
 
-        private async void SendDiscordWebHook(string message,Color colour)
+        private async void SendDiscordWebHook(string message, Color colour)
         {
-            if(message != null)
+            if (message != null)
             {
                 try
                 {
@@ -2001,7 +2005,7 @@ namespace Dead_Matter_Server_Manager
 
                     var client = new DiscordWebhookClient(webhookURL.Text);
                     DiscordMessage messageTxt;
-                    if(discordIncludeAdditional.Checked)
+                    if (discordIncludeAdditional.Checked)
                     {
                         messageTxt = new DiscordMessage(
                         " ",
@@ -2034,16 +2038,16 @@ namespace Dead_Matter_Server_Manager
                         }
                         );
                     }
-                    
+
                     await client.SendToDiscord(messageTxt);
-                    
+
                 }
                 catch
                 {
                     //fail!!
                 }
             }
-            
+
         }
         private static int HexConverter(Color c)
         {
@@ -2058,7 +2062,7 @@ namespace Dead_Matter_Server_Manager
 
         private void notifyOnMemoryLimit_CheckedChanged(object sender, EventArgs e)
         {
-            if(notifyOnMemoryLimit.Checked)
+            if (notifyOnMemoryLimit.Checked)
             {
                 memoryLimitDiscordTxt.Enabled = true;
             }
@@ -2066,12 +2070,12 @@ namespace Dead_Matter_Server_Manager
             {
                 memoryLimitDiscordTxt.Enabled = false;
             }
-            
+
         }
 
         private void notifyOnTimedRestart_CheckedChanged(object sender, EventArgs e)
         {
-            if(notifyOnTimedRestart.Checked)
+            if (notifyOnTimedRestart.Checked)
             {
                 timedRestartDiscordTxt.Enabled = true;
             }
@@ -2083,7 +2087,7 @@ namespace Dead_Matter_Server_Manager
 
         private void notifiyOnCrash_CheckedChanged(object sender, EventArgs e)
         {
-            if(notifiyOnCrash.Checked)
+            if (notifiyOnCrash.Checked)
             {
                 serverCrashedDiscordTxt.Enabled = true;
             }
@@ -2111,7 +2115,7 @@ namespace Dead_Matter_Server_Manager
         private void testWebhook_Click(object sender, EventArgs e)
         {
             SaveData();
-            SendDiscordWebHook(webhookTestMsg.Text,Color.Gold);
+            SendDiscordWebHook(webhookTestMsg.Text, Color.Gold);
         }
 
         private void webhookTestMsg_Leave(object sender, EventArgs e)
@@ -2146,7 +2150,7 @@ namespace Dead_Matter_Server_Manager
 
         private void enableBackups_CheckedChanged(object sender, EventArgs e)
         {
-            if(enableBackups.Checked)
+            if (enableBackups.Checked)
             {
                 backupDestinationFolder.ReadOnly = false;
                 browseBackupDestinationFolder.Enabled = true;
@@ -2236,13 +2240,13 @@ namespace Dead_Matter_Server_Manager
                     //get all db files (in case version updates change them)
                     string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
 
-                    DateTime mostRecent = new DateTime(1990,1,1);
+                    DateTime mostRecent = new DateTime(1990, 1, 1);
                     string mostRecentFile = "";
 
-                    foreach(string s in saveDB)
+                    foreach (string s in saveDB)
                     {
                         FileInfo file = new FileInfo(s);
-                        if(file.LastWriteTime > mostRecent)
+                        if (file.LastWriteTime > mostRecent)
                         {
                             mostRecent = file.LastWriteTime;
                             mostRecentFile = s;
@@ -2282,19 +2286,19 @@ namespace Dead_Matter_Server_Manager
         {
             SaveData();
 
-            if(backupList.SelectedItem != null)
+            if (backupList.SelectedItem != null)
             {
                 string backupFile = backupList.SelectedItem.ToString();
                 string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\restore";
 
-                if(!Directory.Exists(tempExtractPath))
+                if (!Directory.Exists(tempExtractPath))
                 {
                     Directory.CreateDirectory(tempExtractPath);
                 }
 
                 DirectoryInfo directoryInfo = new DirectoryInfo(tempExtractPath);
 
-                foreach(FileInfo file in directoryInfo.GetFiles())
+                foreach (FileInfo file in directoryInfo.GetFiles())
                 {
                     file.Delete();
                 }
@@ -2307,9 +2311,9 @@ namespace Dead_Matter_Server_Manager
                 string extractEngineIni = tempExtractPath + @"\\Engine.ini";
 
                 ZipFile.ExtractToDirectory(backupFile, tempExtractPath);
-                if(restoreGameIni.Checked)
+                if (restoreGameIni.Checked)
                 {
-                    if(File.Exists(gameIni))
+                    if (File.Exists(gameIni))
                     {
                         _ = new FileInfo(gameIni)
                         {
@@ -2349,7 +2353,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         FileInfo file = new FileInfo(s);
 
-                        if(File.Exists(worldSave + file.Name))
+                        if (File.Exists(worldSave + file.Name))
                         {
                             _ = new FileInfo(worldSave + file.Name)
                             {
@@ -2379,7 +2383,7 @@ namespace Dead_Matter_Server_Manager
 
                 try
                 {
-                    if(Directory.Exists(backupDestinationFolder.Text))
+                    if (Directory.Exists(backupDestinationFolder.Text))
                     {
                         string[] backupFiles = Directory.GetFiles(backupDestinationFolder.Text);
 
@@ -2396,7 +2400,7 @@ namespace Dead_Matter_Server_Manager
                                 {
                                     mostRecent = fileInfo.LastWriteTime;
                                 }
-                                backupsList.Add(new BackupFiles(){ FileName = s, CreatedDateTime = fileInfo.LastWriteTime });
+                                backupsList.Add(new BackupFiles() { FileName = s, CreatedDateTime = fileInfo.LastWriteTime });
                             }
                         }
 
@@ -2406,24 +2410,24 @@ namespace Dead_Matter_Server_Manager
                         {
                             backupsList.OrderBy(o => o.CreatedDateTime).ToList();
                             decimal qtyToRemove = backupsList.Count - backupRetentionQty.Value;
-                            for(int i = 1;i <= qtyToRemove;i++)
+                            for (int i = 1; i <= qtyToRemove; i++)
                             {
                                 File.Delete(backupsList[0].FileName);
                                 backupsList.RemoveAt(0);
                             }
                         }
 
-                        foreach(BackupFiles files in backupsList)
+                        foreach (BackupFiles files in backupsList)
                         {
                             ListControl(backupList, true, files.FileName);
                         }
 
-                        if(mostRecent != new DateTime(0))
+                        if (mostRecent != new DateTime(0))
                         {
                             SetText(lastBackupTime, mostRecent.ToString(), Color.Black, true);
                             lastBackup = mostRecent;
                         }
-                        
+
                     }
                 }
                 catch
@@ -2434,7 +2438,7 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        public void ListControl(ListBox controlToChange,bool addItem, string itemName)
+        public void ListControl(ListBox controlToChange, bool addItem, string itemName)
         {
             if (controlToChange.InvokeRequired)
             {
@@ -2443,7 +2447,7 @@ namespace Dead_Matter_Server_Manager
             }
             else
             {
-                if(addItem)
+                if (addItem)
                 {
                     controlToChange.Items.Add(itemName);
                 }
@@ -2461,7 +2465,7 @@ namespace Dead_Matter_Server_Manager
 
         private void scheduledRestartOption_CheckedChanged(object sender, EventArgs e)
         {
-            if(scheduledRestartOption.Checked)
+            if (scheduledRestartOption.Checked)
             {
                 configureRestartSchedule.Enabled = true;
             }
@@ -2479,7 +2483,7 @@ namespace Dead_Matter_Server_Manager
 
         private void notifyOnScheduledRestart_CheckedChanged(object sender, EventArgs e)
         {
-            if(notifyOnScheduledRestart.Checked)
+            if (notifyOnScheduledRestart.Checked)
             {
                 scheduledRestartDiscordTxt.Enabled = true;
             }
@@ -2497,6 +2501,65 @@ namespace Dead_Matter_Server_Manager
         private void notifyOnScheduledRestart_Click(object sender, EventArgs e)
         {
             SaveData();
+        }
+
+        private void GetSavedPlayers()
+        {
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                string queryTxt = "SELECT DocumentID,OwningPlayerID,CharacterIDs FROM PlayerData";
+                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while(reader.Read())
+                {
+                    PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
+                    //string tmp = reader[1].ToString().Substring(13, 17);
+                    playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
+                    playerSteamInfo.CharacterIDs = reader[2].ToString();
+                    selectedPlayer.Items.Add(playerSteamInfo);
+                }
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        private string GetSteamName(string communityID)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                string name = client.DownloadString("https://www.winglessraven.com/DMSM/getSteamName.php?userID=" + communityID);
+                return name;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public class PlayerSteamInfo
+        {
+            public string CharacterIDs { get; set; }
+            public string SteamName { get; set; }
+
+            public override string ToString()
+            {
+                return SteamName;
+            }
+        }
+
+        private void selectedPlayer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var b = selectedPlayer.SelectedItem.ToString();
         }
     }
 }

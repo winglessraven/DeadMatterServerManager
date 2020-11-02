@@ -157,6 +157,9 @@
             this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
             this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.playerInfoTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.selectedPlayer = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -180,6 +183,8 @@
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).BeginInit();
+            this.playerInfoTabPage.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -479,6 +484,7 @@
             this.tabControl1.Controls.Add(this.statisticsTabPage);
             this.tabControl1.Controls.Add(this.discordTabPage);
             this.tabControl1.Controls.Add(this.backupsTabPage);
+            this.tabControl1.Controls.Add(this.playerInfoTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 111);
             this.tabControl1.Name = "tabControl1";
@@ -972,7 +978,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
@@ -1024,7 +1030,7 @@
             this.webhookURL.Enabled = false;
             this.webhookURL.Location = new System.Drawing.Point(208, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(846, 20);
+            this.webhookURL.Size = new System.Drawing.Size(845, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1074,7 +1080,7 @@
             this.memoryLimitDiscordTxt.Enabled = false;
             this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(208, 53);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(846, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(845, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
@@ -1085,7 +1091,7 @@
             this.timedRestartDiscordTxt.Enabled = false;
             this.timedRestartDiscordTxt.Location = new System.Drawing.Point(208, 78);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(846, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(845, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
@@ -1096,7 +1102,7 @@
             this.serverCrashedDiscordTxt.Enabled = false;
             this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(208, 128);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(846, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(845, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1117,7 +1123,7 @@
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookTestMsg.Location = new System.Drawing.Point(208, 203);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(846, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(845, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1141,7 +1147,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(208, 150);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(846, 25);
+            this.label13.Size = new System.Drawing.Size(845, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1165,7 +1171,7 @@
             this.scheduledRestartDiscordTxt.Enabled = false;
             this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(208, 103);
             this.scheduledRestartDiscordTxt.Name = "scheduledRestartDiscordTxt";
-            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(846, 20);
+            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(845, 20);
             this.scheduledRestartDiscordTxt.TabIndex = 60;
             this.scheduledRestartDiscordTxt.Text = "SERVER RESTARTING | Scheduled Restart";
             this.scheduledRestartDiscordTxt.Leave += new System.EventHandler(this.scheduledRestartDiscordTxt_Leave);
@@ -1737,6 +1743,41 @@
             this.configureRestartSchedule.UseVisualStyleBackColor = true;
             this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
+            // playerInfoTabPage
+            // 
+            this.playerInfoTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.playerInfoTabPage.Controls.Add(this.tableLayoutPanel8);
+            this.playerInfoTabPage.Location = new System.Drawing.Point(4, 22);
+            this.playerInfoTabPage.Name = "playerInfoTabPage";
+            this.playerInfoTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.playerInfoTabPage.TabIndex = 7;
+            this.playerInfoTabPage.Text = "Player Info";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.33687F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.66313F));
+            this.tableLayoutPanel8.Controls.Add(this.selectedPlayer, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.712766F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.28723F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // selectedPlayer
+            // 
+            this.selectedPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectedPlayer.FormattingEnabled = true;
+            this.selectedPlayer.Location = new System.Drawing.Point(3, 3);
+            this.selectedPlayer.Name = "selectedPlayer";
+            this.selectedPlayer.Size = new System.Drawing.Size(551, 21);
+            this.selectedPlayer.TabIndex = 0;
+            this.selectedPlayer.SelectedIndexChanged += new System.EventHandler(this.selectedPlayer_SelectedIndexChanged);
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1774,6 +1815,8 @@
             this.tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).EndInit();
+            this.playerInfoTabPage.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1904,6 +1947,9 @@
         private System.Windows.Forms.Button configureRestartSchedule;
         private System.Windows.Forms.CheckBox notifyOnScheduledRestart;
         private System.Windows.Forms.TextBox scheduledRestartDiscordTxt;
+        private System.Windows.Forms.TabPage playerInfoTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.ComboBox selectedPlayer;
     }
 }
 
