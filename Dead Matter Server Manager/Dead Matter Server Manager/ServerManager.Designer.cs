@@ -110,6 +110,8 @@
             this.webhookTestMsg = new System.Windows.Forms.TextBox();
             this.discordIncludeAdditional = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.notifyOnScheduledRestart = new System.Windows.Forms.CheckBox();
+            this.scheduledRestartDiscordTxt = new System.Windows.Forms.TextBox();
             this.backupsTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.enableBackups = new System.Windows.Forms.CheckBox();
@@ -152,6 +154,8 @@
             this.memoryUsed = new System.Windows.Forms.Label();
             this.allTimeHighPlayersLbl = new System.Windows.Forms.Label();
             this.longestUptimeLbl = new System.Windows.Forms.Label();
+            this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
+            this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -183,10 +187,10 @@
             this.tableLayoutPanel1.ColumnCount = 8;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 141F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 156F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 161F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 147F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
@@ -233,6 +237,8 @@
             this.tableLayoutPanel1.Controls.Add(this.memoryUsed, 3, 6);
             this.tableLayoutPanel1.Controls.Add(this.allTimeHighPlayersLbl, 3, 8);
             this.tableLayoutPanel1.Controls.Add(this.longestUptimeLbl, 4, 8);
+            this.tableLayoutPanel1.Controls.Add(this.scheduledRestartOption, 5, 8);
+            this.tableLayoutPanel1.Controls.Add(this.configureRestartSchedule, 5, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -277,9 +283,9 @@
             // steamCMDBrowse
             // 
             this.steamCMDBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamCMDBrowse.Location = new System.Drawing.Point(362, 28);
+            this.steamCMDBrowse.Location = new System.Drawing.Point(354, 28);
             this.steamCMDBrowse.Name = "steamCMDBrowse";
-            this.steamCMDBrowse.Size = new System.Drawing.Size(143, 24);
+            this.steamCMDBrowse.Size = new System.Drawing.Size(130, 24);
             this.steamCMDBrowse.TabIndex = 3;
             this.steamCMDBrowse.Text = "Browse";
             this.steamCMDBrowse.UseVisualStyleBackColor = true;
@@ -288,9 +294,9 @@
             // serverFolderBrowse
             // 
             this.serverFolderBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverFolderBrowse.Location = new System.Drawing.Point(362, 58);
+            this.serverFolderBrowse.Location = new System.Drawing.Point(354, 58);
             this.serverFolderBrowse.Name = "serverFolderBrowse";
-            this.serverFolderBrowse.Size = new System.Drawing.Size(143, 24);
+            this.serverFolderBrowse.Size = new System.Drawing.Size(130, 24);
             this.serverFolderBrowse.TabIndex = 4;
             this.serverFolderBrowse.Text = "Browse";
             this.serverFolderBrowse.UseVisualStyleBackColor = true;
@@ -302,7 +308,7 @@
             this.steamCMDPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.steamCMDPath.Location = new System.Drawing.Point(121, 28);
             this.steamCMDPath.Name = "steamCMDPath";
-            this.steamCMDPath.Size = new System.Drawing.Size(235, 20);
+            this.steamCMDPath.Size = new System.Drawing.Size(227, 20);
             this.steamCMDPath.TabIndex = 5;
             // 
             // serverFolderPath
@@ -311,15 +317,15 @@
             this.serverFolderPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverFolderPath.Location = new System.Drawing.Point(121, 58);
             this.serverFolderPath.Name = "serverFolderPath";
-            this.serverFolderPath.Size = new System.Drawing.Size(235, 20);
+            this.serverFolderPath.Size = new System.Drawing.Size(227, 20);
             this.serverFolderPath.TabIndex = 6;
             // 
             // updateSteamCMD
             // 
             this.updateSteamCMD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateSteamCMD.Location = new System.Drawing.Point(511, 28);
+            this.updateSteamCMD.Location = new System.Drawing.Point(490, 28);
             this.updateSteamCMD.Name = "updateSteamCMD";
-            this.updateSteamCMD.Size = new System.Drawing.Size(148, 24);
+            this.updateSteamCMD.Size = new System.Drawing.Size(150, 24);
             this.updateSteamCMD.TabIndex = 7;
             this.updateSteamCMD.Text = "Update SteamCMD";
             this.updateSteamCMD.UseVisualStyleBackColor = true;
@@ -369,9 +375,9 @@
             // updateServer
             // 
             this.updateServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateServer.Location = new System.Drawing.Point(665, 28);
+            this.updateServer.Location = new System.Drawing.Point(646, 28);
             this.updateServer.Name = "updateServer";
-            this.updateServer.Size = new System.Drawing.Size(136, 24);
+            this.updateServer.Size = new System.Drawing.Size(155, 24);
             this.updateServer.TabIndex = 13;
             this.updateServer.Text = "Update Server";
             this.updateServer.UseVisualStyleBackColor = true;
@@ -380,9 +386,9 @@
             // getConfig
             // 
             this.getConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.getConfig.Location = new System.Drawing.Point(511, 58);
+            this.getConfig.Location = new System.Drawing.Point(490, 58);
             this.getConfig.Name = "getConfig";
-            this.getConfig.Size = new System.Drawing.Size(148, 24);
+            this.getConfig.Size = new System.Drawing.Size(150, 24);
             this.getConfig.TabIndex = 14;
             this.getConfig.Text = "Get Config";
             this.getConfig.UseVisualStyleBackColor = true;
@@ -391,9 +397,9 @@
             // saveConfig
             // 
             this.saveConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConfig.Location = new System.Drawing.Point(665, 58);
+            this.saveConfig.Location = new System.Drawing.Point(646, 58);
             this.saveConfig.Name = "saveConfig";
-            this.saveConfig.Size = new System.Drawing.Size(136, 24);
+            this.saveConfig.Size = new System.Drawing.Size(155, 24);
             this.saveConfig.TabIndex = 17;
             this.saveConfig.Text = "Save Config";
             this.saveConfig.UseVisualStyleBackColor = true;
@@ -460,7 +466,7 @@
             this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 519);
             this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
-            this.memoryUsedProgressBar.Size = new System.Drawing.Size(235, 24);
+            this.memoryUsedProgressBar.Size = new System.Drawing.Size(227, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
             // 
             // tabControl1
@@ -911,12 +917,12 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(120, 25);
             this.label11.TabIndex = 10;
-            this.label11.Text = "Timed Restart Colour";
+            this.label11.Text = "Planned Restart Colour";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // timedRestartColour
             // 
-            this.timedRestartColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.timedRestartColour.BackColor = System.Drawing.Color.Lime;
             this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
@@ -966,19 +972,21 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnTimedRestart, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 5);
             this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 2);
             this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 5);
             this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 8);
             this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 8);
-            this.tableLayoutPanel6.Controls.Add(this.discordIncludeAdditional, 0, 5);
-            this.tableLayoutPanel6.Controls.Add(this.label13, 1, 5);
+            this.tableLayoutPanel6.Controls.Add(this.discordIncludeAdditional, 0, 6);
+            this.tableLayoutPanel6.Controls.Add(this.label13, 1, 6);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnScheduledRestart, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.scheduledRestartDiscordTxt, 1, 4);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -1003,7 +1011,7 @@
             this.discordWebHook.Dock = System.Windows.Forms.DockStyle.Fill;
             this.discordWebHook.Location = new System.Drawing.Point(3, 3);
             this.discordWebHook.Name = "discordWebHook";
-            this.discordWebHook.Size = new System.Drawing.Size(200, 19);
+            this.discordWebHook.Size = new System.Drawing.Size(199, 19);
             this.discordWebHook.TabIndex = 47;
             this.discordWebHook.Text = "Enable Discord Webhook Integration";
             this.discordWebHook.UseVisualStyleBackColor = true;
@@ -1014,9 +1022,9 @@
             // 
             this.webhookURL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookURL.Enabled = false;
-            this.webhookURL.Location = new System.Drawing.Point(209, 3);
+            this.webhookURL.Location = new System.Drawing.Point(208, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(848, 20);
+            this.webhookURL.Size = new System.Drawing.Size(846, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1027,7 +1035,7 @@
             this.notifyOnMemoryLimit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notifyOnMemoryLimit.Location = new System.Drawing.Point(3, 53);
             this.notifyOnMemoryLimit.Name = "notifyOnMemoryLimit";
-            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(200, 19);
+            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(199, 19);
             this.notifyOnMemoryLimit.TabIndex = 49;
             this.notifyOnMemoryLimit.Text = "Notify on Memory Limit";
             this.notifyOnMemoryLimit.UseVisualStyleBackColor = true;
@@ -1040,7 +1048,7 @@
             this.notifyOnTimedRestart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notifyOnTimedRestart.Location = new System.Drawing.Point(3, 78);
             this.notifyOnTimedRestart.Name = "notifyOnTimedRestart";
-            this.notifyOnTimedRestart.Size = new System.Drawing.Size(200, 19);
+            this.notifyOnTimedRestart.Size = new System.Drawing.Size(199, 19);
             this.notifyOnTimedRestart.TabIndex = 50;
             this.notifyOnTimedRestart.Text = "Notify on Timed Restart";
             this.notifyOnTimedRestart.UseVisualStyleBackColor = true;
@@ -1051,9 +1059,9 @@
             // 
             this.notifiyOnCrash.AutoSize = true;
             this.notifiyOnCrash.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 103);
+            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 128);
             this.notifiyOnCrash.Name = "notifiyOnCrash";
-            this.notifiyOnCrash.Size = new System.Drawing.Size(200, 19);
+            this.notifiyOnCrash.Size = new System.Drawing.Size(199, 19);
             this.notifiyOnCrash.TabIndex = 51;
             this.notifiyOnCrash.Text = "Notify on Crash";
             this.notifiyOnCrash.UseVisualStyleBackColor = true;
@@ -1064,9 +1072,9 @@
             // 
             this.memoryLimitDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryLimitDiscordTxt.Enabled = false;
-            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(209, 53);
+            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(208, 53);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(848, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(846, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
@@ -1075,9 +1083,9 @@
             // 
             this.timedRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timedRestartDiscordTxt.Enabled = false;
-            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(209, 78);
+            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(208, 78);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(848, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(846, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
@@ -1086,9 +1094,9 @@
             // 
             this.serverCrashedDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverCrashedDiscordTxt.Enabled = false;
-            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(209, 103);
+            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(208, 128);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(848, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(846, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1098,7 +1106,7 @@
             this.testWebhook.Dock = System.Windows.Forms.DockStyle.Fill;
             this.testWebhook.Location = new System.Drawing.Point(3, 203);
             this.testWebhook.Name = "testWebhook";
-            this.testWebhook.Size = new System.Drawing.Size(200, 24);
+            this.testWebhook.Size = new System.Drawing.Size(199, 24);
             this.testWebhook.TabIndex = 55;
             this.testWebhook.Text = "Test Webhook";
             this.testWebhook.UseVisualStyleBackColor = true;
@@ -1107,9 +1115,9 @@
             // webhookTestMsg
             // 
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webhookTestMsg.Location = new System.Drawing.Point(209, 203);
+            this.webhookTestMsg.Location = new System.Drawing.Point(208, 203);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(848, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(846, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1118,9 +1126,9 @@
             // 
             this.discordIncludeAdditional.AutoSize = true;
             this.discordIncludeAdditional.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discordIncludeAdditional.Location = new System.Drawing.Point(3, 128);
+            this.discordIncludeAdditional.Location = new System.Drawing.Point(3, 153);
             this.discordIncludeAdditional.Name = "discordIncludeAdditional";
-            this.discordIncludeAdditional.Size = new System.Drawing.Size(200, 19);
+            this.discordIncludeAdditional.Size = new System.Drawing.Size(199, 19);
             this.discordIncludeAdditional.TabIndex = 57;
             this.discordIncludeAdditional.Text = "Include Additional Info";
             this.discordIncludeAdditional.UseVisualStyleBackColor = true;
@@ -1131,12 +1139,36 @@
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(209, 125);
+            this.label13.Location = new System.Drawing.Point(208, 150);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(848, 25);
+            this.label13.Size = new System.Drawing.Size(846, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // notifyOnScheduledRestart
+            // 
+            this.notifyOnScheduledRestart.AutoSize = true;
+            this.notifyOnScheduledRestart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notifyOnScheduledRestart.Location = new System.Drawing.Point(3, 103);
+            this.notifyOnScheduledRestart.Name = "notifyOnScheduledRestart";
+            this.notifyOnScheduledRestart.Size = new System.Drawing.Size(199, 19);
+            this.notifyOnScheduledRestart.TabIndex = 59;
+            this.notifyOnScheduledRestart.Text = "Notify on Scheduled Restart";
+            this.notifyOnScheduledRestart.UseVisualStyleBackColor = true;
+            this.notifyOnScheduledRestart.CheckedChanged += new System.EventHandler(this.notifyOnScheduledRestart_CheckedChanged);
+            this.notifyOnScheduledRestart.Click += new System.EventHandler(this.notifyOnScheduledRestart_Click);
+            // 
+            // scheduledRestartDiscordTxt
+            // 
+            this.scheduledRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scheduledRestartDiscordTxt.Enabled = false;
+            this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(208, 103);
+            this.scheduledRestartDiscordTxt.Name = "scheduledRestartDiscordTxt";
+            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(846, 20);
+            this.scheduledRestartDiscordTxt.TabIndex = 60;
+            this.scheduledRestartDiscordTxt.Text = "SERVER RESTARTING | Scheduled Restart";
+            this.scheduledRestartDiscordTxt.Leave += new System.EventHandler(this.scheduledRestartDiscordTxt_Leave);
             // 
             // backupsTabPage
             // 
@@ -1503,9 +1535,9 @@
             this.restartServerTimeOption.AutoSize = true;
             this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimeOption.Location = new System.Drawing.Point(665, 549);
+            this.restartServerTimeOption.Location = new System.Drawing.Point(646, 549);
             this.restartServerTimeOption.Name = "restartServerTimeOption";
-            this.restartServerTimeOption.Size = new System.Drawing.Size(136, 24);
+            this.restartServerTimeOption.Size = new System.Drawing.Size(155, 24);
             this.restartServerTimeOption.TabIndex = 34;
             this.restartServerTimeOption.Text = "Timed Restart";
             this.restartServerTimeOption.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1543,9 +1575,9 @@
             this.changeLaunchParams.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.changeLaunchParams, 2);
             this.changeLaunchParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeLaunchParams.Location = new System.Drawing.Point(362, 88);
+            this.changeLaunchParams.Location = new System.Drawing.Point(354, 88);
             this.changeLaunchParams.Name = "changeLaunchParams";
-            this.changeLaunchParams.Size = new System.Drawing.Size(297, 17);
+            this.changeLaunchParams.Size = new System.Drawing.Size(286, 17);
             this.changeLaunchParams.TabIndex = 40;
             this.changeLaunchParams.Text = "Change Launch Parameters";
             this.changeLaunchParams.UseVisualStyleBackColor = true;
@@ -1570,7 +1602,7 @@
             this.launchParameters.Location = new System.Drawing.Point(121, 88);
             this.launchParameters.Name = "launchParameters";
             this.launchParameters.ReadOnly = true;
-            this.launchParameters.Size = new System.Drawing.Size(235, 20);
+            this.launchParameters.Size = new System.Drawing.Size(227, 20);
             this.launchParameters.TabIndex = 42;
             this.launchParameters.Text = "-USEALLAVAILABLECORES -log";
             this.launchParameters.Leave += new System.EventHandler(this.launchParameters_Leave);
@@ -1616,9 +1648,9 @@
             // 
             this.onlinePlayers.AutoSize = true;
             this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlinePlayers.Location = new System.Drawing.Point(511, 516);
+            this.onlinePlayers.Location = new System.Drawing.Point(490, 516);
             this.onlinePlayers.Name = "onlinePlayers";
-            this.onlinePlayers.Size = new System.Drawing.Size(148, 30);
+            this.onlinePlayers.Size = new System.Drawing.Size(150, 30);
             this.onlinePlayers.TabIndex = 36;
             this.onlinePlayers.Text = "Online Players\r\n0/0";
             this.onlinePlayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1627,9 +1659,9 @@
             // 
             this.restartsThisSessionTxt.AutoSize = true;
             this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartsThisSessionTxt.Location = new System.Drawing.Point(362, 546);
+            this.restartsThisSessionTxt.Location = new System.Drawing.Point(354, 546);
             this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
-            this.restartsThisSessionTxt.Size = new System.Drawing.Size(143, 30);
+            this.restartsThisSessionTxt.Size = new System.Drawing.Size(130, 30);
             this.restartsThisSessionTxt.TabIndex = 38;
             this.restartsThisSessionTxt.Text = "Restarts This Session\r\n0";
             this.restartsThisSessionTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1638,9 +1670,9 @@
             // 
             this.lastRestartTxt.AutoSize = true;
             this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lastRestartTxt.Location = new System.Drawing.Point(511, 546);
+            this.lastRestartTxt.Location = new System.Drawing.Point(490, 546);
             this.lastRestartTxt.Name = "lastRestartTxt";
-            this.lastRestartTxt.Size = new System.Drawing.Size(148, 30);
+            this.lastRestartTxt.Size = new System.Drawing.Size(150, 30);
             this.lastRestartTxt.TabIndex = 39;
             this.lastRestartTxt.Text = "Last Restart\r\n00/00/0000 00:00:00";
             this.lastRestartTxt.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1649,9 +1681,9 @@
             // 
             this.memoryUsed.AutoSize = true;
             this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsed.Location = new System.Drawing.Point(362, 516);
+            this.memoryUsed.Location = new System.Drawing.Point(354, 516);
             this.memoryUsed.Name = "memoryUsed";
-            this.memoryUsed.Size = new System.Drawing.Size(143, 30);
+            this.memoryUsed.Size = new System.Drawing.Size(130, 30);
             this.memoryUsed.TabIndex = 21;
             this.memoryUsed.Text = "memused";
             this.memoryUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1660,9 +1692,9 @@
             // 
             this.allTimeHighPlayersLbl.AutoSize = true;
             this.allTimeHighPlayersLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(362, 576);
+            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(354, 576);
             this.allTimeHighPlayersLbl.Name = "allTimeHighPlayersLbl";
-            this.allTimeHighPlayersLbl.Size = new System.Drawing.Size(143, 30);
+            this.allTimeHighPlayersLbl.Size = new System.Drawing.Size(130, 30);
             this.allTimeHighPlayersLbl.TabIndex = 45;
             this.allTimeHighPlayersLbl.Text = "All Time High Players\r\n0";
             this.allTimeHighPlayersLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1671,12 +1703,39 @@
             // 
             this.longestUptimeLbl.AutoSize = true;
             this.longestUptimeLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.longestUptimeLbl.Location = new System.Drawing.Point(511, 576);
+            this.longestUptimeLbl.Location = new System.Drawing.Point(490, 576);
             this.longestUptimeLbl.Name = "longestUptimeLbl";
-            this.longestUptimeLbl.Size = new System.Drawing.Size(148, 30);
+            this.longestUptimeLbl.Size = new System.Drawing.Size(150, 30);
             this.longestUptimeLbl.TabIndex = 46;
             this.longestUptimeLbl.Text = "Longest Uptime\r\n0.00:00:00";
             this.longestUptimeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // scheduledRestartOption
+            // 
+            this.scheduledRestartOption.AutoSize = true;
+            this.scheduledRestartOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.scheduledRestartOption.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scheduledRestartOption.Location = new System.Drawing.Point(646, 579);
+            this.scheduledRestartOption.Name = "scheduledRestartOption";
+            this.scheduledRestartOption.Size = new System.Drawing.Size(155, 24);
+            this.scheduledRestartOption.TabIndex = 47;
+            this.scheduledRestartOption.Text = "Scheduled Restart";
+            this.scheduledRestartOption.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.scheduledRestartOption.UseVisualStyleBackColor = true;
+            this.scheduledRestartOption.CheckedChanged += new System.EventHandler(this.scheduledRestartOption_CheckedChanged);
+            this.scheduledRestartOption.Click += new System.EventHandler(this.scheduledRestartOption_Click);
+            // 
+            // configureRestartSchedule
+            // 
+            this.configureRestartSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.configureRestartSchedule.Enabled = false;
+            this.configureRestartSchedule.Location = new System.Drawing.Point(646, 609);
+            this.configureRestartSchedule.Name = "configureRestartSchedule";
+            this.configureRestartSchedule.Size = new System.Drawing.Size(155, 24);
+            this.configureRestartSchedule.TabIndex = 48;
+            this.configureRestartSchedule.Text = "Configure Restart Schedule";
+            this.configureRestartSchedule.UseVisualStyleBackColor = true;
+            this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
             // ServerManager
             // 
@@ -1841,6 +1900,10 @@
         private System.Windows.Forms.CheckBox restoreEngineIni;
         private System.Windows.Forms.CheckBox restoreWorldSave;
         private System.Windows.Forms.Button restoreNow;
+        private System.Windows.Forms.CheckBox scheduledRestartOption;
+        private System.Windows.Forms.Button configureRestartSchedule;
+        private System.Windows.Forms.CheckBox notifyOnScheduledRestart;
+        private System.Windows.Forms.TextBox scheduledRestartDiscordTxt;
     }
 }
 

@@ -20,6 +20,9 @@ namespace Dead_Matter_Server_Manager
 {
     public partial class ServerManager : Form
     {
+        internal static ServerManager serverManager;
+        internal static RestartSchedule restartSchedule;
+
         private static List<Settings> settings = new List<Settings>();
         private static string configFilePath;
         private List<String> scripts = new List<String>();
@@ -51,11 +54,14 @@ namespace Dead_Matter_Server_Manager
         TimeSpan uptime;
         bool plannedShutdown;
         private DateTime lastBackup;
+        public static List<DateTime> restartSchedules = new List<DateTime>();
 
         public ServerManager()
         {
             InitializeComponent();
             VersionCheckOnStart();
+
+            serverManager = this;
 
             //set form title to include version number
             this.Text = "Dead Matter Server Manager || " + this.ProductVersion;
@@ -347,6 +353,12 @@ namespace Dead_Matter_Server_Manager
                         notifyOnTimedRestart.Checked = Convert.ToBoolean(temp[1]);
                     }
 
+                    if (s.StartsWith("NotifiyOnScheduledRestart"))
+                    {
+                        String[] temp = s.Split('=');
+                        notifyOnScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
                     if (s.StartsWith("NotifyOnCrash"))
                     {
                         String[] temp = s.Split('=');
@@ -369,6 +381,12 @@ namespace Dead_Matter_Server_Manager
                     {
                         String[] temp = s.Split('=');
                         timedRestartDiscordTxt.Text = temp[1];
+                    }
+
+                    if (s.StartsWith("DiscordTxtScheduledRestart"))
+                    {
+                        String[] temp = s.Split('=');
+                        scheduledRestartDiscordTxt.Text = temp[1];
                     }
 
                     if (s.StartsWith("DiscordWebhookTest"))
@@ -424,6 +442,23 @@ namespace Dead_Matter_Server_Manager
                         String[] temp = s.Split('=');
                         backupRetentionQty.Value = Convert.ToDecimal(temp[1]);
                     }
+
+                    if (s.StartsWith("ScheduledRestartOption"))
+                    {
+                        String[] temp = s.Split('=');
+                        scheduledRestartOption.Checked = Convert.ToBoolean(temp[1]);
+                    }
+
+                    if (s.StartsWith("ScheduledRestartTimes"))
+                    {
+                        String[] temp = s.Split('=');
+                        String[] times = temp[1].Split(',');
+                        foreach(string time in times)
+                        {
+                            restartSchedules.Add(Convert.ToDateTime(time));
+                        }
+                    }
+
                 }
             }
             else
@@ -788,12 +823,28 @@ namespace Dead_Matter_Server_Manager
             WriteLog("Config file saved", "INFO", null);
         }
 
-        private void SaveData()
+        public void SaveData()
         {
             string steamPass = "";
             if (rememberSteamPass.Checked)
             {
                 steamPass = StringCipher.Encrypt(steamPassword.Text, Environment.UserName);
+            }
+
+            string restartTimes = "";
+            if(scheduledRestartOption.Checked)
+            {
+                foreach(DateTime time in restartSchedules)
+                {
+                    restartTimes += time.ToString("HH:mm") + ",";
+                }
+
+                //remove last ,
+                if(restartTimes.Length != 0)
+                {
+                    restartTimes = restartTimes.Substring(0, restartTimes.Length - 1);
+                }
+                
             }
 
             File.WriteAllText(configFilePath, "SteamCMDPath=" + steamCMDPath.Text + Environment.NewLine +
@@ -816,10 +867,12 @@ namespace Dead_Matter_Server_Manager
                 "DiscordIntegration=" + discordWebHook.Checked + Environment.NewLine +
                 "NotifyOnMemoryLimit=" + notifyOnMemoryLimit.Checked + Environment.NewLine +
                 "NotifiyOnTimedRestart=" + notifyOnTimedRestart.Checked + Environment.NewLine +
+                "NotifiyOnScheduledRestart=" + notifyOnScheduledRestart.Checked + Environment.NewLine +
                 "NotifyOnCrash=" + notifiyOnCrash.Checked + Environment.NewLine +
                 "DiscordTxtMemoryLimit=" + memoryLimitDiscordTxt.Text + Environment.NewLine +
                 "DiscordTxtCrash=" + serverCrashedDiscordTxt.Text + Environment.NewLine +
                 "DiscordTxtTimedRestart=" + timedRestartDiscordTxt.Text + Environment.NewLine +
+                "DiscordTxtScheduledRestart=" + scheduledRestartDiscordTxt.Text + Environment.NewLine +
                 "DiscordWebhookTest=" + webhookTestMsg.Text + Environment.NewLine +
                 "DiscordIncludeAdditionalInfo=" + discordIncludeAdditional.Checked + Environment.NewLine +
                 "EnableLogging=" + enableLogging.Checked + Environment.NewLine +
@@ -836,10 +889,10 @@ namespace Dead_Matter_Server_Manager
                 "BackupRetention=" + backupRetentionQty.Value + Environment.NewLine +
                 "RestoreGameIni=" + restoreGameIni.Checked + Environment.NewLine +
                 "RestoreEngineIni=" + restoreEngineIni.Checked + Environment.NewLine +
-                "RestoreWorld=" + restoreWorldSave.Checked
+                "RestoreWorld=" + restoreWorldSave.Checked + Environment.NewLine + 
+                "ScheduledRestartOption=" + scheduledRestartOption.Checked + Environment.NewLine +
+                "ScheduledRestartTimes=" + restartTimes
                 ); 
-
-
         }
 
         private void startServer_Click(object sender, EventArgs e)
@@ -983,7 +1036,19 @@ namespace Dead_Matter_Server_Manager
                             timeSinceLastKill = DateTime.Now - killCommandSentAt;
                         }
 
-                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
+                        bool scheduleRestartTime = false;
+                        if(scheduledRestartOption.Checked)
+                        {
+                            foreach(DateTime time in restartSchedules)
+                            {
+                                if(DateTime.Now.ToString("HH:mm").Equals(time.ToString("HH:mm")) && uptime.TotalMinutes > 1 )
+                                {
+                                    scheduleRestartTime = true;
+                                }
+                            }
+                        }
+
+                        if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || scheduleRestartTime && !killSent || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
                             Process.Start("windows-kill.exe", "-SIGINT " + processID);
@@ -1010,6 +1075,16 @@ namespace Dead_Matter_Server_Manager
                                     tmp = timedRestartDiscordTxt.Text;
                                 }
                                 WriteLog("SERVER UPTIME LIMIT REACHED","UPTIME LIMIT",tmp);
+                            }
+
+                            if(scheduleRestartTime)
+                            {
+                                string tmp = null;
+                                if(notifyOnScheduledRestart.Checked)
+                                {
+                                    tmp = scheduledRestartDiscordTxt.Text;
+                                }
+                                WriteLog("SCHEDULED SERVER RESTART TIME REACHED", "SCHEDULED", tmp);
                             }
 
                             WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"),"INFO",null);
@@ -1168,6 +1243,12 @@ namespace Dead_Matter_Server_Manager
                     }
 
                     if (type.Equals("UPTIME LIMIT"))
+                    {
+                        controlToChange.SelectionColor = timedRestartColour.BackColor;
+                        SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
+                    }
+
+                    if (type.Equals("SCHEDULED"))
                     {
                         controlToChange.SelectionColor = timedRestartColour.BackColor;
                         SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
@@ -2371,6 +2452,51 @@ namespace Dead_Matter_Server_Manager
                     controlToChange.Items.Clear();
                 }
             }
+        }
+
+        private void scheduledRestartOption_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void scheduledRestartOption_CheckedChanged(object sender, EventArgs e)
+        {
+            if(scheduledRestartOption.Checked)
+            {
+                configureRestartSchedule.Enabled = true;
+            }
+            else
+            {
+                configureRestartSchedule.Enabled = false;
+            }
+        }
+
+        private void restartSchedule_Click(object sender, EventArgs e)
+        {
+            RestartSchedule restartSchedule = new RestartSchedule();
+            restartSchedule.Show();
+        }
+
+        private void notifyOnScheduledRestart_CheckedChanged(object sender, EventArgs e)
+        {
+            if(notifyOnScheduledRestart.Checked)
+            {
+                scheduledRestartDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                scheduledRestartDiscordTxt.Enabled = false;
+            }
+        }
+
+        private void scheduledRestartDiscordTxt_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void notifyOnScheduledRestart_Click(object sender, EventArgs e)
+        {
+            SaveData();
         }
     }
 }
