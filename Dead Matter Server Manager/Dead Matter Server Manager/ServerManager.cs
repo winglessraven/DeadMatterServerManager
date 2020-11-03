@@ -455,7 +455,10 @@ namespace Dead_Matter_Server_Manager
                         String[] times = temp[1].Split(',');
                         foreach(string time in times)
                         {
-                            restartSchedules.Add(Convert.ToDateTime(time));
+                            if(time != "")
+                            {
+                                restartSchedules.Add(Convert.ToDateTime(time));
+                            }
                         }
                     }
 
