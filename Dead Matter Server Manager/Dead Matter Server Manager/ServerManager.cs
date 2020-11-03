@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -2522,12 +2523,12 @@ namespace Dead_Matter_Server_Manager
                     //string tmp = reader[1].ToString().Substring(13, 17);
                     playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
                     playerSteamInfo.CharacterIDs = reader[2].ToString();
-                    selectedPlayer.Items.Add(playerSteamInfo);
+                    serverPlayers.Items.Add(playerSteamInfo);
                 }
             }
             catch
             {
-
+                //error connecting to db - do something
             }
 
         }
@@ -2557,9 +2558,111 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void selectedPlayer_SelectedIndexChanged(object sender, EventArgs e)
+        public class Character
         {
-            var b = selectedPlayer.SelectedItem.ToString();
+            public int CharacterKey { get; set; }
+            public string Name { get; set; }
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        public class CharacterLocation
+        {
+            public int CharacterKey { get; set; }
+            public double TranslationX { get; set; }
+            public double TranslationY { get; set; }
+            public double TranslationZ { get; set; }
+        }
+
+        private void serverPlayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            playerCharacters.Items.Clear();
+            xPosition.Text = "";
+            yPosition.Text = "";
+            zPosition.Text = "";
+
+            PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
+            string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
+            tmp = tmp.Replace(")","");
+            string[] characters = tmp.Split(',');
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                foreach(string s in characters)
+                {
+                    string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
+                    SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Character character = new Character();
+                        //string tmp = reader[1].ToString().Substring(13, 17);
+                        character.CharacterKey = Convert.ToInt32(s);
+
+                        string[] temp = reader[0].ToString().Split('=');
+                        string name = Regex.Match(temp[1],"\"[^\"]*\"").ToString();
+                        name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                        name = name.Replace("\"","");
+                        character.Name = name;
+                        playerCharacters.Items.Add(character);
+                    }
+                }
+            }
+            catch
+            {
+                //error connecting to db - do something
+            }
+        }
+
+        private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Character character = (Character)playerCharacters.SelectedItem;
+            int tmp = character.CharacterKey;
+
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                string queryTxt = "SELECT CharacterTransform FROM Characters WHERE CharacterKey = '" + tmp + "'";
+                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string[] temp = reader[0].ToString().Split('(');
+                    string[] temp1 = temp[3].Split('=');
+                    string xPos = temp1[1].Split(',')[0];
+                    string yPos = temp1[2].Split(',')[0];
+                    string zPos = temp1[3].Split(')')[0];
+
+                    CharacterLocation characterLocation = new CharacterLocation();
+                    characterLocation.CharacterKey = tmp;
+                    characterLocation.TranslationX = Convert.ToDouble(xPos);
+                    characterLocation.TranslationY = Convert.ToDouble(yPos);
+                    characterLocation.TranslationZ = Convert.ToDouble(zPos);
+
+                    xPosition.Text = "Position X: " + characterLocation.TranslationX;
+                    yPosition.Text = "Position Y: " + characterLocation.TranslationY;
+                    zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
+                }
+            }
+            catch
+            {
+                //error connecting to db - do something
+                xPosition.Text = "";
+                yPosition.Text = "";
+                zPosition.Text = "";
+            }
         }
     }
 }
