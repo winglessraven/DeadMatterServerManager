@@ -2613,8 +2613,15 @@ namespace Dead_Matter_Server_Manager
                         character.CharacterKey = Convert.ToInt32(s);
 
                         string[] temp = reader[0].ToString().Split('=');
-                        string name = Regex.Match(temp[1],"\"[^\"]*\"").ToString();
-                        name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                        string name = "";
+                        if(temp.Length > 1)
+                        {
+                            name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
+                            if(temp.Length > 2)
+                            {
+                                name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                            }
+                        }                        
                         name = name.Replace("\"","");
                         character.Name = name;
                         playerCharacters.Items.Add(character);
