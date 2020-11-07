@@ -168,6 +168,7 @@
             this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
             this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.refreshPlayerData = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -1463,10 +1464,11 @@
             // 
             // tableLayoutPanel8
             // 
-            this.tableLayoutPanel8.ColumnCount = 3;
+            this.tableLayoutPanel8.ColumnCount = 4;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
             this.tableLayoutPanel8.Controls.Add(this.serverPlayers, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.playerCharacters, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.xPosition, 1, 2);
@@ -1476,17 +1478,17 @@
             this.tableLayoutPanel8.Controls.Add(this.label20, 1, 0);
             this.tableLayoutPanel8.Controls.Add(this.label21, 2, 0);
             this.tableLayoutPanel8.Controls.Add(this.inventoryData, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.refreshPlayerData, 3, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 6;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.041958F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.60839F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 376);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
@@ -1494,10 +1496,10 @@
             // 
             this.serverPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverPlayers.FormattingEnabled = true;
-            this.serverPlayers.Location = new System.Drawing.Point(3, 26);
+            this.serverPlayers.Location = new System.Drawing.Point(3, 43);
             this.serverPlayers.Name = "serverPlayers";
             this.tableLayoutPanel8.SetRowSpan(this.serverPlayers, 5);
-            this.serverPlayers.Size = new System.Drawing.Size(136, 347);
+            this.serverPlayers.Size = new System.Drawing.Size(136, 330);
             this.serverPlayers.TabIndex = 1;
             this.serverPlayers.SelectedIndexChanged += new System.EventHandler(this.serverPlayers_SelectedIndexChanged);
             // 
@@ -1505,9 +1507,9 @@
             // 
             this.playerCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playerCharacters.FormattingEnabled = true;
-            this.playerCharacters.Location = new System.Drawing.Point(145, 26);
+            this.playerCharacters.Location = new System.Drawing.Point(145, 43);
             this.playerCharacters.Name = "playerCharacters";
-            this.playerCharacters.Size = new System.Drawing.Size(171, 113);
+            this.playerCharacters.Size = new System.Drawing.Size(171, 117);
             this.playerCharacters.TabIndex = 2;
             this.playerCharacters.SelectedIndexChanged += new System.EventHandler(this.playerCharacters_SelectedIndexChanged);
             // 
@@ -1515,7 +1517,7 @@
             // 
             this.xPosition.AutoSize = true;
             this.xPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xPosition.Location = new System.Drawing.Point(145, 142);
+            this.xPosition.Location = new System.Drawing.Point(145, 163);
             this.xPosition.Name = "xPosition";
             this.xPosition.Size = new System.Drawing.Size(171, 30);
             this.xPosition.TabIndex = 3;
@@ -1525,7 +1527,7 @@
             // 
             this.yPosition.AutoSize = true;
             this.yPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.yPosition.Location = new System.Drawing.Point(145, 172);
+            this.yPosition.Location = new System.Drawing.Point(145, 193);
             this.yPosition.Name = "yPosition";
             this.yPosition.Size = new System.Drawing.Size(171, 30);
             this.yPosition.TabIndex = 4;
@@ -1535,7 +1537,7 @@
             // 
             this.zPosition.AutoSize = true;
             this.zPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zPosition.Location = new System.Drawing.Point(145, 202);
+            this.zPosition.Location = new System.Drawing.Point(145, 223);
             this.zPosition.Name = "zPosition";
             this.zPosition.Size = new System.Drawing.Size(171, 30);
             this.zPosition.TabIndex = 5;
@@ -1547,7 +1549,7 @@
             this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label18.Location = new System.Drawing.Point(3, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(136, 23);
+            this.label18.Size = new System.Drawing.Size(136, 40);
             this.label18.TabIndex = 6;
             this.label18.Text = "Steam Name";
             this.label18.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -1558,7 +1560,7 @@
             this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label20.Location = new System.Drawing.Point(145, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(171, 23);
+            this.label20.Size = new System.Drawing.Size(171, 40);
             this.label20.TabIndex = 7;
             this.label20.Text = "Characters";
             this.label20.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -1569,20 +1571,21 @@
             this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label21.Location = new System.Drawing.Point(322, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(806, 23);
+            this.label21.Size = new System.Drawing.Size(668, 40);
             this.label21.TabIndex = 8;
             this.label21.Text = "Inventory Data";
             this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // inventoryData
             // 
+            this.tableLayoutPanel8.SetColumnSpan(this.inventoryData, 2);
             this.inventoryData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inventoryData.Location = new System.Drawing.Point(322, 26);
+            this.inventoryData.Location = new System.Drawing.Point(322, 43);
             this.inventoryData.Multiline = true;
             this.inventoryData.Name = "inventoryData";
             this.inventoryData.ReadOnly = true;
             this.tableLayoutPanel8.SetRowSpan(this.inventoryData, 5);
-            this.inventoryData.Size = new System.Drawing.Size(806, 347);
+            this.inventoryData.Size = new System.Drawing.Size(806, 330);
             this.inventoryData.TabIndex = 9;
             // 
             // linkLabel1
@@ -1885,6 +1888,17 @@
             this.configureRestartSchedule.UseVisualStyleBackColor = true;
             this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
+            // refreshPlayerData
+            // 
+            this.refreshPlayerData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.refreshPlayerData.Location = new System.Drawing.Point(996, 3);
+            this.refreshPlayerData.Name = "refreshPlayerData";
+            this.refreshPlayerData.Size = new System.Drawing.Size(132, 34);
+            this.refreshPlayerData.TabIndex = 10;
+            this.refreshPlayerData.Text = "Refresh";
+            this.refreshPlayerData.UseVisualStyleBackColor = true;
+            this.refreshPlayerData.Click += new System.EventHandler(this.refreshPlayerData_Click);
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2066,6 +2080,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox inventoryData;
+        private System.Windows.Forms.Button refreshPlayerData;
     }
 }
 

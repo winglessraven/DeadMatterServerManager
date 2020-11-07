@@ -92,7 +92,7 @@ namespace Dead_Matter_Server_Manager
                 startServer_Click(this, null);
             }
 
-            GetSavedPlayers();
+            //GetSavedPlayers();
 
         }
 
@@ -2508,7 +2508,10 @@ namespace Dead_Matter_Server_Manager
 
         private void GetSavedPlayers()
         {
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+            serverPlayers.Items.Clear();
+            playerCharacters.Items.Clear();
+            inventoryData.Text = "";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
             try
@@ -2687,6 +2690,11 @@ namespace Dead_Matter_Server_Manager
                 zPosition.Text = "";
                 inventoryData.Text = "";
             }
+        }
+
+        private void refreshPlayerData_Click(object sender, EventArgs e)
+        {
+            GetSavedPlayers();
         }
     }
 }
