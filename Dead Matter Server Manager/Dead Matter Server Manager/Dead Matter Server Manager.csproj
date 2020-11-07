@@ -201,7 +201,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DM031roadmap.png" />
     <Content Include="windows-kill.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -460,10 +460,12 @@ namespace Dead_Matter_Server_Manager
                         String[] times = temp[1].Split(',');
                         foreach (string time in times)
                         {
-                            restartSchedules.Add(Convert.ToDateTime(time));
+                            if(time != "")
+                            {
+                                restartSchedules.Add(Convert.ToDateTime(time));
+                            }
                         }
                     }
-
                 }
             }
             else
@@ -2582,12 +2584,13 @@ namespace Dead_Matter_Server_Manager
             xPosition.Text = "";
             yPosition.Text = "";
             zPosition.Text = "";
+            inventoryData.Text = "";
 
             PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
             string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
             tmp = tmp.Replace(")","");
             string[] characters = tmp.Split(',');
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
             try
@@ -2626,14 +2629,14 @@ namespace Dead_Matter_Server_Manager
             Character character = (Character)playerCharacters.SelectedItem;
             int tmp = character.CharacterKey;
 
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
             try
             {
                 connection.Open();
 
-                string queryTxt = "SELECT CharacterTransform FROM Characters WHERE CharacterKey = '" + tmp + "'";
+                string queryTxt = "SELECT CharacterTransform, InventoryData FROM Characters WHERE CharacterKey = '" + tmp + "'";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2654,6 +2657,25 @@ namespace Dead_Matter_Server_Manager
                     xPosition.Text = "Position X: " + characterLocation.TranslationX;
                     yPosition.Text = "Position Y: " + characterLocation.TranslationY;
                     zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
+
+                    string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
+                    List<string> itemNames = new List<string>();
+
+                    foreach(string s in items)
+                    {
+                        string[] split = s.Split(',');
+                        itemNames.Add(split[0]);
+                    }
+
+                    foreach(string s in itemNames)
+                    {
+                        if(!s.StartsWith("(EquipmentInventory"))
+                        {
+                            string trim = s.Replace(")","");
+                            trim = trim.Replace("\"", "");
+                            inventoryData.AppendText(trim + Environment.NewLine);
+                        }
+                    }
                 }
             }
             catch
@@ -2662,6 +2684,7 @@ namespace Dead_Matter_Server_Manager
                 xPosition.Text = "";
                 yPosition.Text = "";
                 zPosition.Text = "";
+                inventoryData.Text = "";
             }
         }
     }

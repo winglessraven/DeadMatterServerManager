@@ -138,7 +138,7 @@
             this.xPosition = new System.Windows.Forms.Label();
             this.yPosition = new System.Windows.Forms.Label();
             this.zPosition = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -165,6 +165,9 @@
             this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
             this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.inventoryData = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -190,7 +193,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).BeginInit();
             this.playerInfoTabPage.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -984,7 +986,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
@@ -1036,7 +1038,7 @@
             this.webhookURL.Enabled = false;
             this.webhookURL.Location = new System.Drawing.Point(207, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(843, 20);
+            this.webhookURL.Size = new System.Drawing.Size(841, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1086,7 +1088,7 @@
             this.memoryLimitDiscordTxt.Enabled = false;
             this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(207, 53);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(843, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(841, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
@@ -1097,7 +1099,7 @@
             this.timedRestartDiscordTxt.Enabled = false;
             this.timedRestartDiscordTxt.Location = new System.Drawing.Point(207, 78);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(843, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(841, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
@@ -1108,7 +1110,7 @@
             this.serverCrashedDiscordTxt.Enabled = false;
             this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(207, 128);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(843, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(841, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1129,7 +1131,7 @@
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookTestMsg.Location = new System.Drawing.Point(207, 203);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(843, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(841, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1153,7 +1155,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(207, 150);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(843, 25);
+            this.label13.Size = new System.Drawing.Size(841, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1177,7 +1179,7 @@
             this.scheduledRestartDiscordTxt.Enabled = false;
             this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(207, 103);
             this.scheduledRestartDiscordTxt.Name = "scheduledRestartDiscordTxt";
-            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(843, 20);
+            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(841, 20);
             this.scheduledRestartDiscordTxt.TabIndex = 60;
             this.scheduledRestartDiscordTxt.Text = "SERVER RESTARTING | Scheduled Restart";
             this.scheduledRestartDiscordTxt.Leave += new System.EventHandler(this.scheduledRestartDiscordTxt_Leave);
@@ -1470,17 +1472,21 @@
             this.tableLayoutPanel8.Controls.Add(this.xPosition, 1, 2);
             this.tableLayoutPanel8.Controls.Add(this.yPosition, 1, 3);
             this.tableLayoutPanel8.Controls.Add(this.zPosition, 1, 4);
-            this.tableLayoutPanel8.Controls.Add(this.pictureBox1, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.label18, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label20, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label21, 2, 0);
+            this.tableLayoutPanel8.Controls.Add(this.inventoryData, 2, 1);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 6;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.812834F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.18716F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.041958F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.60839F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 376);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
@@ -1488,10 +1494,10 @@
             // 
             this.serverPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverPlayers.FormattingEnabled = true;
-            this.serverPlayers.Location = new System.Drawing.Point(3, 16);
+            this.serverPlayers.Location = new System.Drawing.Point(3, 26);
             this.serverPlayers.Name = "serverPlayers";
             this.tableLayoutPanel8.SetRowSpan(this.serverPlayers, 5);
-            this.serverPlayers.Size = new System.Drawing.Size(136, 357);
+            this.serverPlayers.Size = new System.Drawing.Size(136, 347);
             this.serverPlayers.TabIndex = 1;
             this.serverPlayers.SelectedIndexChanged += new System.EventHandler(this.serverPlayers_SelectedIndexChanged);
             // 
@@ -1499,9 +1505,9 @@
             // 
             this.playerCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playerCharacters.FormattingEnabled = true;
-            this.playerCharacters.Location = new System.Drawing.Point(145, 16);
+            this.playerCharacters.Location = new System.Drawing.Point(145, 26);
             this.playerCharacters.Name = "playerCharacters";
-            this.playerCharacters.Size = new System.Drawing.Size(171, 123);
+            this.playerCharacters.Size = new System.Drawing.Size(171, 113);
             this.playerCharacters.TabIndex = 2;
             this.playerCharacters.SelectedIndexChanged += new System.EventHandler(this.playerCharacters_SelectedIndexChanged);
             // 
@@ -1535,17 +1541,16 @@
             this.zPosition.TabIndex = 5;
             this.zPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pictureBox1
+            // label18
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(322, 16);
-            this.pictureBox1.Name = "pictureBox1";
-            this.tableLayoutPanel8.SetRowSpan(this.pictureBox1, 5);
-            this.pictureBox1.Size = new System.Drawing.Size(806, 357);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
+            this.label18.AutoSize = true;
+            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label18.Location = new System.Drawing.Point(3, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(136, 23);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Steam Name";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // linkLabel1
             // 
@@ -1847,6 +1852,39 @@
             this.configureRestartSchedule.UseVisualStyleBackColor = true;
             this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label20.Location = new System.Drawing.Point(145, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(171, 23);
+            this.label20.TabIndex = 7;
+            this.label20.Text = "Characters";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label21.Location = new System.Drawing.Point(322, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(806, 23);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "Inventory Data";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // inventoryData
+            // 
+            this.inventoryData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inventoryData.Location = new System.Drawing.Point(322, 26);
+            this.inventoryData.Multiline = true;
+            this.inventoryData.Name = "inventoryData";
+            this.inventoryData.ReadOnly = true;
+            this.tableLayoutPanel8.SetRowSpan(this.inventoryData, 5);
+            this.inventoryData.Size = new System.Drawing.Size(806, 347);
+            this.inventoryData.TabIndex = 9;
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1887,7 +1925,6 @@
             this.playerInfoTabPage.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2025,7 +2062,10 @@
         private System.Windows.Forms.Label xPosition;
         private System.Windows.Forms.Label yPosition;
         private System.Windows.Forms.Label zPosition;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox inventoryData;
     }
 }
 
