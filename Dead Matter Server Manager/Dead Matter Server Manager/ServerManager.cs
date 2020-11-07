@@ -2590,47 +2590,50 @@ namespace Dead_Matter_Server_Manager
             inventoryData.Text = "";
 
             PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
-            string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
-            tmp = tmp.Replace(")","");
-            string[] characters = tmp.Split(',');
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
-
-            SQLiteConnection connection = new SQLiteConnection(connectionString);
-            try
+            if(selectedPlayer.CharacterIDs.Length > 15)
             {
-                connection.Open();
+                string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
+                tmp = tmp.Replace(")", "");
+                string[] characters = tmp.Split(',');
+                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
 
-                foreach(string s in characters)
+                SQLiteConnection connection = new SQLiteConnection(connectionString);
+                try
                 {
-                    string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
-                    SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
-                    SQLiteDataReader reader = command.ExecuteReader();
+                    connection.Open();
 
-                    while (reader.Read())
+                    foreach (string s in characters)
                     {
-                        Character character = new Character();
-                        //string tmp = reader[1].ToString().Substring(13, 17);
-                        character.CharacterKey = Convert.ToInt32(s);
+                        string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
+                        SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                        SQLiteDataReader reader = command.ExecuteReader();
 
-                        string[] temp = reader[0].ToString().Split('=');
-                        string name = "";
-                        if(temp.Length > 1)
+                        while (reader.Read())
                         {
-                            name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
-                            if(temp.Length > 2)
+                            Character character = new Character();
+                            //string tmp = reader[1].ToString().Substring(13, 17);
+                            character.CharacterKey = Convert.ToInt32(s);
+
+                            string[] temp = reader[0].ToString().Split('=');
+                            string name = "";
+                            if (temp.Length > 1)
                             {
-                                name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                                name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
+                                if (temp.Length > 2)
+                                {
+                                    name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                                }
                             }
-                        }                        
-                        name = name.Replace("\"","");
-                        character.Name = name;
-                        playerCharacters.Items.Add(character);
+                            name = name.Replace("\"", "");
+                            character.Name = name;
+                            playerCharacters.Items.Add(character);
+                        }
                     }
                 }
-            }
-            catch
-            {
-                //error connecting to db - do something
+                catch
+                {
+                    //error connecting to db - do something
+                }
             }
         }
 
