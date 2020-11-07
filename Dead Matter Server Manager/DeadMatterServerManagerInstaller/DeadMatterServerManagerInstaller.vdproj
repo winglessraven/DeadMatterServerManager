@@ -1053,6 +1053,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D8975DA9BC494B28BDF53957A60108D1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DA82636A72C8E0DC3097B6EE3EF5CA1C"
         "OwnerKey" = "8:_262D2683AA2142C289BFC824DDFCD381"
         "MsmSig" = "8:_UNDEFINED"
@@ -5991,6 +5997,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D8975DA9BC494B28BDF53957A60108D1"
+            {
+            "SourcePath" = "8:..\\Dead Matter Server Manager\\bin\\x64\\Debug\\x64\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_12EB296AC619417D8A628C01638EB039"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DA82636A72C8E0DC3097B6EE3EF5CA1C"
             {
             "AssemblyRegister" = "3:1"
@@ -6740,15 +6766,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Dead Matter Server Manager"
-        "ProductCode" = "8:{88CE5376-E207-4612-A23F-E2E373C4D8B2}"
-        "PackageCode" = "8:{02448CA0-90DB-4E38-AE62-F178793885AA}"
+        "ProductCode" = "8:{60F5C0DA-4C31-494C-A83B-AE1A5242E401}"
+        "PackageCode" = "8:{493811AC-B65D-459A-94B0-902101AF484A}"
         "UpgradeCode" = "8:{BC345328-E944-4F2F-9559-E95043070B11}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.10.2"
+        "ProductVersion" = "8:1.10.3"
         "Manufacturer" = "8:winglessraven"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

@@ -2626,6 +2626,7 @@ namespace Dead_Matter_Server_Manager
 
         private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
         {
+            inventoryData.Text = "";
             Character character = (Character)playerCharacters.SelectedItem;
             int tmp = character.CharacterKey;
 
