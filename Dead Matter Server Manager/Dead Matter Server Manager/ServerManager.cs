@@ -1434,7 +1434,7 @@ namespace Dead_Matter_Server_Manager
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://paypal.me/winglessraven");
+            Process.Start("https://www.buymeacoffee.com/winglessraven");
         }
 
         private void autoStartWithWindows_CheckedChanged(object sender, EventArgs e)
@@ -2640,9 +2640,12 @@ namespace Dead_Matter_Server_Manager
         private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
         {
             inventoryData.Text = "";
+            int tmp = 0;
             Character character = (Character)playerCharacters.SelectedItem;
-            int tmp = character.CharacterKey;
-
+            if (character != null)
+            {
+                tmp = character.CharacterKey;
+            }
             string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
