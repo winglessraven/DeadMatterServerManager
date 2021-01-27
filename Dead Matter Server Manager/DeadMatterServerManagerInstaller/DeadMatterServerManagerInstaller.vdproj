@@ -70,13 +70,13 @@
         "Entry"
         {
         "MsmKey" = "8:_092E9BD0E39F0BC8A109F49607C6A9D7"
-        "OwnerKey" = "8:_F18BF1B9CB8D4AC861A878B218E2274D"
+        "OwnerKey" = "8:_262D2683AA2142C289BFC824DDFCD381"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_092E9BD0E39F0BC8A109F49607C6A9D7"
-        "OwnerKey" = "8:_262D2683AA2142C289BFC824DDFCD381"
+        "OwnerKey" = "8:_F18BF1B9CB8D4AC861A878B218E2274D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -670,6 +670,12 @@
         "Entry"
         {
         "MsmKey" = "8:_A856053A896DE827667EBF0815CF06AD"
+        "OwnerKey" = "8:_23B95959D50F0B47DCCF8695DECF6A89"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A856053A896DE827667EBF0815CF06AD"
         "OwnerKey" = "8:_262D2683AA2142C289BFC824DDFCD381"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -677,12 +683,6 @@
         {
         "MsmKey" = "8:_A856053A896DE827667EBF0815CF06AD"
         "OwnerKey" = "8:_2B3DC76D266C8C69C41791F52B0AFED2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A856053A896DE827667EBF0815CF06AD"
-        "OwnerKey" = "8:_23B95959D50F0B47DCCF8695DECF6A89"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -6766,15 +6766,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Dead Matter Server Manager"
-        "ProductCode" = "8:{9F3300BD-63F3-4026-8D12-253DEF6AA578}"
-        "PackageCode" = "8:{D0A3B94C-7CBD-4D32-B81A-4679C2FD3ACF}"
+        "ProductCode" = "8:{6EEF9652-E8D8-45F5-882E-6F48F07E6F37}"
+        "PackageCode" = "8:{D236BF8F-662B-493D-A1AE-F8E50F1A1F59}"
         "UpgradeCode" = "8:{BC345328-E944-4F2F-9559-E95043070B11}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.10.9"
+        "ProductVersion" = "8:1.10.10"
         "Manufacturer" = "8:winglessraven"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

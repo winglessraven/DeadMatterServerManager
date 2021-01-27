@@ -1905,9 +1905,16 @@ namespace Dead_Matter_Server_Manager
 
                 AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + logText, type, discordMessage);
 
-                using (StreamWriter sw = File.AppendText(logFilePath))
+                try
                 {
-                    sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
+                    using (StreamWriter sw = File.AppendText(logFilePath))
+                    {
+                        sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + "Cannot access " + logFilePath + " - " + exception.Message ,"ERROR",null);
                 }
             }
             else
