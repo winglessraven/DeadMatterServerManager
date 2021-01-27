@@ -1058,7 +1058,14 @@ namespace Dead_Matter_Server_Manager
                         if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || scheduleRestartTime && !killSent || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
-                            Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                            try
+                            {
+                                Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                            }
+                            catch (Exception exception)
+                            {
+                                WriteLog("Cannot showdown gracefully - windows-kill.exe not found or accessible - " + exception.Message,"ERROR",null);
+                            }
 
                             killSent = true;
                             killAttempts += 1;
@@ -1094,7 +1101,7 @@ namespace Dead_Matter_Server_Manager
                                 WriteLog("SCHEDULED SERVER RESTART TIME REACHED", "SCHEDULED", tmp);
                             }
 
-                            WriteLog("SERVER SHUTDOWN REQEST " + killAttempts + " SENT: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"), "INFO", null);
+                            WriteLog("SERVER SHUTDOWN REQUEST " + killAttempts + " ATTEMPTED: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"), "INFO", null);
                             plannedShutdown = true;
                         }
                         else
@@ -1416,7 +1423,24 @@ namespace Dead_Matter_Server_Manager
             if (dmServer.Length != 0)
             {
                 int processID = dmServer[0].Id;
-                Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                try
+                {
+                    Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                }
+                catch (Exception exception)
+                {
+                    WriteLog("Failed to send graceful shutdown, windows-kill.exe cannot be executed - " + exception.Message, "ERROR", null);
+                    WriteLog("Force close initiated", "ERROR", null);
+                    if (dmServer.Length != 0)
+                    {
+                        Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+                        if (dmServerShipping.Length != 0)
+                        {
+                            dmServerShipping[0].CloseMainWindow();
+                        }
+                    }
+                }
+                
             }
             serverStarted = false;
             firstTimeServerStarted = false;
@@ -1434,7 +1458,7 @@ namespace Dead_Matter_Server_Manager
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://paypal.me/winglessraven");
+            Process.Start("https://www.buymeacoffee.com/winglessraven");
         }
 
         private void autoStartWithWindows_CheckedChanged(object sender, EventArgs e)
@@ -1848,7 +1872,24 @@ namespace Dead_Matter_Server_Manager
             if (dmServer.Length != 0)
             {
                 int processID = dmServer[0].Id;
-                Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                try
+                {
+                    Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                }
+                catch (Exception exception)
+                {
+                    WriteLog("Failed to send graceful shutdown, windows-kill.exe cannot be executed - " + exception.Message,"ERROR",null);
+                    WriteLog("Force close initiated", "ERROR", null);
+                    if (dmServer.Length != 0)
+                    {
+                        Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+                        if (dmServerShipping.Length != 0)
+                        {
+                            dmServerShipping[0].CloseMainWindow();
+                        }
+                    }
+                }
+                
             }
         }
 
