@@ -1530,7 +1530,7 @@ namespace Dead_Matter_Server_Manager
                             controlToChange.SelectionColor = timedRestartColour.BackColor;
                             SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
                         }
-                        if(emailTimedRestart.Checked && notifyOnTimedRestart.Checked && enableEmailAlerts.Checked)
+                        if(emailTimedRestart.Checked && notifyOnTimedRestart.Checked && enableEmailAlerts.Checked && discordMessage != "")
                         {
                             sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                         }
@@ -1543,7 +1543,7 @@ namespace Dead_Matter_Server_Manager
                             controlToChange.SelectionColor = timedRestartColour.BackColor;
                             SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
                         }
-                        if(emailScheduledRestart.Checked && notifyOnScheduledRestart.Checked && enableEmailAlerts.Checked)
+                        if(emailScheduledRestart.Checked && notifyOnScheduledRestart.Checked && enableEmailAlerts.Checked && discordMessage != "")
                         {
                             sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                         }
@@ -1556,7 +1556,7 @@ namespace Dead_Matter_Server_Manager
                             controlToChange.SelectionColor = memoryLimitColour.BackColor;
                             SendDiscordWebHook(discordMessage, memoryLimitColour.BackColor);
                         }
-                        if(emailMemLimit.Checked && notifyOnMemoryLimit.Checked && enableEmailAlerts.Checked)
+                        if(emailMemLimit.Checked && notifyOnMemoryLimit.Checked && enableEmailAlerts.Checked && discordMessage != "")
                         {
                             sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                         }
@@ -1570,7 +1570,7 @@ namespace Dead_Matter_Server_Manager
                             controlToChange.SelectionColor = serverCrashColour.BackColor;
                             SendDiscordWebHook(discordMessage, serverCrashColour.BackColor);
                         }   
-                        if(emailCrash.Checked && notifiyOnCrash.Checked && enableEmailAlerts.Checked)
+                        if(emailCrash.Checked && notifiyOnCrash.Checked && enableEmailAlerts.Checked && discordMessage != "")
                         {
                             sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                         }
@@ -1585,13 +1585,11 @@ namespace Dead_Matter_Server_Manager
                     {
                         SendDiscordWebHook(discordMessage, controlToChange.ForeColor);
                     }
-                    else if(enableEmailAlerts.Checked)
+                    else if(enableEmailAlerts.Checked && discordMessage != "")
                     {
                         sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                     }
-                    
                 }
-
             }
         }
 
