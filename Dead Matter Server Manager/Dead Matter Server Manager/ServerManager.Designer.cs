@@ -987,7 +987,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
@@ -1039,7 +1039,7 @@
             this.webhookURL.Enabled = false;
             this.webhookURL.Location = new System.Drawing.Point(206, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(838, 20);
+            this.webhookURL.Size = new System.Drawing.Size(835, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1089,7 +1089,7 @@
             this.memoryLimitDiscordTxt.Enabled = false;
             this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(206, 53);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(838, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(835, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
@@ -1100,7 +1100,7 @@
             this.timedRestartDiscordTxt.Enabled = false;
             this.timedRestartDiscordTxt.Location = new System.Drawing.Point(206, 78);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(838, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(835, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
@@ -1111,7 +1111,7 @@
             this.serverCrashedDiscordTxt.Enabled = false;
             this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(206, 128);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(838, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(835, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1132,7 +1132,7 @@
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookTestMsg.Location = new System.Drawing.Point(206, 203);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(838, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(835, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1156,7 +1156,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(206, 150);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(838, 25);
+            this.label13.Size = new System.Drawing.Size(835, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1180,7 +1180,7 @@
             this.scheduledRestartDiscordTxt.Enabled = false;
             this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(206, 103);
             this.scheduledRestartDiscordTxt.Name = "scheduledRestartDiscordTxt";
-            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(838, 20);
+            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(835, 20);
             this.scheduledRestartDiscordTxt.TabIndex = 60;
             this.scheduledRestartDiscordTxt.Text = "SERVER RESTARTING | Scheduled Restart";
             this.scheduledRestartDiscordTxt.Leave += new System.EventHandler(this.scheduledRestartDiscordTxt_Leave);
@@ -1637,11 +1637,11 @@
             // autoStartWithWindows
             // 
             this.autoStartWithWindows.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.autoStartWithWindows, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.autoStartWithWindows, 3);
             this.autoStartWithWindows.Dock = System.Windows.Forms.DockStyle.Fill;
             this.autoStartWithWindows.Location = new System.Drawing.Point(3, 609);
             this.autoStartWithWindows.Name = "autoStartWithWindows";
-            this.autoStartWithWindows.Size = new System.Drawing.Size(204, 24);
+            this.autoStartWithWindows.Size = new System.Drawing.Size(345, 24);
             this.autoStartWithWindows.TabIndex = 29;
             this.autoStartWithWindows.Text = "Auto Start with Windows";
             this.autoStartWithWindows.UseVisualStyleBackColor = true;
@@ -1651,11 +1651,11 @@
             // autoStartServer
             // 
             this.autoStartServer.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.autoStartServer, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.autoStartServer, 3);
             this.autoStartServer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.autoStartServer.Location = new System.Drawing.Point(3, 639);
             this.autoStartServer.Name = "autoStartServer";
-            this.autoStartServer.Size = new System.Drawing.Size(204, 23);
+            this.autoStartServer.Size = new System.Drawing.Size(345, 23);
             this.autoStartServer.TabIndex = 30;
             this.autoStartServer.Text = "Auto Start Server on Launch";
             this.autoStartServer.UseVisualStyleBackColor = true;
@@ -1664,11 +1664,11 @@
             // updateSoftware
             // 
             this.updateSoftware.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.updateSoftware, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.updateSoftware, 4);
             this.updateSoftware.Dock = System.Windows.Forms.DockStyle.Fill;
             this.updateSoftware.Location = new System.Drawing.Point(3, 0);
             this.updateSoftware.Name = "updateSoftware";
-            this.updateSoftware.Size = new System.Drawing.Size(204, 25);
+            this.updateSoftware.Size = new System.Drawing.Size(481, 25);
             this.updateSoftware.TabIndex = 31;
             this.updateSoftware.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateSoftware_LinkClicked);
             // 
