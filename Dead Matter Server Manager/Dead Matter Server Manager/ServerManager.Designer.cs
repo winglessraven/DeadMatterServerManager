@@ -81,21 +81,18 @@
             this.playerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.connectionDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.refreshOnlinePlayerList = new System.Windows.Forms.Button();
-            this.statisticsTabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.enableLogging = new System.Windows.Forms.CheckBox();
-            this.openLog = new System.Windows.Forms.LinkLabel();
-            this.logTextBox = new System.Windows.Forms.RichTextBox();
-            this.backgroundColour = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.userEventColour = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.memoryLimitColour = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.timedRestartColour = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.serverCrashColour = new System.Windows.Forms.Button();
+            this.playerInfoTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.serverPlayers = new System.Windows.Forms.ListBox();
+            this.playerCharacters = new System.Windows.Forms.ListBox();
+            this.xPosition = new System.Windows.Forms.Label();
+            this.yPosition = new System.Windows.Forms.Label();
+            this.zPosition = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.inventoryData = new System.Windows.Forms.TextBox();
+            this.refreshPlayerData = new System.Windows.Forms.Button();
             this.discordTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.discordWebHook = new System.Windows.Forms.CheckBox();
@@ -112,6 +109,24 @@
             this.label13 = new System.Windows.Forms.Label();
             this.notifyOnScheduledRestart = new System.Windows.Forms.CheckBox();
             this.scheduledRestartDiscordTxt = new System.Windows.Forms.TextBox();
+            this.enableEmailAlerts = new System.Windows.Forms.CheckBox();
+            this.smtpAddress = new System.Windows.Forms.TextBox();
+            this.emailUsername = new System.Windows.Forms.TextBox();
+            this.emailPassword = new System.Windows.Forms.TextBox();
+            this.sendTestEmail = new System.Windows.Forms.Button();
+            this.testEmailText = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.discordMemLimit = new System.Windows.Forms.CheckBox();
+            this.discordTimedRestart = new System.Windows.Forms.CheckBox();
+            this.discordScheduledRestart = new System.Windows.Forms.CheckBox();
+            this.discordCrash = new System.Windows.Forms.CheckBox();
+            this.emailMemLimit = new System.Windows.Forms.CheckBox();
+            this.emailTimedRestart = new System.Windows.Forms.CheckBox();
+            this.emailScheduledRestart = new System.Windows.Forms.CheckBox();
+            this.emailCrash = new System.Windows.Forms.CheckBox();
+            this.discordAdditional = new System.Windows.Forms.CheckBox();
+            this.emailAdditional = new System.Windows.Forms.CheckBox();
             this.backupsTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.enableBackups = new System.Windows.Forms.CheckBox();
@@ -131,18 +146,21 @@
             this.restoreEngineIni = new System.Windows.Forms.CheckBox();
             this.restoreWorldSave = new System.Windows.Forms.CheckBox();
             this.restoreNow = new System.Windows.Forms.Button();
-            this.playerInfoTabPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.serverPlayers = new System.Windows.Forms.ListBox();
-            this.playerCharacters = new System.Windows.Forms.ListBox();
-            this.xPosition = new System.Windows.Forms.Label();
-            this.yPosition = new System.Windows.Forms.Label();
-            this.zPosition = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.inventoryData = new System.Windows.Forms.TextBox();
-            this.refreshPlayerData = new System.Windows.Forms.Button();
+            this.logsTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.enableLogging = new System.Windows.Forms.CheckBox();
+            this.openLog = new System.Windows.Forms.LinkLabel();
+            this.logTextBox = new System.Windows.Forms.RichTextBox();
+            this.backgroundColour = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.userEventColour = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.memoryLimitColour = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.timedRestartColour = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.serverCrashColour = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.uptimeLbl = new System.Windows.Forms.Label();
             this.serverUptime = new System.Windows.Forms.Label();
@@ -169,6 +187,12 @@
             this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
             this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.emailTo = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.emailPort = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.emailSSL = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -184,16 +208,16 @@
             this.playersOnlineTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playersOnlineDGV)).BeginInit();
-            this.statisticsTabPage.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.playerInfoTabPage.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.discordTabPage.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.backupsTabPage.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).BeginInit();
-            this.playerInfoTabPage.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
+            this.logsTabPage.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -269,7 +293,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 670);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 699);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label2
@@ -423,7 +447,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(807, 516);
+            this.label1.Location = new System.Drawing.Point(807, 545);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 30);
             this.label1.TabIndex = 18;
@@ -433,7 +457,7 @@
             // maxServerMemory
             // 
             this.maxServerMemory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maxServerMemory.Location = new System.Drawing.Point(954, 519);
+            this.maxServerMemory.Location = new System.Drawing.Point(954, 548);
             this.maxServerMemory.Name = "maxServerMemory";
             this.maxServerMemory.Size = new System.Drawing.Size(188, 20);
             this.maxServerMemory.TabIndex = 19;
@@ -442,7 +466,7 @@
             // startServer
             // 
             this.startServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startServer.Location = new System.Drawing.Point(954, 579);
+            this.startServer.Location = new System.Drawing.Point(954, 608);
             this.startServer.Name = "startServer";
             this.startServer.Size = new System.Drawing.Size(188, 24);
             this.startServer.TabIndex = 20;
@@ -453,7 +477,7 @@
             // stopServer
             // 
             this.stopServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stopServer.Location = new System.Drawing.Point(954, 609);
+            this.stopServer.Location = new System.Drawing.Point(954, 638);
             this.stopServer.Name = "stopServer";
             this.stopServer.Size = new System.Drawing.Size(188, 24);
             this.stopServer.TabIndex = 22;
@@ -467,7 +491,7 @@
             this.serverStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.serverStatus.ForeColor = System.Drawing.Color.Red;
-            this.serverStatus.Location = new System.Drawing.Point(3, 516);
+            this.serverStatus.Location = new System.Drawing.Point(3, 545);
             this.serverStatus.Name = "serverStatus";
             this.serverStatus.Size = new System.Drawing.Size(112, 30);
             this.serverStatus.TabIndex = 23;
@@ -478,7 +502,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.memoryUsedProgressBar, 2);
             this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 519);
+            this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 548);
             this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
             this.memoryUsedProgressBar.Size = new System.Drawing.Size(227, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
@@ -490,16 +514,16 @@
             this.tabControl1.Controls.Add(this.userTabPage);
             this.tabControl1.Controls.Add(this.serverTagsTabPage);
             this.tabControl1.Controls.Add(this.playersOnlineTabPage);
-            this.tabControl1.Controls.Add(this.statisticsTabPage);
+            this.tabControl1.Controls.Add(this.playerInfoTabPage);
             this.tabControl1.Controls.Add(this.discordTabPage);
             this.tabControl1.Controls.Add(this.backupsTabPage);
-            this.tabControl1.Controls.Add(this.playerInfoTabPage);
+            this.tabControl1.Controls.Add(this.logsTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 111);
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 402);
+            this.tabControl1.Size = new System.Drawing.Size(1139, 431);
             this.tabControl1.TabIndex = 25;
             // 
             // settingsTabPage
@@ -509,9 +533,9 @@
             this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.settingsTabPage.Name = "settingsTabPage";
             this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.settingsTabPage.Size = new System.Drawing.Size(1131, 405);
             this.settingsTabPage.TabIndex = 1;
-            this.settingsTabPage.Text = "Settings";
+            this.settingsTabPage.Text = "Server Settings";
             // 
             // configSettings
             // 
@@ -527,7 +551,7 @@
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1125, 370);
+            this.configSettings.Size = new System.Drawing.Size(1125, 399);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
@@ -574,7 +598,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.userTabPage.Size = new System.Drawing.Size(1131, 405);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -592,8 +616,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 370);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 399F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 399);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -605,7 +629,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 364);
+            this.whitelistDGV.Size = new System.Drawing.Size(369, 393);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -622,7 +646,7 @@
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminDGV.Location = new System.Drawing.Point(378, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 364);
+            this.adminDGV.Size = new System.Drawing.Size(369, 393);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -639,7 +663,7 @@
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 364);
+            this.superAdminDGV.Size = new System.Drawing.Size(369, 393);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -653,7 +677,7 @@
             this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
             this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
             this.serverTagsTabPage.Name = "serverTagsTabPage";
-            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 405);
             this.serverTagsTabPage.TabIndex = 2;
             this.serverTagsTabPage.Text = "Server Tags";
             // 
@@ -670,7 +694,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 405);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // serverTagsDGV
@@ -682,7 +706,7 @@
             this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
             this.serverTagsDGV.Name = "serverTagsDGV";
             this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
-            this.serverTagsDGV.Size = new System.Drawing.Size(842, 370);
+            this.serverTagsDGV.Size = new System.Drawing.Size(842, 399);
             this.serverTagsDGV.TabIndex = 0;
             // 
             // serverTags
@@ -696,7 +720,7 @@
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label6.Location = new System.Drawing.Point(851, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 188);
+            this.label6.Size = new System.Drawing.Size(277, 202);
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
@@ -706,7 +730,7 @@
             this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
             this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
             this.playersOnlineTabPage.Name = "playersOnlineTabPage";
-            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 405);
             this.playersOnlineTabPage.TabIndex = 3;
             this.playersOnlineTabPage.Text = "Online Players";
             // 
@@ -723,7 +747,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 405);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // playersOnlineDGV
@@ -740,7 +764,7 @@
             this.playersOnlineDGV.Name = "playersOnlineDGV";
             this.playersOnlineDGV.ReadOnly = true;
             this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
-            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 370);
+            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 399);
             this.playersOnlineDGV.TabIndex = 0;
             // 
             // playerName
@@ -765,210 +789,152 @@
             this.refreshOnlinePlayerList.UseVisualStyleBackColor = true;
             this.refreshOnlinePlayerList.Click += new System.EventHandler(this.refreshOnlinePlayerList_Click);
             // 
-            // statisticsTabPage
+            // playerInfoTabPage
             // 
-            this.statisticsTabPage.BackColor = System.Drawing.Color.Transparent;
-            this.statisticsTabPage.Controls.Add(this.tableLayoutPanel5);
-            this.statisticsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.statisticsTabPage.Name = "statisticsTabPage";
-            this.statisticsTabPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statisticsTabPage.Size = new System.Drawing.Size(1131, 376);
-            this.statisticsTabPage.TabIndex = 4;
-            this.statisticsTabPage.Text = "Logs";
+            this.playerInfoTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.playerInfoTabPage.Controls.Add(this.tableLayoutPanel8);
+            this.playerInfoTabPage.Location = new System.Drawing.Point(4, 22);
+            this.playerInfoTabPage.Name = "playerInfoTabPage";
+            this.playerInfoTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.playerInfoTabPage.TabIndex = 7;
+            this.playerInfoTabPage.Text = "Player Info";
             // 
-            // tableLayoutPanel5
+            // tableLayoutPanel8
             // 
-            this.tableLayoutPanel5.ColumnCount = 4;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.33333F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.66666F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.openLog, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.backgroundColour, 3, 1);
-            this.tableLayoutPanel5.Controls.Add(this.label8, 2, 1);
-            this.tableLayoutPanel5.Controls.Add(this.label9, 2, 2);
-            this.tableLayoutPanel5.Controls.Add(this.userEventColour, 3, 2);
-            this.tableLayoutPanel5.Controls.Add(this.label10, 2, 3);
-            this.tableLayoutPanel5.Controls.Add(this.memoryLimitColour, 3, 3);
-            this.tableLayoutPanel5.Controls.Add(this.label11, 2, 4);
-            this.tableLayoutPanel5.Controls.Add(this.timedRestartColour, 3, 4);
-            this.tableLayoutPanel5.Controls.Add(this.label12, 2, 5);
-            this.tableLayoutPanel5.Controls.Add(this.serverCrashColour, 3, 5);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 10;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1131, 376);
-            this.tableLayoutPanel5.TabIndex = 0;
+            this.tableLayoutPanel8.ColumnCount = 4;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
+            this.tableLayoutPanel8.Controls.Add(this.serverPlayers, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.playerCharacters, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.xPosition, 1, 2);
+            this.tableLayoutPanel8.Controls.Add(this.yPosition, 1, 3);
+            this.tableLayoutPanel8.Controls.Add(this.zPosition, 1, 4);
+            this.tableLayoutPanel8.Controls.Add(this.label18, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label20, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label21, 2, 0);
+            this.tableLayoutPanel8.Controls.Add(this.inventoryData, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.refreshPlayerData, 3, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 6;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel8.TabIndex = 0;
             // 
-            // enableLogging
+            // serverPlayers
             // 
-            this.enableLogging.AutoSize = true;
-            this.enableLogging.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.enableLogging.Location = new System.Drawing.Point(3, 3);
-            this.enableLogging.Name = "enableLogging";
-            this.enableLogging.Size = new System.Drawing.Size(202, 24);
-            this.enableLogging.TabIndex = 0;
-            this.enableLogging.Text = "Enable Logging";
-            this.enableLogging.UseVisualStyleBackColor = true;
-            this.enableLogging.Click += new System.EventHandler(this.enableLogging_Click);
+            this.serverPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverPlayers.FormattingEnabled = true;
+            this.serverPlayers.Location = new System.Drawing.Point(3, 43);
+            this.serverPlayers.Name = "serverPlayers";
+            this.tableLayoutPanel8.SetRowSpan(this.serverPlayers, 5);
+            this.serverPlayers.Size = new System.Drawing.Size(136, 359);
+            this.serverPlayers.TabIndex = 1;
+            this.serverPlayers.SelectedIndexChanged += new System.EventHandler(this.serverPlayers_SelectedIndexChanged);
             // 
-            // openLog
+            // playerCharacters
             // 
-            this.openLog.AutoSize = true;
-            this.tableLayoutPanel5.SetColumnSpan(this.openLog, 2);
-            this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openLog.Location = new System.Drawing.Point(978, 0);
-            this.openLog.Name = "openLog";
-            this.openLog.Size = new System.Drawing.Size(150, 30);
-            this.openLog.TabIndex = 2;
-            this.openLog.TabStop = true;
-            this.openLog.Text = "Open Log File";
-            this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
+            this.playerCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playerCharacters.FormattingEnabled = true;
+            this.playerCharacters.Location = new System.Drawing.Point(145, 43);
+            this.playerCharacters.Name = "playerCharacters";
+            this.playerCharacters.Size = new System.Drawing.Size(171, 131);
+            this.playerCharacters.TabIndex = 2;
+            this.playerCharacters.SelectedIndexChanged += new System.EventHandler(this.playerCharacters_SelectedIndexChanged);
             // 
-            // logTextBox
+            // xPosition
             // 
-            this.logTextBox.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel5.SetColumnSpan(this.logTextBox, 2);
-            this.logTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logTextBox.ForeColor = System.Drawing.Color.White;
-            this.logTextBox.Location = new System.Drawing.Point(3, 33);
-            this.logTextBox.Name = "logTextBox";
-            this.logTextBox.ReadOnly = true;
-            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
-            this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(969, 340);
-            this.logTextBox.TabIndex = 3;
-            this.logTextBox.Text = "";
+            this.xPosition.AutoSize = true;
+            this.xPosition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xPosition.Location = new System.Drawing.Point(145, 177);
+            this.xPosition.Name = "xPosition";
+            this.xPosition.Size = new System.Drawing.Size(171, 30);
+            this.xPosition.TabIndex = 3;
+            this.xPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // backgroundColour
+            // yPosition
             // 
-            this.backgroundColour.BackColor = System.Drawing.Color.Black;
-            this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backgroundColour.Location = new System.Drawing.Point(1104, 33);
-            this.backgroundColour.Name = "backgroundColour";
-            this.backgroundColour.Size = new System.Drawing.Size(24, 19);
-            this.backgroundColour.TabIndex = 4;
-            this.backgroundColour.UseVisualStyleBackColor = false;
-            this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
+            this.yPosition.AutoSize = true;
+            this.yPosition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.yPosition.Location = new System.Drawing.Point(145, 207);
+            this.yPosition.Name = "yPosition";
+            this.yPosition.Size = new System.Drawing.Size(171, 30);
+            this.yPosition.TabIndex = 4;
+            this.yPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label8
+            // zPosition
             // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(978, 30);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(120, 25);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Background Colour";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.zPosition.AutoSize = true;
+            this.zPosition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zPosition.Location = new System.Drawing.Point(145, 237);
+            this.zPosition.Name = "zPosition";
+            this.zPosition.Size = new System.Drawing.Size(171, 30);
+            this.zPosition.TabIndex = 5;
+            this.zPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label9
+            // label18
             // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(978, 55);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(120, 25);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "User Event Colour";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label18.AutoSize = true;
+            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label18.Location = new System.Drawing.Point(3, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(136, 40);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Steam Name";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // userEventColour
+            // label20
             // 
-            this.userEventColour.BackColor = System.Drawing.Color.White;
-            this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.userEventColour.Location = new System.Drawing.Point(1104, 58);
-            this.userEventColour.Name = "userEventColour";
-            this.userEventColour.Size = new System.Drawing.Size(24, 19);
-            this.userEventColour.TabIndex = 7;
-            this.userEventColour.UseVisualStyleBackColor = false;
-            this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label20.Location = new System.Drawing.Point(145, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(171, 40);
+            this.label20.TabIndex = 7;
+            this.label20.Text = "Characters";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // label10
+            // label21
             // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(978, 80);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 25);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Memory Limit Colour";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label21.AutoSize = true;
+            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label21.Location = new System.Drawing.Point(322, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(668, 40);
+            this.label21.TabIndex = 8;
+            this.label21.Text = "Inventory Data";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // memoryLimitColour
+            // inventoryData
             // 
-            this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryLimitColour.Location = new System.Drawing.Point(1104, 83);
-            this.memoryLimitColour.Name = "memoryLimitColour";
-            this.memoryLimitColour.Size = new System.Drawing.Size(24, 19);
-            this.memoryLimitColour.TabIndex = 9;
-            this.memoryLimitColour.UseVisualStyleBackColor = false;
-            this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
+            this.tableLayoutPanel8.SetColumnSpan(this.inventoryData, 2);
+            this.inventoryData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inventoryData.Location = new System.Drawing.Point(322, 43);
+            this.inventoryData.Multiline = true;
+            this.inventoryData.Name = "inventoryData";
+            this.inventoryData.ReadOnly = true;
+            this.tableLayoutPanel8.SetRowSpan(this.inventoryData, 5);
+            this.inventoryData.Size = new System.Drawing.Size(806, 359);
+            this.inventoryData.TabIndex = 9;
             // 
-            // label11
+            // refreshPlayerData
             // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(978, 105);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(120, 25);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Planned Restart Colour";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // timedRestartColour
-            // 
-            this.timedRestartColour.BackColor = System.Drawing.Color.Lime;
-            this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
-            this.timedRestartColour.Name = "timedRestartColour";
-            this.timedRestartColour.Size = new System.Drawing.Size(24, 19);
-            this.timedRestartColour.TabIndex = 11;
-            this.timedRestartColour.UseVisualStyleBackColor = false;
-            this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(978, 130);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(120, 25);
-            this.label12.TabIndex = 12;
-            this.label12.Text = "Server Crash Colour";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // serverCrashColour
-            // 
-            this.serverCrashColour.BackColor = System.Drawing.Color.Red;
-            this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverCrashColour.Location = new System.Drawing.Point(1104, 133);
-            this.serverCrashColour.Name = "serverCrashColour";
-            this.serverCrashColour.Size = new System.Drawing.Size(24, 19);
-            this.serverCrashColour.TabIndex = 13;
-            this.serverCrashColour.UseVisualStyleBackColor = false;
-            this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
+            this.refreshPlayerData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.refreshPlayerData.Location = new System.Drawing.Point(996, 3);
+            this.refreshPlayerData.Name = "refreshPlayerData";
+            this.refreshPlayerData.Size = new System.Drawing.Size(132, 34);
+            this.refreshPlayerData.TabIndex = 10;
+            this.refreshPlayerData.Text = "Refresh";
+            this.refreshPlayerData.UseVisualStyleBackColor = true;
+            this.refreshPlayerData.Click += new System.EventHandler(this.refreshPlayerData_Click);
             // 
             // discordTabPage
             // 
@@ -976,36 +942,66 @@
             this.discordTabPage.Controls.Add(this.tableLayoutPanel6);
             this.discordTabPage.Location = new System.Drawing.Point(4, 22);
             this.discordTabPage.Name = "discordTabPage";
-            this.discordTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.discordTabPage.Size = new System.Drawing.Size(1131, 405);
             this.discordTabPage.TabIndex = 5;
-            this.discordTabPage.Text = "Discord Webhook";
+            this.discordTabPage.Text = "Discord/Email Notifications";
             // 
             // tableLayoutPanel6
             // 
-            this.tableLayoutPanel6.ColumnCount = 5;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.43925F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.56075F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel6.ColumnCount = 6;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 314F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 297F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Controls.Add(this.discordWebHook, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.webhookURL, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.notifyOnTimedRestart, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 5);
-            this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 5);
-            this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 8);
-            this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 8);
-            this.tableLayoutPanel6.Controls.Add(this.discordIncludeAdditional, 0, 6);
-            this.tableLayoutPanel6.Controls.Add(this.label13, 1, 6);
-            this.tableLayoutPanel6.Controls.Add(this.notifyOnScheduledRestart, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.scheduledRestartDiscordTxt, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnMemoryLimit, 0, 7);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnTimedRestart, 0, 8);
+            this.tableLayoutPanel6.Controls.Add(this.notifiyOnCrash, 0, 10);
+            this.tableLayoutPanel6.Controls.Add(this.memoryLimitDiscordTxt, 1, 7);
+            this.tableLayoutPanel6.Controls.Add(this.timedRestartDiscordTxt, 1, 8);
+            this.tableLayoutPanel6.Controls.Add(this.serverCrashedDiscordTxt, 1, 10);
+            this.tableLayoutPanel6.Controls.Add(this.testWebhook, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.webhookTestMsg, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.discordIncludeAdditional, 0, 11);
+            this.tableLayoutPanel6.Controls.Add(this.label13, 1, 11);
+            this.tableLayoutPanel6.Controls.Add(this.notifyOnScheduledRestart, 0, 9);
+            this.tableLayoutPanel6.Controls.Add(this.scheduledRestartDiscordTxt, 1, 9);
+            this.tableLayoutPanel6.Controls.Add(this.enableEmailAlerts, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.smtpAddress, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.emailUsername, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.emailPassword, 2, 3);
+            this.tableLayoutPanel6.Controls.Add(this.sendTestEmail, 0, 4);
+            this.tableLayoutPanel6.Controls.Add(this.testEmailText, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.label22, 3, 6);
+            this.tableLayoutPanel6.Controls.Add(this.label23, 4, 6);
+            this.tableLayoutPanel6.Controls.Add(this.discordMemLimit, 3, 7);
+            this.tableLayoutPanel6.Controls.Add(this.discordTimedRestart, 3, 8);
+            this.tableLayoutPanel6.Controls.Add(this.discordScheduledRestart, 3, 9);
+            this.tableLayoutPanel6.Controls.Add(this.discordCrash, 3, 10);
+            this.tableLayoutPanel6.Controls.Add(this.emailMemLimit, 4, 7);
+            this.tableLayoutPanel6.Controls.Add(this.emailTimedRestart, 4, 8);
+            this.tableLayoutPanel6.Controls.Add(this.emailScheduledRestart, 4, 9);
+            this.tableLayoutPanel6.Controls.Add(this.emailCrash, 4, 10);
+            this.tableLayoutPanel6.Controls.Add(this.discordAdditional, 3, 11);
+            this.tableLayoutPanel6.Controls.Add(this.emailAdditional, 4, 11);
+            this.tableLayoutPanel6.Controls.Add(this.emailTo, 4, 3);
+            this.tableLayoutPanel6.Controls.Add(this.label24, 3, 3);
+            this.tableLayoutPanel6.Controls.Add(this.emailPort, 4, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label25, 3, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label26, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.emailSSL, 5, 2);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 11;
+            this.tableLayoutPanel6.RowCount = 16;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -1015,9 +1011,9 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1131, 405);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // discordWebHook
@@ -1026,7 +1022,7 @@
             this.discordWebHook.Dock = System.Windows.Forms.DockStyle.Fill;
             this.discordWebHook.Location = new System.Drawing.Point(3, 3);
             this.discordWebHook.Name = "discordWebHook";
-            this.discordWebHook.Size = new System.Drawing.Size(197, 19);
+            this.discordWebHook.Size = new System.Drawing.Size(212, 19);
             this.discordWebHook.TabIndex = 47;
             this.discordWebHook.Text = "Enable Discord Webhook Integration";
             this.discordWebHook.UseVisualStyleBackColor = true;
@@ -1035,11 +1031,12 @@
             // 
             // webhookURL
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.webhookURL, 2);
             this.webhookURL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webhookURL.Enabled = false;
-            this.webhookURL.Location = new System.Drawing.Point(206, 3);
+            this.webhookURL.Location = new System.Drawing.Point(221, 3);
             this.webhookURL.Name = "webhookURL";
-            this.webhookURL.Size = new System.Drawing.Size(835, 20);
+            this.webhookURL.Size = new System.Drawing.Size(605, 20);
             this.webhookURL.TabIndex = 48;
             this.webhookURL.Text = "[Webhook URL]";
             this.webhookURL.Leave += new System.EventHandler(this.webhookURL_Leave);
@@ -1048,9 +1045,9 @@
             // 
             this.notifyOnMemoryLimit.AutoSize = true;
             this.notifyOnMemoryLimit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifyOnMemoryLimit.Location = new System.Drawing.Point(3, 53);
+            this.notifyOnMemoryLimit.Location = new System.Drawing.Point(3, 188);
             this.notifyOnMemoryLimit.Name = "notifyOnMemoryLimit";
-            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(197, 19);
+            this.notifyOnMemoryLimit.Size = new System.Drawing.Size(212, 19);
             this.notifyOnMemoryLimit.TabIndex = 49;
             this.notifyOnMemoryLimit.Text = "Notify on Memory Limit";
             this.notifyOnMemoryLimit.UseVisualStyleBackColor = true;
@@ -1061,9 +1058,9 @@
             // 
             this.notifyOnTimedRestart.AutoSize = true;
             this.notifyOnTimedRestart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifyOnTimedRestart.Location = new System.Drawing.Point(3, 78);
+            this.notifyOnTimedRestart.Location = new System.Drawing.Point(3, 213);
             this.notifyOnTimedRestart.Name = "notifyOnTimedRestart";
-            this.notifyOnTimedRestart.Size = new System.Drawing.Size(197, 19);
+            this.notifyOnTimedRestart.Size = new System.Drawing.Size(212, 19);
             this.notifyOnTimedRestart.TabIndex = 50;
             this.notifyOnTimedRestart.Text = "Notify on Timed Restart";
             this.notifyOnTimedRestart.UseVisualStyleBackColor = true;
@@ -1074,9 +1071,9 @@
             // 
             this.notifiyOnCrash.AutoSize = true;
             this.notifiyOnCrash.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 128);
+            this.notifiyOnCrash.Location = new System.Drawing.Point(3, 263);
             this.notifiyOnCrash.Name = "notifiyOnCrash";
-            this.notifiyOnCrash.Size = new System.Drawing.Size(197, 19);
+            this.notifiyOnCrash.Size = new System.Drawing.Size(212, 19);
             this.notifiyOnCrash.TabIndex = 51;
             this.notifiyOnCrash.Text = "Notify on Crash";
             this.notifiyOnCrash.UseVisualStyleBackColor = true;
@@ -1085,33 +1082,36 @@
             // 
             // memoryLimitDiscordTxt
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.memoryLimitDiscordTxt, 2);
             this.memoryLimitDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryLimitDiscordTxt.Enabled = false;
-            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(206, 53);
+            this.memoryLimitDiscordTxt.Location = new System.Drawing.Point(221, 188);
             this.memoryLimitDiscordTxt.Name = "memoryLimitDiscordTxt";
-            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(835, 20);
+            this.memoryLimitDiscordTxt.Size = new System.Drawing.Size(605, 20);
             this.memoryLimitDiscordTxt.TabIndex = 52;
             this.memoryLimitDiscordTxt.Text = "SERVER RESTARTING | Memory Limit Hit";
             this.memoryLimitDiscordTxt.Leave += new System.EventHandler(this.memoryLimitDiscordTxt_Leave);
             // 
             // timedRestartDiscordTxt
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.timedRestartDiscordTxt, 2);
             this.timedRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timedRestartDiscordTxt.Enabled = false;
-            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(206, 78);
+            this.timedRestartDiscordTxt.Location = new System.Drawing.Point(221, 213);
             this.timedRestartDiscordTxt.Name = "timedRestartDiscordTxt";
-            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(835, 20);
+            this.timedRestartDiscordTxt.Size = new System.Drawing.Size(605, 20);
             this.timedRestartDiscordTxt.TabIndex = 53;
             this.timedRestartDiscordTxt.Text = "SERVER RESTARTING | Timed Restart";
             this.timedRestartDiscordTxt.Leave += new System.EventHandler(this.timedRestartDiscordTxt_Leave);
             // 
             // serverCrashedDiscordTxt
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.serverCrashedDiscordTxt, 2);
             this.serverCrashedDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverCrashedDiscordTxt.Enabled = false;
-            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(206, 128);
+            this.serverCrashedDiscordTxt.Location = new System.Drawing.Point(221, 263);
             this.serverCrashedDiscordTxt.Name = "serverCrashedDiscordTxt";
-            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(835, 20);
+            this.serverCrashedDiscordTxt.Size = new System.Drawing.Size(605, 20);
             this.serverCrashedDiscordTxt.TabIndex = 54;
             this.serverCrashedDiscordTxt.Text = "SERVER RESTARTING | Server Crashed";
             this.serverCrashedDiscordTxt.Leave += new System.EventHandler(this.serverCrashedDiscordTxt_Leave);
@@ -1119,9 +1119,10 @@
             // testWebhook
             // 
             this.testWebhook.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.testWebhook.Location = new System.Drawing.Point(3, 203);
+            this.testWebhook.Enabled = false;
+            this.testWebhook.Location = new System.Drawing.Point(3, 28);
             this.testWebhook.Name = "testWebhook";
-            this.testWebhook.Size = new System.Drawing.Size(197, 24);
+            this.testWebhook.Size = new System.Drawing.Size(212, 24);
             this.testWebhook.TabIndex = 55;
             this.testWebhook.Text = "Test Webhook";
             this.testWebhook.UseVisualStyleBackColor = true;
@@ -1129,10 +1130,12 @@
             // 
             // webhookTestMsg
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.webhookTestMsg, 2);
             this.webhookTestMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webhookTestMsg.Location = new System.Drawing.Point(206, 203);
+            this.webhookTestMsg.Enabled = false;
+            this.webhookTestMsg.Location = new System.Drawing.Point(221, 28);
             this.webhookTestMsg.Name = "webhookTestMsg";
-            this.webhookTestMsg.Size = new System.Drawing.Size(835, 20);
+            this.webhookTestMsg.Size = new System.Drawing.Size(605, 20);
             this.webhookTestMsg.TabIndex = 56;
             this.webhookTestMsg.Text = "Testing Dead Matter Server Manager Webhook Integration";
             this.webhookTestMsg.Leave += new System.EventHandler(this.webhookTestMsg_Leave);
@@ -1141,12 +1144,13 @@
             // 
             this.discordIncludeAdditional.AutoSize = true;
             this.discordIncludeAdditional.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discordIncludeAdditional.Location = new System.Drawing.Point(3, 153);
+            this.discordIncludeAdditional.Location = new System.Drawing.Point(3, 288);
             this.discordIncludeAdditional.Name = "discordIncludeAdditional";
-            this.discordIncludeAdditional.Size = new System.Drawing.Size(197, 19);
+            this.discordIncludeAdditional.Size = new System.Drawing.Size(212, 19);
             this.discordIncludeAdditional.TabIndex = 57;
             this.discordIncludeAdditional.Text = "Include Additional Info";
             this.discordIncludeAdditional.UseVisualStyleBackColor = true;
+            this.discordIncludeAdditional.CheckedChanged += new System.EventHandler(this.discordIncludeAdditional_CheckedChanged);
             this.discordIncludeAdditional.Click += new System.EventHandler(this.discordIncludeAdditional_Click);
             // 
             // label13
@@ -1154,9 +1158,9 @@
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(206, 150);
+            this.label13.Location = new System.Drawing.Point(221, 285);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(835, 25);
+            this.label13.Size = new System.Drawing.Size(308, 25);
             this.label13.TabIndex = 58;
             this.label13.Text = "Player count and previous uptime";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1165,9 +1169,9 @@
             // 
             this.notifyOnScheduledRestart.AutoSize = true;
             this.notifyOnScheduledRestart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notifyOnScheduledRestart.Location = new System.Drawing.Point(3, 103);
+            this.notifyOnScheduledRestart.Location = new System.Drawing.Point(3, 238);
             this.notifyOnScheduledRestart.Name = "notifyOnScheduledRestart";
-            this.notifyOnScheduledRestart.Size = new System.Drawing.Size(197, 19);
+            this.notifyOnScheduledRestart.Size = new System.Drawing.Size(212, 19);
             this.notifyOnScheduledRestart.TabIndex = 59;
             this.notifyOnScheduledRestart.Text = "Notify on Scheduled Restart";
             this.notifyOnScheduledRestart.UseVisualStyleBackColor = true;
@@ -1176,14 +1180,269 @@
             // 
             // scheduledRestartDiscordTxt
             // 
+            this.tableLayoutPanel6.SetColumnSpan(this.scheduledRestartDiscordTxt, 2);
             this.scheduledRestartDiscordTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scheduledRestartDiscordTxt.Enabled = false;
-            this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(206, 103);
+            this.scheduledRestartDiscordTxt.Location = new System.Drawing.Point(221, 238);
             this.scheduledRestartDiscordTxt.Name = "scheduledRestartDiscordTxt";
-            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(835, 20);
+            this.scheduledRestartDiscordTxt.Size = new System.Drawing.Size(605, 20);
             this.scheduledRestartDiscordTxt.TabIndex = 60;
             this.scheduledRestartDiscordTxt.Text = "SERVER RESTARTING | Scheduled Restart";
             this.scheduledRestartDiscordTxt.Leave += new System.EventHandler(this.scheduledRestartDiscordTxt_Leave);
+            // 
+            // enableEmailAlerts
+            // 
+            this.enableEmailAlerts.AutoSize = true;
+            this.enableEmailAlerts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enableEmailAlerts.Location = new System.Drawing.Point(3, 58);
+            this.enableEmailAlerts.Name = "enableEmailAlerts";
+            this.enableEmailAlerts.Size = new System.Drawing.Size(212, 19);
+            this.enableEmailAlerts.TabIndex = 61;
+            this.enableEmailAlerts.Text = "Enable Email Alerts";
+            this.enableEmailAlerts.UseVisualStyleBackColor = true;
+            this.enableEmailAlerts.CheckedChanged += new System.EventHandler(this.enableEmail_CheckedChanged);
+            this.enableEmailAlerts.Click += new System.EventHandler(this.enableEmailAlerts_Click);
+            // 
+            // smtpAddress
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.smtpAddress, 2);
+            this.smtpAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.smtpAddress.Enabled = false;
+            this.smtpAddress.Location = new System.Drawing.Point(221, 58);
+            this.smtpAddress.Name = "smtpAddress";
+            this.smtpAddress.Size = new System.Drawing.Size(605, 20);
+            this.smtpAddress.TabIndex = 62;
+            this.smtpAddress.Text = "[SMTP Address]";
+            this.smtpAddress.Leave += new System.EventHandler(this.smtpAddress_Leave);
+            // 
+            // emailUsername
+            // 
+            this.emailUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailUsername.Enabled = false;
+            this.emailUsername.Location = new System.Drawing.Point(221, 83);
+            this.emailUsername.Name = "emailUsername";
+            this.emailUsername.Size = new System.Drawing.Size(308, 20);
+            this.emailUsername.TabIndex = 63;
+            this.emailUsername.Text = "[Username]";
+            this.emailUsername.Leave += new System.EventHandler(this.emailUsername_Leave);
+            // 
+            // emailPassword
+            // 
+            this.emailPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailPassword.Enabled = false;
+            this.emailPassword.Location = new System.Drawing.Point(535, 83);
+            this.emailPassword.Name = "emailPassword";
+            this.emailPassword.PasswordChar = '*';
+            this.emailPassword.Size = new System.Drawing.Size(291, 20);
+            this.emailPassword.TabIndex = 64;
+            this.emailPassword.Text = "password";
+            this.emailPassword.Leave += new System.EventHandler(this.emailPassword_Leave);
+            // 
+            // sendTestEmail
+            // 
+            this.sendTestEmail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sendTestEmail.Enabled = false;
+            this.sendTestEmail.Location = new System.Drawing.Point(3, 108);
+            this.sendTestEmail.Name = "sendTestEmail";
+            this.sendTestEmail.Size = new System.Drawing.Size(212, 24);
+            this.sendTestEmail.TabIndex = 66;
+            this.sendTestEmail.Text = "Test Email";
+            this.sendTestEmail.UseVisualStyleBackColor = true;
+            this.sendTestEmail.Click += new System.EventHandler(this.sendTestEmail_Click);
+            // 
+            // testEmailText
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.testEmailText, 2);
+            this.testEmailText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.testEmailText.Enabled = false;
+            this.testEmailText.Location = new System.Drawing.Point(221, 108);
+            this.testEmailText.Name = "testEmailText";
+            this.testEmailText.Size = new System.Drawing.Size(605, 20);
+            this.testEmailText.TabIndex = 67;
+            this.testEmailText.Text = "Testing Dead Matter Server Manager Email Notifications";
+            this.testEmailText.Leave += new System.EventHandler(this.testEmailText_Leave);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label22.Location = new System.Drawing.Point(832, 160);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(87, 25);
+            this.label22.TabIndex = 68;
+            this.label22.Text = "Discord";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label23.Location = new System.Drawing.Point(925, 160);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(99, 25);
+            this.label23.TabIndex = 69;
+            this.label23.Text = "Email";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // discordMemLimit
+            // 
+            this.discordMemLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.discordMemLimit.AutoSize = true;
+            this.discordMemLimit.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordMemLimit.Enabled = false;
+            this.discordMemLimit.Location = new System.Drawing.Point(832, 188);
+            this.discordMemLimit.Name = "discordMemLimit";
+            this.discordMemLimit.Size = new System.Drawing.Size(87, 19);
+            this.discordMemLimit.TabIndex = 70;
+            this.discordMemLimit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordMemLimit.UseVisualStyleBackColor = true;
+            this.discordMemLimit.Click += new System.EventHandler(this.discordMemLimit_Click);
+            // 
+            // discordTimedRestart
+            // 
+            this.discordTimedRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.discordTimedRestart.AutoSize = true;
+            this.discordTimedRestart.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordTimedRestart.Enabled = false;
+            this.discordTimedRestart.Location = new System.Drawing.Point(832, 213);
+            this.discordTimedRestart.Name = "discordTimedRestart";
+            this.discordTimedRestart.Size = new System.Drawing.Size(87, 19);
+            this.discordTimedRestart.TabIndex = 71;
+            this.discordTimedRestart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordTimedRestart.UseVisualStyleBackColor = true;
+            this.discordTimedRestart.Click += new System.EventHandler(this.discordTimedRestart_Click);
+            // 
+            // discordScheduledRestart
+            // 
+            this.discordScheduledRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.discordScheduledRestart.AutoSize = true;
+            this.discordScheduledRestart.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordScheduledRestart.Enabled = false;
+            this.discordScheduledRestart.Location = new System.Drawing.Point(832, 238);
+            this.discordScheduledRestart.Name = "discordScheduledRestart";
+            this.discordScheduledRestart.Size = new System.Drawing.Size(87, 19);
+            this.discordScheduledRestart.TabIndex = 72;
+            this.discordScheduledRestart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordScheduledRestart.UseVisualStyleBackColor = true;
+            this.discordScheduledRestart.Click += new System.EventHandler(this.discordScheduledRestart_Click);
+            // 
+            // discordCrash
+            // 
+            this.discordCrash.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.discordCrash.AutoSize = true;
+            this.discordCrash.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordCrash.Enabled = false;
+            this.discordCrash.Location = new System.Drawing.Point(832, 263);
+            this.discordCrash.Name = "discordCrash";
+            this.discordCrash.Size = new System.Drawing.Size(87, 19);
+            this.discordCrash.TabIndex = 73;
+            this.discordCrash.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordCrash.UseVisualStyleBackColor = true;
+            this.discordCrash.Click += new System.EventHandler(this.discordCrash_Click);
+            // 
+            // emailMemLimit
+            // 
+            this.emailMemLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.emailMemLimit.AutoSize = true;
+            this.emailMemLimit.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailMemLimit.Enabled = false;
+            this.emailMemLimit.Location = new System.Drawing.Point(925, 188);
+            this.emailMemLimit.Name = "emailMemLimit";
+            this.emailMemLimit.Size = new System.Drawing.Size(99, 19);
+            this.emailMemLimit.TabIndex = 74;
+            this.emailMemLimit.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailMemLimit.UseVisualStyleBackColor = true;
+            this.emailMemLimit.Click += new System.EventHandler(this.emailMemLimit_Click);
+            // 
+            // emailTimedRestart
+            // 
+            this.emailTimedRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.emailTimedRestart.AutoSize = true;
+            this.emailTimedRestart.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailTimedRestart.Enabled = false;
+            this.emailTimedRestart.Location = new System.Drawing.Point(925, 213);
+            this.emailTimedRestart.Name = "emailTimedRestart";
+            this.emailTimedRestart.Size = new System.Drawing.Size(99, 19);
+            this.emailTimedRestart.TabIndex = 75;
+            this.emailTimedRestart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailTimedRestart.UseVisualStyleBackColor = true;
+            this.emailTimedRestart.Click += new System.EventHandler(this.emailTimedRestart_Click);
+            // 
+            // emailScheduledRestart
+            // 
+            this.emailScheduledRestart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.emailScheduledRestart.AutoSize = true;
+            this.emailScheduledRestart.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailScheduledRestart.Enabled = false;
+            this.emailScheduledRestart.Location = new System.Drawing.Point(925, 238);
+            this.emailScheduledRestart.Name = "emailScheduledRestart";
+            this.emailScheduledRestart.Size = new System.Drawing.Size(99, 19);
+            this.emailScheduledRestart.TabIndex = 76;
+            this.emailScheduledRestart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailScheduledRestart.UseVisualStyleBackColor = true;
+            this.emailScheduledRestart.Click += new System.EventHandler(this.emailScheduledRestart_Click);
+            // 
+            // emailCrash
+            // 
+            this.emailCrash.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.emailCrash.AutoSize = true;
+            this.emailCrash.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailCrash.Enabled = false;
+            this.emailCrash.Location = new System.Drawing.Point(925, 263);
+            this.emailCrash.Name = "emailCrash";
+            this.emailCrash.Size = new System.Drawing.Size(99, 19);
+            this.emailCrash.TabIndex = 77;
+            this.emailCrash.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailCrash.UseVisualStyleBackColor = true;
+            this.emailCrash.Click += new System.EventHandler(this.emailCrash_Click);
+            // 
+            // discordAdditional
+            // 
+            this.discordAdditional.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.discordAdditional.AutoSize = true;
+            this.discordAdditional.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordAdditional.Enabled = false;
+            this.discordAdditional.Location = new System.Drawing.Point(832, 288);
+            this.discordAdditional.Name = "discordAdditional";
+            this.discordAdditional.Size = new System.Drawing.Size(87, 19);
+            this.discordAdditional.TabIndex = 78;
+            this.discordAdditional.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.discordAdditional.UseVisualStyleBackColor = true;
+            this.discordAdditional.Click += new System.EventHandler(this.discordAdditional_Click);
+            // 
+            // emailAdditional
+            // 
+            this.emailAdditional.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.emailAdditional.AutoSize = true;
+            this.emailAdditional.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailAdditional.Enabled = false;
+            this.emailAdditional.Location = new System.Drawing.Point(925, 288);
+            this.emailAdditional.Name = "emailAdditional";
+            this.emailAdditional.Size = new System.Drawing.Size(99, 19);
+            this.emailAdditional.TabIndex = 79;
+            this.emailAdditional.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailAdditional.UseVisualStyleBackColor = true;
+            this.emailAdditional.Click += new System.EventHandler(this.emailAdditional_Click);
             // 
             // backupsTabPage
             // 
@@ -1191,9 +1450,9 @@
             this.backupsTabPage.Controls.Add(this.tableLayoutPanel7);
             this.backupsTabPage.Location = new System.Drawing.Point(4, 22);
             this.backupsTabPage.Name = "backupsTabPage";
-            this.backupsTabPage.Size = new System.Drawing.Size(1131, 376);
+            this.backupsTabPage.Size = new System.Drawing.Size(1131, 405);
             this.backupsTabPage.TabIndex = 6;
-            this.backupsTabPage.Text = "Backup / Restore";
+            this.backupsTabPage.Text = "Backup/Restore";
             // 
             // tableLayoutPanel7
             // 
@@ -1236,7 +1495,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1131, 376);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1131, 405);
             this.tableLayoutPanel7.TabIndex = 0;
             // 
             // enableBackups
@@ -1400,7 +1659,7 @@
             this.label19.Location = new System.Drawing.Point(556, 0);
             this.label19.Name = "label19";
             this.tableLayoutPanel7.SetRowSpan(this.label19, 11);
-            this.label19.Size = new System.Drawing.Size(2, 376);
+            this.label19.Size = new System.Drawing.Size(2, 405);
             this.label19.TabIndex = 12;
             // 
             // restoreGameIni
@@ -1452,158 +1711,216 @@
             this.restoreNow.UseVisualStyleBackColor = true;
             this.restoreNow.Click += new System.EventHandler(this.RestoreNow_Click);
             // 
-            // playerInfoTabPage
+            // logsTabPage
             // 
-            this.playerInfoTabPage.BackColor = System.Drawing.Color.Transparent;
-            this.playerInfoTabPage.Controls.Add(this.tableLayoutPanel8);
-            this.playerInfoTabPage.Location = new System.Drawing.Point(4, 22);
-            this.playerInfoTabPage.Name = "playerInfoTabPage";
-            this.playerInfoTabPage.Size = new System.Drawing.Size(1131, 376);
-            this.playerInfoTabPage.TabIndex = 7;
-            this.playerInfoTabPage.Text = "Player Info";
+            this.logsTabPage.BackColor = System.Drawing.Color.Transparent;
+            this.logsTabPage.Controls.Add(this.tableLayoutPanel5);
+            this.logsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.logsTabPage.Name = "logsTabPage";
+            this.logsTabPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.logsTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.logsTabPage.TabIndex = 4;
+            this.logsTabPage.Text = "Logs";
             // 
-            // tableLayoutPanel8
+            // tableLayoutPanel5
             // 
-            this.tableLayoutPanel8.ColumnCount = 4;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 138F));
-            this.tableLayoutPanel8.Controls.Add(this.serverPlayers, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.playerCharacters, 1, 1);
-            this.tableLayoutPanel8.Controls.Add(this.xPosition, 1, 2);
-            this.tableLayoutPanel8.Controls.Add(this.yPosition, 1, 3);
-            this.tableLayoutPanel8.Controls.Add(this.zPosition, 1, 4);
-            this.tableLayoutPanel8.Controls.Add(this.label18, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.label20, 1, 0);
-            this.tableLayoutPanel8.Controls.Add(this.label21, 2, 0);
-            this.tableLayoutPanel8.Controls.Add(this.inventoryData, 2, 1);
-            this.tableLayoutPanel8.Controls.Add(this.refreshPlayerData, 3, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 6;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 376);
-            this.tableLayoutPanel8.TabIndex = 0;
+            this.tableLayoutPanel5.ColumnCount = 4;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.33333F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.66666F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.openLog, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.backgroundColour, 3, 1);
+            this.tableLayoutPanel5.Controls.Add(this.label8, 2, 1);
+            this.tableLayoutPanel5.Controls.Add(this.label9, 2, 2);
+            this.tableLayoutPanel5.Controls.Add(this.userEventColour, 3, 2);
+            this.tableLayoutPanel5.Controls.Add(this.label10, 2, 3);
+            this.tableLayoutPanel5.Controls.Add(this.memoryLimitColour, 3, 3);
+            this.tableLayoutPanel5.Controls.Add(this.label11, 2, 4);
+            this.tableLayoutPanel5.Controls.Add(this.timedRestartColour, 3, 4);
+            this.tableLayoutPanel5.Controls.Add(this.label12, 2, 5);
+            this.tableLayoutPanel5.Controls.Add(this.serverCrashColour, 3, 5);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 10;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel5.TabIndex = 0;
             // 
-            // serverPlayers
+            // enableLogging
             // 
-            this.serverPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverPlayers.FormattingEnabled = true;
-            this.serverPlayers.Location = new System.Drawing.Point(3, 43);
-            this.serverPlayers.Name = "serverPlayers";
-            this.tableLayoutPanel8.SetRowSpan(this.serverPlayers, 5);
-            this.serverPlayers.Size = new System.Drawing.Size(136, 330);
-            this.serverPlayers.TabIndex = 1;
-            this.serverPlayers.SelectedIndexChanged += new System.EventHandler(this.serverPlayers_SelectedIndexChanged);
+            this.enableLogging.AutoSize = true;
+            this.enableLogging.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enableLogging.Location = new System.Drawing.Point(3, 3);
+            this.enableLogging.Name = "enableLogging";
+            this.enableLogging.Size = new System.Drawing.Size(202, 24);
+            this.enableLogging.TabIndex = 0;
+            this.enableLogging.Text = "Enable Logging";
+            this.enableLogging.UseVisualStyleBackColor = true;
+            this.enableLogging.Click += new System.EventHandler(this.enableLogging_Click);
             // 
-            // playerCharacters
+            // openLog
             // 
-            this.playerCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.playerCharacters.FormattingEnabled = true;
-            this.playerCharacters.Location = new System.Drawing.Point(145, 43);
-            this.playerCharacters.Name = "playerCharacters";
-            this.playerCharacters.Size = new System.Drawing.Size(171, 117);
-            this.playerCharacters.TabIndex = 2;
-            this.playerCharacters.SelectedIndexChanged += new System.EventHandler(this.playerCharacters_SelectedIndexChanged);
+            this.openLog.AutoSize = true;
+            this.tableLayoutPanel5.SetColumnSpan(this.openLog, 2);
+            this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openLog.Location = new System.Drawing.Point(978, 0);
+            this.openLog.Name = "openLog";
+            this.openLog.Size = new System.Drawing.Size(150, 30);
+            this.openLog.TabIndex = 2;
+            this.openLog.TabStop = true;
+            this.openLog.Text = "Open Log File";
+            this.openLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.openLog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.openLog_LinkClicked);
             // 
-            // xPosition
+            // logTextBox
             // 
-            this.xPosition.AutoSize = true;
-            this.xPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xPosition.Location = new System.Drawing.Point(145, 163);
-            this.xPosition.Name = "xPosition";
-            this.xPosition.Size = new System.Drawing.Size(171, 30);
-            this.xPosition.TabIndex = 3;
-            this.xPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.logTextBox.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel5.SetColumnSpan(this.logTextBox, 2);
+            this.logTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logTextBox.ForeColor = System.Drawing.Color.White;
+            this.logTextBox.Location = new System.Drawing.Point(3, 33);
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ReadOnly = true;
+            this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
+            this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.logTextBox.Size = new System.Drawing.Size(969, 369);
+            this.logTextBox.TabIndex = 3;
+            this.logTextBox.Text = "";
             // 
-            // yPosition
+            // backgroundColour
             // 
-            this.yPosition.AutoSize = true;
-            this.yPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.yPosition.Location = new System.Drawing.Point(145, 193);
-            this.yPosition.Name = "yPosition";
-            this.yPosition.Size = new System.Drawing.Size(171, 30);
-            this.yPosition.TabIndex = 4;
-            this.yPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.backgroundColour.BackColor = System.Drawing.Color.Black;
+            this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backgroundColour.Location = new System.Drawing.Point(1104, 33);
+            this.backgroundColour.Name = "backgroundColour";
+            this.backgroundColour.Size = new System.Drawing.Size(24, 19);
+            this.backgroundColour.TabIndex = 4;
+            this.backgroundColour.UseVisualStyleBackColor = false;
+            this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
             // 
-            // zPosition
+            // label8
             // 
-            this.zPosition.AutoSize = true;
-            this.zPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zPosition.Location = new System.Drawing.Point(145, 223);
-            this.zPosition.Name = "zPosition";
-            this.zPosition.Size = new System.Drawing.Size(171, 30);
-            this.zPosition.TabIndex = 5;
-            this.zPosition.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Location = new System.Drawing.Point(978, 30);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(120, 25);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Background Colour";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label18
+            // label9
             // 
-            this.label18.AutoSize = true;
-            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Location = new System.Drawing.Point(3, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(136, 40);
-            this.label18.TabIndex = 6;
-            this.label18.Text = "Steam Name";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(978, 55);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(120, 25);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "User Event Colour";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label20
+            // userEventColour
             // 
-            this.label20.AutoSize = true;
-            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label20.Location = new System.Drawing.Point(145, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(171, 40);
-            this.label20.TabIndex = 7;
-            this.label20.Text = "Characters";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.userEventColour.BackColor = System.Drawing.Color.White;
+            this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.userEventColour.Location = new System.Drawing.Point(1104, 58);
+            this.userEventColour.Name = "userEventColour";
+            this.userEventColour.Size = new System.Drawing.Size(24, 19);
+            this.userEventColour.TabIndex = 7;
+            this.userEventColour.UseVisualStyleBackColor = false;
+            this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
             // 
-            // label21
+            // label10
             // 
-            this.label21.AutoSize = true;
-            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label21.Location = new System.Drawing.Point(322, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(668, 40);
-            this.label21.TabIndex = 8;
-            this.label21.Text = "Inventory Data";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Location = new System.Drawing.Point(978, 80);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(120, 25);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Memory Limit Colour";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // inventoryData
+            // memoryLimitColour
             // 
-            this.tableLayoutPanel8.SetColumnSpan(this.inventoryData, 2);
-            this.inventoryData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inventoryData.Location = new System.Drawing.Point(322, 43);
-            this.inventoryData.Multiline = true;
-            this.inventoryData.Name = "inventoryData";
-            this.inventoryData.ReadOnly = true;
-            this.tableLayoutPanel8.SetRowSpan(this.inventoryData, 5);
-            this.inventoryData.Size = new System.Drawing.Size(806, 330);
-            this.inventoryData.TabIndex = 9;
+            this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.memoryLimitColour.Location = new System.Drawing.Point(1104, 83);
+            this.memoryLimitColour.Name = "memoryLimitColour";
+            this.memoryLimitColour.Size = new System.Drawing.Size(24, 19);
+            this.memoryLimitColour.TabIndex = 9;
+            this.memoryLimitColour.UseVisualStyleBackColor = false;
+            this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
             // 
-            // refreshPlayerData
+            // label11
             // 
-            this.refreshPlayerData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.refreshPlayerData.Location = new System.Drawing.Point(996, 3);
-            this.refreshPlayerData.Name = "refreshPlayerData";
-            this.refreshPlayerData.Size = new System.Drawing.Size(132, 34);
-            this.refreshPlayerData.TabIndex = 10;
-            this.refreshPlayerData.Text = "Refresh";
-            this.refreshPlayerData.UseVisualStyleBackColor = true;
-            this.refreshPlayerData.Click += new System.EventHandler(this.refreshPlayerData_Click);
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Location = new System.Drawing.Point(978, 105);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(120, 25);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Planned Restart Colour";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // timedRestartColour
+            // 
+            this.timedRestartColour.BackColor = System.Drawing.Color.Lime;
+            this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
+            this.timedRestartColour.Name = "timedRestartColour";
+            this.timedRestartColour.Size = new System.Drawing.Size(24, 19);
+            this.timedRestartColour.TabIndex = 11;
+            this.timedRestartColour.UseVisualStyleBackColor = false;
+            this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Location = new System.Drawing.Point(978, 130);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(120, 25);
+            this.label12.TabIndex = 12;
+            this.label12.Text = "Server Crash Colour";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // serverCrashColour
+            // 
+            this.serverCrashColour.BackColor = System.Drawing.Color.Red;
+            this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.serverCrashColour.Location = new System.Drawing.Point(1104, 133);
+            this.serverCrashColour.Name = "serverCrashColour";
+            this.serverCrashColour.Size = new System.Drawing.Size(24, 19);
+            this.serverCrashColour.TabIndex = 13;
+            this.serverCrashColour.UseVisualStyleBackColor = false;
+            this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel1.Location = new System.Drawing.Point(954, 636);
+            this.linkLabel1.Location = new System.Drawing.Point(954, 665);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(188, 29);
             this.linkLabel1.TabIndex = 26;
@@ -1616,7 +1933,7 @@
             // 
             this.uptimeLbl.AutoSize = true;
             this.uptimeLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uptimeLbl.Location = new System.Drawing.Point(3, 546);
+            this.uptimeLbl.Location = new System.Drawing.Point(3, 575);
             this.uptimeLbl.Name = "uptimeLbl";
             this.uptimeLbl.Size = new System.Drawing.Size(112, 30);
             this.uptimeLbl.TabIndex = 27;
@@ -1627,7 +1944,7 @@
             // 
             this.serverUptime.AutoSize = true;
             this.serverUptime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverUptime.Location = new System.Drawing.Point(121, 546);
+            this.serverUptime.Location = new System.Drawing.Point(121, 575);
             this.serverUptime.Name = "serverUptime";
             this.serverUptime.Size = new System.Drawing.Size(86, 30);
             this.serverUptime.TabIndex = 28;
@@ -1639,7 +1956,7 @@
             this.autoStartWithWindows.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.autoStartWithWindows, 3);
             this.autoStartWithWindows.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.autoStartWithWindows.Location = new System.Drawing.Point(3, 609);
+            this.autoStartWithWindows.Location = new System.Drawing.Point(3, 638);
             this.autoStartWithWindows.Name = "autoStartWithWindows";
             this.autoStartWithWindows.Size = new System.Drawing.Size(345, 24);
             this.autoStartWithWindows.TabIndex = 29;
@@ -1653,7 +1970,7 @@
             this.autoStartServer.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.autoStartServer, 3);
             this.autoStartServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.autoStartServer.Location = new System.Drawing.Point(3, 639);
+            this.autoStartServer.Location = new System.Drawing.Point(3, 668);
             this.autoStartServer.Name = "autoStartServer";
             this.autoStartServer.Size = new System.Drawing.Size(345, 23);
             this.autoStartServer.TabIndex = 30;
@@ -1676,7 +1993,7 @@
             // 
             this.restartServerTimelbl.AutoSize = true;
             this.restartServerTimelbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimelbl.Location = new System.Drawing.Point(807, 546);
+            this.restartServerTimelbl.Location = new System.Drawing.Point(807, 575);
             this.restartServerTimelbl.Name = "restartServerTimelbl";
             this.restartServerTimelbl.Size = new System.Drawing.Size(141, 30);
             this.restartServerTimelbl.TabIndex = 32;
@@ -1686,7 +2003,7 @@
             // restartServerTime
             // 
             this.restartServerTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTime.Location = new System.Drawing.Point(954, 549);
+            this.restartServerTime.Location = new System.Drawing.Point(954, 578);
             this.restartServerTime.Name = "restartServerTime";
             this.restartServerTime.Size = new System.Drawing.Size(188, 20);
             this.restartServerTime.TabIndex = 33;
@@ -1697,7 +2014,7 @@
             this.restartServerTimeOption.AutoSize = true;
             this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimeOption.Location = new System.Drawing.Point(646, 549);
+            this.restartServerTimeOption.Location = new System.Drawing.Point(646, 578);
             this.restartServerTimeOption.Name = "restartServerTimeOption";
             this.restartServerTimeOption.Size = new System.Drawing.Size(155, 24);
             this.restartServerTimeOption.TabIndex = 34;
@@ -1774,7 +2091,7 @@
             this.saveConfigOnStart.AutoSize = true;
             this.saveConfigOnStart.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveConfigOnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConfigOnStart.Location = new System.Drawing.Point(807, 579);
+            this.saveConfigOnStart.Location = new System.Drawing.Point(807, 608);
             this.saveConfigOnStart.Name = "saveConfigOnStart";
             this.saveConfigOnStart.Size = new System.Drawing.Size(141, 24);
             this.saveConfigOnStart.TabIndex = 43;
@@ -1786,7 +2103,7 @@
             // restartServer
             // 
             this.restartServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServer.Location = new System.Drawing.Point(807, 609);
+            this.restartServer.Location = new System.Drawing.Point(807, 638);
             this.restartServer.Name = "restartServer";
             this.restartServer.Size = new System.Drawing.Size(141, 24);
             this.restartServer.TabIndex = 44;
@@ -1797,7 +2114,7 @@
             // checkUpdateOnStart
             // 
             this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(807, 639);
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(807, 668);
             this.checkUpdateOnStart.Name = "checkUpdateOnStart";
             this.checkUpdateOnStart.Size = new System.Drawing.Size(141, 17);
             this.checkUpdateOnStart.TabIndex = 15;
@@ -1810,7 +2127,7 @@
             // 
             this.onlinePlayers.AutoSize = true;
             this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlinePlayers.Location = new System.Drawing.Point(490, 516);
+            this.onlinePlayers.Location = new System.Drawing.Point(490, 545);
             this.onlinePlayers.Name = "onlinePlayers";
             this.onlinePlayers.Size = new System.Drawing.Size(150, 30);
             this.onlinePlayers.TabIndex = 36;
@@ -1821,7 +2138,7 @@
             // 
             this.restartsThisSessionTxt.AutoSize = true;
             this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartsThisSessionTxt.Location = new System.Drawing.Point(354, 546);
+            this.restartsThisSessionTxt.Location = new System.Drawing.Point(354, 575);
             this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
             this.restartsThisSessionTxt.Size = new System.Drawing.Size(130, 30);
             this.restartsThisSessionTxt.TabIndex = 38;
@@ -1832,7 +2149,7 @@
             // 
             this.lastRestartTxt.AutoSize = true;
             this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lastRestartTxt.Location = new System.Drawing.Point(490, 546);
+            this.lastRestartTxt.Location = new System.Drawing.Point(490, 575);
             this.lastRestartTxt.Name = "lastRestartTxt";
             this.lastRestartTxt.Size = new System.Drawing.Size(150, 30);
             this.lastRestartTxt.TabIndex = 39;
@@ -1843,7 +2160,7 @@
             // 
             this.memoryUsed.AutoSize = true;
             this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsed.Location = new System.Drawing.Point(354, 516);
+            this.memoryUsed.Location = new System.Drawing.Point(354, 545);
             this.memoryUsed.Name = "memoryUsed";
             this.memoryUsed.Size = new System.Drawing.Size(130, 30);
             this.memoryUsed.TabIndex = 21;
@@ -1854,7 +2171,7 @@
             // 
             this.allTimeHighPlayersLbl.AutoSize = true;
             this.allTimeHighPlayersLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(354, 576);
+            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(354, 605);
             this.allTimeHighPlayersLbl.Name = "allTimeHighPlayersLbl";
             this.allTimeHighPlayersLbl.Size = new System.Drawing.Size(130, 30);
             this.allTimeHighPlayersLbl.TabIndex = 45;
@@ -1865,7 +2182,7 @@
             // 
             this.longestUptimeLbl.AutoSize = true;
             this.longestUptimeLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.longestUptimeLbl.Location = new System.Drawing.Point(490, 576);
+            this.longestUptimeLbl.Location = new System.Drawing.Point(490, 605);
             this.longestUptimeLbl.Name = "longestUptimeLbl";
             this.longestUptimeLbl.Size = new System.Drawing.Size(150, 30);
             this.longestUptimeLbl.TabIndex = 46;
@@ -1877,7 +2194,7 @@
             this.scheduledRestartOption.AutoSize = true;
             this.scheduledRestartOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.scheduledRestartOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scheduledRestartOption.Location = new System.Drawing.Point(646, 579);
+            this.scheduledRestartOption.Location = new System.Drawing.Point(646, 608);
             this.scheduledRestartOption.Name = "scheduledRestartOption";
             this.scheduledRestartOption.Size = new System.Drawing.Size(155, 24);
             this.scheduledRestartOption.TabIndex = 47;
@@ -1891,7 +2208,7 @@
             // 
             this.configureRestartSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configureRestartSchedule.Enabled = false;
-            this.configureRestartSchedule.Location = new System.Drawing.Point(646, 609);
+            this.configureRestartSchedule.Location = new System.Drawing.Point(646, 638);
             this.configureRestartSchedule.Name = "configureRestartSchedule";
             this.configureRestartSchedule.Size = new System.Drawing.Size(155, 24);
             this.configureRestartSchedule.TabIndex = 48;
@@ -1899,11 +2216,77 @@
             this.configureRestartSchedule.UseVisualStyleBackColor = true;
             this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
+            // emailTo
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.emailTo, 2);
+            this.emailTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailTo.Enabled = false;
+            this.emailTo.Location = new System.Drawing.Point(925, 83);
+            this.emailTo.Name = "emailTo";
+            this.emailTo.Size = new System.Drawing.Size(203, 20);
+            this.emailTo.TabIndex = 80;
+            this.emailTo.Leave += new System.EventHandler(this.emailTo_Leave);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label24.Location = new System.Drawing.Point(832, 80);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(87, 25);
+            this.label24.TabIndex = 81;
+            this.label24.Text = "Email To";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // emailPort
+            // 
+            this.emailPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailPort.Enabled = false;
+            this.emailPort.Location = new System.Drawing.Point(925, 58);
+            this.emailPort.Name = "emailPort";
+            this.emailPort.Size = new System.Drawing.Size(99, 20);
+            this.emailPort.TabIndex = 82;
+            this.emailPort.Leave += new System.EventHandler(this.emailPort_Leave);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Location = new System.Drawing.Point(832, 55);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(87, 25);
+            this.label25.TabIndex = 83;
+            this.label25.Text = "Port";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label26.Location = new System.Drawing.Point(3, 80);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(212, 25);
+            this.label26.TabIndex = 84;
+            this.label26.Text = "Username and Password";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // emailSSL
+            // 
+            this.emailSSL.AutoSize = true;
+            this.emailSSL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailSSL.Location = new System.Drawing.Point(1030, 58);
+            this.emailSSL.Name = "emailSSL";
+            this.emailSSL.Size = new System.Drawing.Size(98, 19);
+            this.emailSSL.TabIndex = 85;
+            this.emailSSL.Text = "SSL";
+            this.emailSSL.UseVisualStyleBackColor = true;
+            this.emailSSL.Click += new System.EventHandler(this.emailSSL_Click);
+            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1145, 670);
+            this.ClientSize = new System.Drawing.Size(1145, 699);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ServerManager";
@@ -1925,9 +2308,9 @@
             this.playersOnlineTabPage.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.playersOnlineDGV)).EndInit();
-            this.statisticsTabPage.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
+            this.playerInfoTabPage.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
             this.discordTabPage.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
@@ -1936,9 +2319,9 @@
             this.tableLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.backupScheduleMinutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backupRetentionQty)).EndInit();
-            this.playerInfoTabPage.ResumeLayout(false);
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
+            this.logsTabPage.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2014,7 +2397,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Script;
         private System.Windows.Forms.DataGridViewTextBoxColumn IniFile;
         private System.Windows.Forms.DataGridViewTextBoxColumn Info;
-        private System.Windows.Forms.TabPage statisticsTabPage;
+        private System.Windows.Forms.TabPage logsTabPage;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.CheckBox enableLogging;
         private System.Windows.Forms.Label allTimeHighPlayersLbl;
@@ -2081,6 +2464,30 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox inventoryData;
         private System.Windows.Forms.Button refreshPlayerData;
+        private System.Windows.Forms.CheckBox enableEmailAlerts;
+        private System.Windows.Forms.TextBox smtpAddress;
+        private System.Windows.Forms.TextBox emailUsername;
+        private System.Windows.Forms.TextBox emailPassword;
+        private System.Windows.Forms.Button sendTestEmail;
+        private System.Windows.Forms.TextBox testEmailText;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.CheckBox discordMemLimit;
+        private System.Windows.Forms.CheckBox discordTimedRestart;
+        private System.Windows.Forms.CheckBox discordScheduledRestart;
+        private System.Windows.Forms.CheckBox discordCrash;
+        private System.Windows.Forms.CheckBox emailMemLimit;
+        private System.Windows.Forms.CheckBox emailTimedRestart;
+        private System.Windows.Forms.CheckBox emailScheduledRestart;
+        private System.Windows.Forms.CheckBox emailCrash;
+        private System.Windows.Forms.CheckBox discordAdditional;
+        private System.Windows.Forms.CheckBox emailAdditional;
+        private System.Windows.Forms.TextBox emailTo;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox emailPort;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.CheckBox emailSSL;
     }
 }
 
