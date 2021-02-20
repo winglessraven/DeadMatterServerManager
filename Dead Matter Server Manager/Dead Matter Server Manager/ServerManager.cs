@@ -22,12 +22,21 @@ namespace Dead_Matter_Server_Manager
 {
     public partial class ServerManager : Form
     {
+        //internals
         internal static ServerManager serverManager;
         internal static RestartSchedule restartSchedule;
 
+        //lists
         private static List<Settings> settings = new List<Settings>();
-        private static string configFilePath;
         private List<String> scripts = new List<String>();
+        public static List<DateTime> restartSchedules = new List<DateTime>();
+
+        //file info and paths
+        private static string configFilePath;
+        private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
+        public string currentDBfile = "SaveData_v04.db";
+
+        //delegates
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
         delegate void AppendTextOnControl(RichTextBox controlToChange, string message, string type, string discordColour);
         delegate void SetProgressBar(ProgressBar progressBar, double maximum, double current);
@@ -35,33 +44,44 @@ namespace Dead_Matter_Server_Manager
         delegate void SetReadOnlyControl(Control control, bool enabled);
         delegate void SetOnlinePlayersDGV(DataGridView dGV, A2S_PLAYER onlinePlayers);
         delegate void SetListControlItems(ListBox controlToChange, bool addItem, string itemName);
-        static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-        private bool serverStarted;
-        private bool firstTimeServerStarted;
-        private DateTime serverStartTime;
+
+        //server connection info
         private IPAddress serverIP;
         private A2S_INFO serverInfo;
         private A2S_PLAYER playerInfo;
         private int steamQueryPort;
-        private bool killSent;
-        private DateTime killCommandSentAt;
-        private TimeSpan timeSinceLastKill;
+
+        //server stats
+        private bool serverStarted;
+        private bool firstTimeServerStarted;
+        private DateTime serverStartTime;
+        private int allTimeHighPlayers;
+        private TimeSpan longestUptime;
         private double restartsThisSession;
         private bool sessionStarted;
         private DateTime lastRestart;
-        private int killAttempts;
-        private int allTimeHighPlayers;
-        private TimeSpan longestUptime;
-        private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
         TimeSpan uptime;
-        bool plannedShutdown;
         private DateTime lastBackup;
-        public static List<DateTime> restartSchedules = new List<DateTime>();
-        public string currentDBfile = "SaveData_v04.db";
+
+        //server stop
+        bool plannedShutdown;
+        private bool killSent;
+        private DateTime killCommandSentAt;
+        private TimeSpan timeSinceLastKill;
+        private int killAttempts;
+
+        //misc ooleans
+        private bool initialStartUpDone;
+        private bool stoppedControlsChanged;
+
+        //for memory conversion
+        static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
         public ServerManager()
         {
             InitializeComponent();
+
+            //check if this version is current
             VersionCheckOnStart();
 
             serverManager = this;
@@ -96,6 +116,10 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// Check if application is up to date.  Current version displayed on https://www.winglessraven.com/DMSM.html.
+        /// If application not up to date, prompt for user to update.
+        /// </summary>
         private void VersionCheckOnStart()
         {
             //check if previous update file exists
@@ -135,8 +159,8 @@ namespace Dead_Matter_Server_Manager
                     }
                     catch
                     {
-                        //can't find installer
-                        DialogResult result1 = MessageBox.Show("Download failed, visit github now?", "Download Failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        //can't find installer from latest msi link, redirect to Github
+                        DialogResult result1 = MessageBox.Show("Download failed, visit Github now?", "Download Failed", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                         if (result1 == DialogResult.Yes)
                         {
                             Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases/latest");
@@ -147,6 +171,10 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Check if previous config exists for app, if so read it in and set values accordingly.
+        /// If config file doesn't exist, create an empty one ready for storing data.
+        /// </summary>
         private void CheckAppData()
         {
             if (File.Exists(configFilePath))
@@ -460,7 +488,7 @@ namespace Dead_Matter_Server_Manager
                         String[] times = temp[1].Split(',');
                         foreach (string time in times)
                         {
-                            if(time != "")
+                            if (time != "")
                             {
                                 restartSchedules.Add(Convert.ToDateTime(time));
                             }
@@ -479,6 +507,10 @@ namespace Dead_Matter_Server_Manager
         }
 
 
+        /// <summary>
+        /// Add current server setting defaults as per the latest documentation.
+        /// Read in the values into the datagridview table called 'configSettings'.
+        /// </summary>
         private void AddConfigRows()
         {
             //add rows for server settings
@@ -518,6 +550,11 @@ namespace Dead_Matter_Server_Manager
             configSettings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
+        /// <summary>
+        /// Folder browse dialog fo SteamCMD path.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void steamCMDBrowse_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
@@ -534,6 +571,11 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// Folder browse dialog for the DM server ROOT folder.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void serverFolderBrowse_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
@@ -549,6 +591,11 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
 
+        /// <summary>
+        /// Get latest version of SteamCMD, extract in the specified location.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateSteamCMD_Click(object sender, EventArgs e)
         {
             if (steamCMDPath.Text == "")
@@ -575,6 +622,11 @@ namespace Dead_Matter_Server_Manager
             MessageBox.Show("SteamCMD Updated", "SteamCMD Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Use SteamCMD to update the server files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateServer_Click(object sender, EventArgs e)
         {
             if (steamCMDPath.Text.Equals(""))
@@ -618,6 +670,11 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// Get the latest server ini files, can be used if files are updated outside the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void getConfig_Click(object sender, EventArgs e)
         {
             if (!File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
@@ -700,6 +757,11 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Write the current settings to the ini files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveConfig_Click(object sender, EventArgs e)
         {
             List<WriteConfig> writeConfigs = new List<WriteConfig>();
@@ -830,6 +892,9 @@ namespace Dead_Matter_Server_Manager
             WriteLog("Config file saved", "INFO", null);
         }
 
+        /// <summary>
+        /// Write current application settings to file.
+        /// </summary>
         public void SaveData()
         {
             string steamPass = "";
@@ -902,6 +967,12 @@ namespace Dead_Matter_Server_Manager
                 );
         }
 
+        /// <summary>
+        /// Start the server!
+        /// Check for steam_appid.txt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startServer_Click(object sender, EventArgs e)
         {
             if (saveConfigOnStart.Checked)
@@ -932,6 +1003,10 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// Main method for monitoring the server.  Runs every 500ms.
+        /// </summary>
+        /// <param name="maxMemory">Maxmimum memory the server should use.  If it goes above this value restart the server.</param>
         private async void MonitorServer(string maxMemory)
         {
             SynchronizationContext.SetSynchronizationContext(new WindowsFormsSynchronizationContext());
@@ -940,25 +1015,42 @@ namespace Dead_Matter_Server_Manager
             {
                 long memory;
                 Process[] dmServer;
+
+                //check if one of the server processes is running
                 dmServer = Process.GetProcessesByName("deadmatterServer");
                 if (dmServer.Length != 0)
                 {
+                    //check if the deadmatterServer-Win64-Shipping.exe is also running
                     Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
                     if (dmServerShipping.Length != 0)
                     {
+                        //server is running, update values accordingly
                         memory = dmServerShipping[0].WorkingSet64;
                         string memoryGB = SizeSuffix(memory, 2);
-                        SetText(memoryUsed, "Memory Used" + Environment.NewLine + memoryGB, Color.Black, true);
-                        SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
-                        serverStatus.ForeColor = Color.Green;
-                        SetText(startServer, "Start Server", Color.Black, false);
-                        SetText(stopServer, "Stop Server", Color.Black, true);
 
-                        SetReadOnly(restartServerTimeOption, false);
-                        SetReadOnly(restartServerTime, false);
-                        SetReadOnly(maxServerMemory, false);
-                        SetReadOnly(restartServer, true);
-                        SetReadOnly(restoreNow, false);
+                        //check if initial staus changes are done, if not, run through them
+                        if (!initialStartUpDone)
+                        {
+                            stoppedControlsChanged = false;
+
+                            SetText(memoryUsed, "Memory Used" + Environment.NewLine + memoryGB, Color.Black, true);
+                            SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
+                            serverStatus.ForeColor = Color.Green;
+                            SetText(startServer, "Start Server", Color.Black, false);
+                            SetText(stopServer, "Stop Server", Color.Black, true);
+
+                            SetReadOnly(restartServerTimeOption, false);
+                            SetReadOnly(restartServerTime, false);
+                            SetReadOnly(maxServerMemory, false);
+                            SetReadOnly(restartServer, true);
+                            SetReadOnly(restoreNow, false);
+
+                            SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
+                            SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
+
+                            initialStartUpDone = true;
+                        }
+
                         string maxMem = ReadControl(maxServerMemory);
                         if (maxMem == "")
                         {
@@ -968,11 +1060,12 @@ namespace Dead_Matter_Server_Manager
                         SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
 
                         uptime = DateTime.Now - serverStartTime;
-
                         SetText(serverUptime, uptime.Days.ToString("0") + "." + uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
+                        //only run this every 30 seconds, no need to run it each time this method is called
                         if (uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
                         {
+                            //try to get online player numbers
                             try
                             {
                                 serverIP = IPAddress.Parse(GetPublicIP());
@@ -983,8 +1076,10 @@ namespace Dead_Matter_Server_Manager
                             catch (Exception ex)
                             {
                                 SetText(onlinePlayers, "", Color.Black, true);
+                                WriteLog("Error getting online players: " + ex.Message, "ERROR", null);
                             }
 
+                            //try to get online player names
                             try
                             {
                                 playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
@@ -997,25 +1092,26 @@ namespace Dead_Matter_Server_Manager
 
                         }
 
+                        //update longest uptime if we exceed the record
                         if (uptime > longestUptime)
                         {
                             longestUptime = uptime;
+                            SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
+                            SaveData();
                         }
 
+                        //if we have an online player number and it's higher than the current record, update it
                         if (serverInfo != null)
                         {
                             if (serverInfo.Players > allTimeHighPlayers)
                             {
                                 allTimeHighPlayers = serverInfo.Players;
+                                SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
                                 SaveData();
                             }
                         }
 
-
-                        SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
-                        SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
-
-
+                        //check to see if the client has an update, only run every 10 mins
                         if (uptime.Minutes % 10 == 0 && uptime.Seconds % 30 == 0)
                         {
                             WebClient webClient = new WebClient();
@@ -1029,20 +1125,22 @@ namespace Dead_Matter_Server_Manager
                                 releaseVersion = this.ProductVersion.ToString();
                             }
                             Version version = new Version(releaseVersion);
-                            //MessageBox.Show(version.ToString() + Environment.NewLine + this.ProductVersion);
                             if (version.CompareTo(new Version(this.ProductVersion)) > 0)
                             {
                                 SetText(updateSoftware, "Version " + releaseVersion + " available - click to update now", Color.Blue, true);
                             }
                         }
 
+
                         string restartTime = ReadControl(restartServerTime);
 
+                        //check if we've tried to send a graceful shutdown and get how long it has been since
                         if (killSent)
                         {
                             timeSinceLastKill = DateTime.Now - killCommandSentAt;
                         }
 
+                        //reset scheduleRestartTime
                         bool scheduleRestartTime = false;
                         if (scheduledRestartOption.Checked)
                         {
@@ -1055,6 +1153,7 @@ namespace Dead_Matter_Server_Manager
                             }
                         }
 
+                        //send a graceful shutdown if we're over max memory OR it's scheduled time OR we've already sent one and it's been over a minute
                         if ((Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem) && !killSent) || (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString() && !killSent) || scheduleRestartTime && !killSent || killSent && timeSinceLastKill.Minutes >= 1 && killAttempts <= 3)
                         {
                             int processID = dmServerShipping[0].Id;
@@ -1064,13 +1163,14 @@ namespace Dead_Matter_Server_Manager
                             }
                             catch (Exception exception)
                             {
-                                WriteLog("Cannot showdown gracefully - windows-kill.exe not found or accessible - " + exception.Message,"ERROR",null);
+                                WriteLog("Cannot showdown gracefully - windows-kill.exe not found or accessible - " + exception.Message, "ERROR", null);
                             }
 
                             killSent = true;
                             killAttempts += 1;
                             killCommandSentAt = DateTime.Now;
 
+                            //if over max memory log it and if needed send discord webhook
                             if (Convert.ToDouble(memory) / 1024 / 1024 / 1024 > Convert.ToDouble(maxMem))
                             {
                                 string tmp = null;
@@ -1081,6 +1181,7 @@ namespace Dead_Matter_Server_Manager
                                 WriteLog("MAX MEMORY HIT: " + Convert.ToDouble(memory) / 1024 / 1024 / 1024 + "/" + Convert.ToDouble(maxMem), "MEM LIMIT", tmp);
                             }
 
+                            //if restart on timer log it and if needed send discord webhook
                             if (restartServerTimeOption.Checked && restartTime == ((uptime.Hours * 60) + uptime.Minutes).ToString())
                             {
                                 string tmp = null;
@@ -1091,6 +1192,8 @@ namespace Dead_Matter_Server_Manager
                                 WriteLog("SERVER UPTIME LIMIT REACHED", "UPTIME LIMIT", tmp);
                             }
 
+
+                            //if scheduled restart time log it and if needed send discord webhook
                             if (scheduleRestartTime)
                             {
                                 string tmp = null;
@@ -1101,11 +1204,13 @@ namespace Dead_Matter_Server_Manager
                                 WriteLog("SCHEDULED SERVER RESTART TIME REACHED", "SCHEDULED", tmp);
                             }
 
+                            //log number of shutdown attempts, online players, and uptime
                             WriteLog("SERVER SHUTDOWN REQUEST " + killAttempts + " ATTEMPTED: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"), "INFO", null);
                             plannedShutdown = true;
                         }
                         else
                         {
+                            //3 graceful shutdowns failed, KILL IT WITH FIRE
                             if (killSent && timeSinceLastKill.Minutes >= 1)
                             {
                                 dmServerShipping[0].CloseMainWindow();
@@ -1117,80 +1222,97 @@ namespace Dead_Matter_Server_Manager
                 }
                 else
                 {
-                    SetText(memoryUsed, "Memory Used" + Environment.NewLine + "0 GB", Color.Black, true);
-                    SetText(serverStatus, "SERVER OFFLINE", Color.Red, true);
-                    SetText(startServer, "Start Server", Color.Black, true);
-                    SetText(stopServer, "Stop Server", Color.Black, false);
-                    SetProgress(memoryUsedProgressBar, 100, 0);
-                    SetReadOnly(restartServerTimeOption, true);
-                    SetReadOnly(restartServerTime, true);
-                    SetReadOnly(maxServerMemory, true);
-                    SetReadOnly(restartServer, false);
-                    SetReadOnly(restoreNow, true);
-                    SetText(onlinePlayers, "", Color.Black, true);
+                    //server is off
+                    if (!stoppedControlsChanged)
+                    {
+                        initialStartUpDone = false;
 
-                    SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
-                    SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
+                        SetText(memoryUsed, "Memory Used" + Environment.NewLine + "0 GB", Color.Black, true);
+                        SetText(serverStatus, "SERVER OFFLINE", Color.Red, true);
+                        SetText(startServer, "Start Server", Color.Black, true);
+                        SetText(stopServer, "Stop Server", Color.Black, false);
+                        SetProgress(memoryUsedProgressBar, 100, 0);
+                        SetReadOnly(restartServerTimeOption, true);
+                        SetReadOnly(restartServerTime, true);
+                        SetReadOnly(maxServerMemory, true);
+                        SetReadOnly(restartServer, false);
+                        SetReadOnly(restoreNow, true);
+                        SetText(onlinePlayers, "", Color.Black, true);
+                        SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
+                        SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
 
+                        stoppedControlsChanged = true;
+                    }
+
+                    //check if server should be running
                     if (serverStarted && firstTimeServerStarted)
                     {
-                        if (checkUpdateOnStart.Checked)
+
+                        //TODO - Use SteamCMD, check for update, only start again when update is complete - wait for return code??
+                        //if (checkUpdateOnStart.Checked)
+                        //{
+                        //    updateServer_Click(this, null);
+                        //    string serverExe = serverFolderPath.Text + @"\deadmatterServer.exe";
+                        //    Process.Start(serverExe, launchParameters.Text);
+                        //}
+
+                        SetText(startServer, "Start Server", Color.Black, false);
+
+                        //reset player count
+                        int players = 0;
+
+                        //if server is up already get the player count
+                        if (serverInfo != null)
                         {
-                            //not currently used
-                            updateServer_Click(this, null);
-                            string serverExe = serverFolderPath.Text + @"\deadmatterServer.exe";
-                            Process.Start(serverExe, launchParameters.Text);
+                            players = serverInfo.Players;
                         }
-                        else
+
+                        //if the server was up and there was not a planned shutdown report a crash
+                        if (uptime.Ticks != 0 && !plannedShutdown)
                         {
-                            SetText(startServer, "Start Server", Color.Black, false);
-
-                            int players = 0;
-                            if (serverInfo != null)
+                            string tmp = null;
+                            if (notifiyOnCrash.Checked)
                             {
-                                players = serverInfo.Players;
+                                tmp = serverCrashedDiscordTxt.Text;
                             }
-
-                            if (uptime.Ticks != 0 && !plannedShutdown)
-                            {
-                                string tmp = null;
-                                if (notifiyOnCrash.Checked)
-                                {
-                                    tmp = serverCrashedDiscordTxt.Text;
-                                }
-                                WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "ERROR", tmp);
-                            }
-                            if (uptime.Ticks != 0 && plannedShutdown)
-                            {
-                                WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO", null);
-                            }
-
-                            Process dmServerExe = new Process();
-                            dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
-                            dmServerExe.StartInfo.Arguments = launchParameters.Text;
-                            dmServerExe.Start();
-                            Thread.Sleep(500);
-                            serverStartTime = DateTime.Now;
-
-                            plannedShutdown = false;
-
-                            SaveData();
-
-                            if (sessionStarted)
-                            {
-                                lastRestart = DateTime.Now;
-                                SetText(restartsThisSessionTxt, "Restarts this Session" + Environment.NewLine + restartsThisSession, Color.Black, true);
-                                SetText(lastRestartTxt, "Last Restart" + Environment.NewLine + lastRestart.ToString(), Color.Black, true);
-                                restartsThisSession += 1;
-                            }
-
+                            WriteLog("SERVER CRASHED - RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "ERROR", tmp);
                         }
+
+                        //if the server was up and shutdown was planned, log it
+                        if (uptime.Ticks != 0 && plannedShutdown)
+                        {
+                            WriteLog("SERVER RESTARTED: Previous session uptime= " + uptime.ToString(@"d\.hh\:mm\:ss") + ", Players Online= " + players, "INFO", null);
+                        }
+
+                        //start the server
+                        Process dmServerExe = new Process();
+                        dmServerExe.StartInfo.FileName = serverFolderPath.Text + @"\deadmatterServer.exe";
+                        dmServerExe.StartInfo.Arguments = launchParameters.Text;
+                        dmServerExe.Start();
+                        Thread.Sleep(500);
+                        serverStartTime = DateTime.Now;
+                        
+                        //reset the plannedShutdown
+                        plannedShutdown = false;
+
+                        SaveData();
+
+                        //update number of restarts
+                        if (sessionStarted)
+                        {
+                            lastRestart = DateTime.Now;
+                            SetText(restartsThisSessionTxt, "Restarts this Session" + Environment.NewLine + restartsThisSession, Color.Black, true);
+                            SetText(lastRestartTxt, "Last Restart" + Environment.NewLine + lastRestart.ToString(), Color.Black, true);
+                            restartsThisSession += 1;
+                        }
+
+                        //server running again, restart the kill count
                         killSent = false;
                         killAttempts = 0;
                     }
                 }
 
-                //backup schedule
+                //check if backups are enabled and it's time for a backup
                 if (enableBackups.Checked && lastBackup.AddMinutes(Convert.ToDouble(backupScheduleMinutes.Value)) < DateTime.Now)
                 {
                     backupNow_Click(this, null);
@@ -1202,12 +1324,22 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// The task for monitoring the server
+        /// </summary>
+        /// <param name="maxMemory">Maximum Memory</param>
+        /// <returns>Completed Task</returns>
         public Task Monitor(string maxMemory)
         {
             MonitorServer(maxMemory);
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// For reading controls on different threads.
+        /// </summary>
+        /// <param name="control">Control name</param>
+        /// <returns>Control text</returns>
         public string ReadControl(Control control)
         {
             if (control.InvokeRequired)
@@ -1223,6 +1355,11 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// For setting read only value on controls on different threads.
+        /// </summary>
+        /// <param name="control">Control name</param>
+        /// <param name="enabled">Enabled</param>
         public void SetReadOnly(Control control, bool enabled)
         {
             if (control.InvokeRequired)
@@ -1236,6 +1373,13 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// For appending text to controls on different threads.
+        /// </summary>
+        /// <param name="controlToChange">Control name</param>
+        /// <param name="message">Text to Add</param>
+        /// <param name="type">INFO, UPTIME LIMIT, SCHEDULED, MEM LIMIT, ERROR</param>
+        /// <param name="discordMessage"></param>
         public void AppendText(RichTextBox controlToChange, string message, string type, string discordMessage)
         {
             if (controlToChange.InvokeRequired)
@@ -1291,6 +1435,13 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Set text of a control on a different thread.
+        /// </summary>
+        /// <param name="controlToChange">Control name</param>
+        /// <param name="message">Text to set</param>
+        /// <param name="foreColour">Colour</param>
+        /// <param name="enabled">If control should be enabled</param>
         public void SetText(Control controlToChange, string message, Color foreColour, bool enabled)
         {
             if (controlToChange.InvokeRequired)
@@ -1306,6 +1457,12 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Update the memory progress bar on a different thread.
+        /// </summary>
+        /// <param name="progressBar">Control name</param>
+        /// <param name="maximum">Maxmimum value</param>
+        /// <param name="current">Current value</param>
         public void SetProgress(ProgressBar progressBar, double maximum, double current)
         {
             if (progressBar.InvokeRequired)
@@ -1331,6 +1488,11 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Update online player names data grid view that is on a different thread.
+        /// </summary>
+        /// <param name="dGV">Control name</param>
+        /// <param name="playerInfo">playerInfo</param>
         public void SetOnlinePlayers(DataGridView dGV, A2S_PLAYER playerInfo)
         {
             if (dGV.InvokeRequired)
@@ -1353,6 +1515,38 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Add items to a listbox control that is on a different thread.
+        /// </summary>
+        /// <param name="controlToChange">Control name</param>
+        /// <param name="addItem">Add item? If false, clear the list</param>
+        /// <param name="itemName">Item Name</param>
+        public void ListControl(ListBox controlToChange, bool addItem, string itemName)
+        {
+            if (controlToChange.InvokeRequired)
+            {
+                SetListControlItems DDD = new SetListControlItems(ListControl);
+                controlToChange.Invoke(DDD, controlToChange, addItem, itemName);
+            }
+            else
+            {
+                if (addItem)
+                {
+                    controlToChange.Items.Add(itemName);
+                }
+                else
+                {
+                    controlToChange.Items.Clear();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Used for converting memory sizes (bytes to GB etc)
+        /// </summary>
+        /// <param name="value">Values</param>
+        /// <param name="decimalPlaces">How many decimal places</param>
+        /// <returns></returns>
         static string SizeSuffix(Int64 value, int decimalPlaces = 1)
         {
             if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
@@ -1379,43 +1573,11 @@ namespace Dead_Matter_Server_Manager
                 SizeSuffixes[mag]);
         }
 
-        public class Settings
-        {
-            public string Variable { get; set; }
-            public string Value { get; set; }
-            public string Script { get; set; }
-            public string Tooltip { get; set; }
-            public string IniFile { get; set; }
-        }
-
-        public class WriteConfig
-        {
-            public string Script { get; set; }
-            public string Values { get; set; }
-            public bool AlreadyExists { get; set; }
-        }
-
-        public class BackupFiles
-        {
-            public string FileName { get; set; }
-            public DateTime CreatedDateTime { get; set; }
-        }
-
-        private void steamID_Leave(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void steamPassword_Leave(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void maxServerMemory_Leave(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
+        /// <summary>
+        /// Stop the server on demand, try graceful first
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void stopServer_Click(object sender, EventArgs e)
         {
             Process[] dmServer;
@@ -1440,7 +1602,7 @@ namespace Dead_Matter_Server_Manager
                         }
                     }
                 }
-                
+
             }
             serverStarted = false;
             firstTimeServerStarted = false;
@@ -1451,16 +1613,22 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
 
-        private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
+        /// <summary>
+        /// Some lovely user would like to see the donate page, take them there
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://www.buymeacoffee.com/winglessraven");
         }
 
+        /// <summary>
+        /// Toggle starting the application with Windows
+        /// TODO - Check if this works, seems intermittent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void autoStartWithWindows_CheckedChanged(object sender, EventArgs e)
         {
             if (autoStartWithWindows.Checked)
@@ -1479,6 +1647,11 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Update link cliked, download the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void updateSoftware_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             WebClient webClient = new WebClient();
@@ -1499,6 +1672,11 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        /// <summary>
+        /// Restart server time changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void restartServerTimeOption_CheckedChanged(object sender, EventArgs e)
         {
             if (restartServerTimeOption.Checked)
@@ -1511,16 +1689,953 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void restartServerTime_Leave(object sender, EventArgs e)
+        /// <summary>
+        /// Get the users public IP address to use when querying the server
+        /// </summary>
+        /// <returns>Public IP Address</returns>
+        public static string GetPublicIP()
         {
+            string url = "http://checkip.dyndns.org";
+            WebRequest req = WebRequest.Create(url);
+            WebResponse resp = req.GetResponse();
+            StreamReader sr = new StreamReader(resp.GetResponseStream());
+            string response = sr.ReadToEnd().Trim();
+            string[] a = response.Split(':');
+            string a2 = a[1].Substring(1);
+            string[] a3 = a2.Split('<');
+            string a4 = a3[0];
+            return a4;
+        }
+
+        /// <summary>
+        /// Change log clicked, direct to Github
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases");
+        }
+
+        /// <summary>
+        /// Refresh the online player list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void refreshOnlinePlayerList_Click(object sender, EventArgs e)
+        {
+            serverIP = IPAddress.Parse(GetPublicIP());
+            try
+            {
+                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
+                SetOnlinePlayers(playersOnlineDGV, playerInfo);
+            }
+            catch
+            {
+                //no response from steam
+                playersOnlineDGV.Rows.Clear();
+            }
+
+        }
+
+        /// <summary>
+        /// Custom launch parameters changed, set the values accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void changeLaunchParams_CheckedChanged(object sender, EventArgs e)
+        {
+            if (changeLaunchParams.Checked)
+            {
+                launchParameters.ReadOnly = false;
+            }
+            else
+            {
+                launchParameters.ReadOnly = true;
+                launchParameters.Text = "-USEALLAVAILABLECORES -log";
+            }
+        }
+
+        /// <summary>
+        /// Restart server clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void restartServer_Click(object sender, EventArgs e)
+        {
+            Process[] dmServer;
+            dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+            if (dmServer.Length != 0)
+            {
+                int processID = dmServer[0].Id;
+                try
+                {
+                    Process.Start("windows-kill.exe", "-SIGINT " + processID);
+                }
+                catch (Exception exception)
+                {
+                    WriteLog("Failed to send graceful shutdown, windows-kill.exe cannot be executed - " + exception.Message, "ERROR", null);
+                    WriteLog("Force close initiated", "ERROR", null);
+                    if (dmServer.Length != 0)
+                    {
+                        Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
+                        if (dmServerShipping.Length != 0)
+                        {
+                            dmServerShipping[0].CloseMainWindow();
+                        }
+                    }
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Write to the log file
+        /// </summary>
+        /// <param name="logText">Text to write</param>
+        /// <param name="type">Type of message</param>
+        /// <param name="discordMessage">Discord message if webhook enabled</param>
+        private void WriteLog(string logText, string type, string discordMessage)
+        {
+            if (enableLogging.Checked)
+            {
+                if (!File.Exists(logFilePath))
+                {
+                    var file = File.Create(logFilePath);
+                    file.Close();
+                }
+
+                AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + logText, type, discordMessage);
+
+                try
+                {
+                    using (StreamWriter sw = File.AppendText(logFilePath))
+                    {
+                        sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + "Cannot access " + logFilePath + " - " + exception.Message, "ERROR", null);
+                }
+            }
+            else
+            {
+                AppendText(logTextBox, null, type, discordMessage);
+            }
+        }
+
+        /// <summary>
+        /// Open the log file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openLog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (File.Exists(logFilePath))
+            {
+                Process.Start(logFilePath);
+            }
+            else
+            {
+                MessageBox.Show("No log exists yet.  Run with logging enabled to create the file", "No Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Change the BG colour
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                backgroundColour.BackColor = colorDialog1.Color;
+            }
+
+            logTextBox.BackColor = backgroundColour.BackColor;
+
             SaveData();
         }
 
-        private void rememberSteamPass_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Change event colour
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void userEventColour_Click(object sender, EventArgs e)
         {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                userEventColour.BackColor = colorDialog1.Color;
+            }
+
             SaveData();
         }
 
+        /// <summary>
+        /// Change memory limit colour
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void memoryLimitColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                memoryLimitColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        /// <summary>
+        /// Change the colour for timed restart notifications
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timedRestartColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                timedRestartColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        /// <summary>
+        /// Change the colour for server crash notifications
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void serverCrashColour_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                serverCrashColour.BackColor = colorDialog1.Color;
+            }
+
+            SaveData();
+        }
+
+        /// <summary>
+        /// Discord webhook option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void discordWebHook_CheckedChanged(object sender, EventArgs e)
+        {
+            if (discordWebHook.Checked)
+            {
+                webhookURL.Enabled = true;
+            }
+            else
+            {
+                webhookURL.Enabled = false;
+                webhookURL.Text = "";
+            }
+        }
+
+        /// <summary>
+        /// Send data to the discord webhook
+        /// </summary>
+        /// <param name="message">Message to send</param>
+        /// <param name="colour">What colour should the message have</param>
+        private async void SendDiscordWebHook(string message, Color colour)
+        {
+            if (message != null)
+            {
+                try
+                {
+                    int players = 0;
+                    int maxPlayers = 0;
+                    if (serverInfo != null)
+                    {
+                        players = serverInfo.Players;
+                        maxPlayers = serverInfo.MaxPlayers;
+                    }
+
+                    var client = new DiscordWebhookClient(webhookURL.Text);
+                    DiscordMessage messageTxt;
+                    if (discordIncludeAdditional.Checked)
+                    {
+                        messageTxt = new DiscordMessage(
+                        " ",
+                        embeds: new[]
+                        {
+                            new DiscordMessageEmbed(
+                                message,
+                                color: HexConverter(colour),
+                                fields: new[]
+                                {
+                                    new DiscordMessageEmbedField("Previous Player Count", players + "/" + maxPlayers),
+                                    new DiscordMessageEmbedField("Previous Uptime", uptime.ToString(@"d\.hh\:mm\:ss"))
+                                },
+                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
+                            )
+                        }
+                        );
+                    }
+                    else
+                    {
+                        messageTxt = new DiscordMessage(
+                        " ",
+                        embeds: new[]
+                        {
+                            new DiscordMessageEmbed(
+                                message,
+                                color: HexConverter(colour),
+                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
+                            )
+                        }
+                        );
+                    }
+
+                    await client.SendToDiscord(messageTxt);
+
+                }
+                catch
+                {
+                    //fail!!
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Convert colour to hex
+        /// </summary>
+        /// <param name="c">Colour</param>
+        /// <returns></returns>
+        private static int HexConverter(Color c)
+        {
+            string hex = c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+            return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+        }
+
+        /// <summary>
+        /// Memory limit notification option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyOnMemoryLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (notifyOnMemoryLimit.Checked)
+            {
+                memoryLimitDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                memoryLimitDiscordTxt.Enabled = false;
+            }
+
+        }
+
+        /// <summary>
+        /// Timed restart notification option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyOnTimedRestart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (notifyOnTimedRestart.Checked)
+            {
+                timedRestartDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                timedRestartDiscordTxt.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Crash notification option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifiyOnCrash_CheckedChanged(object sender, EventArgs e)
+        {
+            if (notifiyOnCrash.Checked)
+            {
+                serverCrashedDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                serverCrashedDiscordTxt.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Scheduled restart notification changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyOnScheduledRestart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (notifyOnScheduledRestart.Checked)
+            {
+                scheduledRestartDiscordTxt.Enabled = true;
+            }
+            else
+            {
+                scheduledRestartDiscordTxt.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Send a test webhook notification
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void testWebhook_Click(object sender, EventArgs e)
+        {
+            SaveData();
+            SendDiscordWebHook(webhookTestMsg.Text, Color.Gold);
+        }
+
+        /// <summary>
+        /// Backup option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enableBackups_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enableBackups.Checked)
+            {
+                backupDestinationFolder.ReadOnly = false;
+                browseBackupDestinationFolder.Enabled = true;
+                backupScheduleMinutes.Enabled = true;
+                backupRetentionQty.Enabled = true;
+                backupNow.Enabled = true;
+            }
+            else
+            {
+                backupDestinationFolder.ReadOnly = true;
+                browseBackupDestinationFolder.Enabled = false;
+                backupScheduleMinutes.Enabled = false;
+                backupRetentionQty.Enabled = false;
+                backupNow.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Open folder browse dialog for backup location
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void browseBackupDestinationFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "Select Backup Folder Location"
+            };
+            DialogResult result = folderBrowserDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                backupDestinationFolder.Text = folderBrowserDialog.SelectedPath;
+            }
+
+            SaveData();
+        }
+
+        /// <summary>
+        /// Back up data now
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void backupNow_Click(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    lastBackup = DateTime.Now;
+
+                    var backupFile = ZipFile.Open(backupDestinationFolder.Text + "\\" + @"DM-Backup-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".zip", ZipArchiveMode.Create);
+
+                    string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
+                    string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
+
+
+                    //get all db files (in case version updates change them)
+                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
+
+                    DateTime mostRecent = new DateTime(1990, 1, 1);
+                    string mostRecentFile = "";
+
+                    foreach (string s in saveDB)
+                    {
+                        FileInfo file = new FileInfo(s);
+                        if (file.LastWriteTime > mostRecent)
+                        {
+                            mostRecent = file.LastWriteTime;
+                            mostRecentFile = s;
+                        }
+                    }
+
+                    backupFile.CreateEntryFromFile(mostRecentFile, Path.GetFileName(mostRecentFile), CompressionLevel.Optimal);
+
+                    backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
+                    backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
+
+                    backupFile.Dispose();
+
+                    WriteLog("Backup created successfully", "INFO", null);
+
+                    CheckBackups();
+                }
+                catch (Exception ex)
+                {
+                    //file already exists for this second - don't dooo eeeeet
+                    WriteLog("Backup Failed! " + ex.Message, "ERROR", null);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Restore data now
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestoreNow_Click(object sender, EventArgs e)
+        {
+            SaveData();
+
+            if (backupList.SelectedItem != null)
+            {
+                string backupFile = backupList.SelectedItem.ToString();
+                string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\restore";
+
+                if (!Directory.Exists(tempExtractPath))
+                {
+                    Directory.CreateDirectory(tempExtractPath);
+                }
+
+                DirectoryInfo directoryInfo = new DirectoryInfo(tempExtractPath);
+
+                foreach (FileInfo file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+
+                string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
+                string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
+                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\";
+
+                string extractGameIni = tempExtractPath + @"\\Game.ini";
+                string extractEngineIni = tempExtractPath + @"\\Engine.ini";
+
+                ZipFile.ExtractToDirectory(backupFile, tempExtractPath);
+                if (restoreGameIni.Checked)
+                {
+                    if (File.Exists(gameIni))
+                    {
+                        _ = new FileInfo(gameIni)
+                        {
+                            IsReadOnly = false
+                        };
+                        File.Delete(gameIni);
+                    }
+                    File.Move(extractGameIni, gameIni);
+                    _ = new FileInfo(gameIni)
+                    {
+                        IsReadOnly = true
+                    };
+                }
+
+                if (restoreEngineIni.Checked)
+                {
+                    if (File.Exists(engineIni))
+                    {
+                        _ = new FileInfo(engineIni)
+                        {
+                            IsReadOnly = false
+                        };
+                        File.Delete(engineIni);
+                    }
+                    File.Move(extractEngineIni, engineIni);
+                    _ = new FileInfo(engineIni)
+                    {
+                        IsReadOnly = true
+                    };
+                }
+
+                if (restoreWorldSave.Checked)
+                {
+                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
+
+                    foreach (string s in saveDB)
+                    {
+                        FileInfo file = new FileInfo(s);
+
+                        if (File.Exists(worldSave + file.Name))
+                        {
+                            _ = new FileInfo(worldSave + file.Name)
+                            {
+                                IsReadOnly = false
+                            };
+                            File.Delete(worldSave + file.Name);
+                        }
+
+                        File.Move(s, worldSave + file.Name);
+                    }
+                }
+
+                WriteLog("Backup restored successfully", "INFO", null);
+                MessageBox.Show("Backup restored!", "Restored", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("Select Backup to Restore First", "Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Check which backups exist and add them to the backups list
+        /// </summary>
+        private void CheckBackups()
+        {
+            if (backupDestinationFolder.Text != "")
+            {
+                ListControl(backupList, false, null);
+
+                try
+                {
+                    if (Directory.Exists(backupDestinationFolder.Text))
+                    {
+                        string[] backupFiles = Directory.GetFiles(backupDestinationFolder.Text);
+
+                        //filter down so we just get the files we want
+                        List<BackupFiles> backupsList = new List<BackupFiles>();
+
+                        DateTime mostRecent = new DateTime(0);
+                        foreach (string s in backupFiles)
+                        {
+                            if (s.EndsWith(".zip") && s.StartsWith(backupDestinationFolder.Text + "\\" + @"DM-Backup"))
+                            {
+                                FileInfo fileInfo = new FileInfo(s);
+                                if (fileInfo.LastWriteTime > mostRecent)
+                                {
+                                    mostRecent = fileInfo.LastWriteTime;
+                                }
+                                backupsList.Add(new BackupFiles() { FileName = s, CreatedDateTime = fileInfo.LastWriteTime });
+                            }
+                        }
+
+
+                        //check qty of backups
+                        if (backupsList.Count > backupRetentionQty.Value)
+                        {
+                            backupsList.OrderBy(o => o.CreatedDateTime).ToList();
+                            decimal qtyToRemove = backupsList.Count - backupRetentionQty.Value;
+                            for (int i = 1; i <= qtyToRemove; i++)
+                            {
+                                File.Delete(backupsList[0].FileName);
+                                backupsList.RemoveAt(0);
+                            }
+                        }
+
+                        foreach (BackupFiles files in backupsList)
+                        {
+                            ListControl(backupList, true, files.FileName);
+                        }
+
+                        if (mostRecent != new DateTime(0))
+                        {
+                            SetText(lastBackupTime, mostRecent.ToString(), Color.Black, true);
+                            lastBackup = mostRecent;
+                        }
+
+                    }
+                }
+                catch
+                {
+                    SetText(lastBackupTime, "No Backup Found", Color.Black, true);
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Scheduled restart option changed, update accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void scheduledRestartOption_CheckedChanged(object sender, EventArgs e)
+        {
+            if (scheduledRestartOption.Checked)
+            {
+                configureRestartSchedule.Enabled = true;
+            }
+            else
+            {
+                configureRestartSchedule.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Restart schedule option changed, open the schedule form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void restartSchedule_Click(object sender, EventArgs e)
+        {
+            restartSchedule = new RestartSchedule();
+            restartSchedule.Show();
+        }
+
+        /// <summary>
+        /// Get players from the server DB
+        /// </summary>
+        private void GetSavedPlayers()
+        {
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+            serverPlayers.Items.Clear();
+            playerCharacters.Items.Clear();
+            inventoryData.Text = "";
+
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                string queryTxt = "SELECT DocumentID,OwningPlayerID,CharacterIDs FROM PlayerData";
+                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
+                    //string tmp = reader[1].ToString().Substring(13, 17);
+                    playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
+                    playerSteamInfo.CharacterIDs = reader[2].ToString();
+                    serverPlayers.Items.Add(playerSteamInfo);
+                }
+            }
+            catch
+            {
+                //error connecting to db - do something
+            }
+
+        }
+
+        /// <summary>
+        /// Convert community ID to Steam username
+        /// Performance not great, find a better way to do it without disclosing API key
+        /// </summary>
+        /// <param name="communityID">SteamID</param>
+        /// <returns></returns>
+        private string GetSteamName(string communityID)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                string name = client.DownloadString("https://www.winglessraven.com/DMSM/getSteamName.php?userID=" + communityID);
+                return name;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Player selection changed, get characters associated with the new selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void serverPlayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            playerCharacters.Items.Clear();
+            xPosition.Text = "";
+            yPosition.Text = "";
+            zPosition.Text = "";
+            inventoryData.Text = "";
+
+            PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
+            if (selectedPlayer.CharacterIDs.Length > 15)
+            {
+                string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
+                tmp = tmp.Replace(")", "");
+                string[] characters = tmp.Split(',');
+                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+
+                SQLiteConnection connection = new SQLiteConnection(connectionString);
+                try
+                {
+                    connection.Open();
+
+                    foreach (string s in characters)
+                    {
+                        string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
+                        SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                        SQLiteDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Character character = new Character();
+                            //string tmp = reader[1].ToString().Substring(13, 17);
+                            character.CharacterKey = Convert.ToInt32(s);
+
+                            string[] temp = reader[0].ToString().Split('=');
+                            string name = "";
+                            if (temp.Length > 1)
+                            {
+                                name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
+                                if (temp.Length > 2)
+                                {
+                                    name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
+                                }
+                            }
+                            name = name.Replace("\"", "");
+                            character.Name = name;
+                            playerCharacters.Items.Add(character);
+                        }
+                    }
+                }
+                catch
+                {
+                    //error connecting to db - do something
+                }
+            }
+        }
+
+        /// <summary>
+        /// Character selection changed, get character info from DB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            inventoryData.Text = "";
+            Character character = (Character)playerCharacters.SelectedItem;
+            int tmp = character.CharacterKey;
+
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
+
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            try
+            {
+                connection.Open();
+
+                string queryTxt = "SELECT CharacterTransform, InventoryData FROM Characters WHERE CharacterKey = '" + tmp + "'";
+                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string[] temp = reader[0].ToString().Split('(');
+                    string[] temp1 = temp[3].Split('=');
+                    string xPos = temp1[1].Split(',')[0];
+                    string yPos = temp1[2].Split(',')[0];
+                    string zPos = temp1[3].Split(')')[0];
+
+                    CharacterLocation characterLocation = new CharacterLocation();
+                    characterLocation.CharacterKey = tmp;
+                    characterLocation.TranslationX = Convert.ToDouble(xPos);
+                    characterLocation.TranslationY = Convert.ToDouble(yPos);
+                    characterLocation.TranslationZ = Convert.ToDouble(zPos);
+
+                    xPosition.Text = "Position X: " + characterLocation.TranslationX;
+                    yPosition.Text = "Position Y: " + characterLocation.TranslationY;
+                    zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
+
+                    string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
+                    List<string> itemNames = new List<string>();
+
+                    foreach (string s in items)
+                    {
+                        string[] split = s.Split(',');
+                        itemNames.Add(split[0]);
+                    }
+
+                    foreach (string s in itemNames)
+                    {
+                        if (!s.StartsWith("(EquipmentInventory"))
+                        {
+                            string trim = s.Replace(")", "");
+                            trim = trim.Replace("\"", "");
+                            inventoryData.AppendText(trim + Environment.NewLine);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                //error connecting to db - do something
+                xPosition.Text = "";
+                yPosition.Text = "";
+                zPosition.Text = "";
+                inventoryData.Text = "";
+            }
+        }
+
+        /// <summary>
+        /// Get the saved players
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void refreshPlayerData_Click(object sender, EventArgs e)
+        {
+            GetSavedPlayers();
+        }
+
+        public class PlayerSteamInfo
+        {
+            public string CharacterIDs { get; set; }
+            public string SteamName { get; set; }
+
+            public override string ToString()
+            {
+                return SteamName;
+            }
+        }
+
+        public class Character
+        {
+            public int CharacterKey { get; set; }
+            public string Name { get; set; }
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        public class CharacterLocation
+        {
+            public int CharacterKey { get; set; }
+            public double TranslationX { get; set; }
+            public double TranslationY { get; set; }
+            public double TranslationZ { get; set; }
+        }
+
+        public class Settings
+        {
+            public string Variable { get; set; }
+            public string Value { get; set; }
+            public string Script { get; set; }
+            public string Tooltip { get; set; }
+            public string IniFile { get; set; }
+        }
+
+        public class WriteConfig
+        {
+            public string Script { get; set; }
+            public string Values { get; set; }
+            public bool AlreadyExists { get; set; }
+        }
+
+        public class BackupFiles
+        {
+            public string FileName { get; set; }
+            public DateTime CreatedDateTime { get; set; }
+        }
+
+        /// <summary>
+        /// For password encryption/decryption
+        /// </summary>
         public static class StringCipher
         {
             // This constant is used to determine the keysize of the encryption algorithm in bits.
@@ -1619,6 +2734,9 @@ namespace Dead_Matter_Server_Manager
 
         }
 
+        /// <summary>
+        /// A2S query stuff
+        /// </summary>
         public class A2S_INFO
         {
             // \xFF\xFF\xFF\xFFTSource Engine Query\x00 because UTF-8 doesn't like to encode 0xFF
@@ -1739,26 +2857,10 @@ namespace Dead_Matter_Server_Manager
                 return sb.ToString();
             }
         }
-        public static string GetPublicIP()
-        {
-            string url = "http://checkip.dyndns.org";
-            WebRequest req = WebRequest.Create(url);
-            WebResponse resp = req.GetResponse();
-            StreamReader sr = new StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] a = response.Split(':');
-            string a2 = a[1].Substring(1);
-            string[] a3 = a2.Split('<');
-            string a4 = a3[0];
-            return a4;
-        }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("https://github.com/winglessraven/DeadMatterServerManager/releases");
-        }
-
-        // <summary>Adopted from Valve description: https://developer.valvesoftware.com/wiki/Server_queries#A2S_PLAYER </summary>
+        ///<summary>
+        ///Adopted from Valve description: https://developer.valvesoftware.com/wiki/Server_queries#A2S_PLAYER 
+        ///</summary>
         public class A2S_PLAYER
         {
             public struct Player
@@ -1831,929 +2933,160 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
-        private void refreshOnlinePlayerList_Click(object sender, EventArgs e)
-        {
-            serverIP = IPAddress.Parse(GetPublicIP());
-            try
-            {
-                playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
-                SetOnlinePlayers(playersOnlineDGV, playerInfo);
-            }
-            catch
-            {
-                //no response from steam
-                playersOnlineDGV.Rows.Clear();
-            }
-
-        }
-
-        private void changeLaunchParams_CheckedChanged(object sender, EventArgs e)
-        {
-            if (changeLaunchParams.Checked)
-            {
-                launchParameters.ReadOnly = false;
-            }
-            else
-            {
-                launchParameters.ReadOnly = true;
-                launchParameters.Text = "-USEALLAVAILABLECORES -log";
-            }
-        }
-
-        private void launchParameters_Leave(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void restartServer_Click(object sender, EventArgs e)
-        {
-            Process[] dmServer;
-            dmServer = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
-            if (dmServer.Length != 0)
-            {
-                int processID = dmServer[0].Id;
-                try
-                {
-                    Process.Start("windows-kill.exe", "-SIGINT " + processID);
-                }
-                catch (Exception exception)
-                {
-                    WriteLog("Failed to send graceful shutdown, windows-kill.exe cannot be executed - " + exception.Message,"ERROR",null);
-                    WriteLog("Force close initiated", "ERROR", null);
-                    if (dmServer.Length != 0)
-                    {
-                        Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
-                        if (dmServerShipping.Length != 0)
-                        {
-                            dmServerShipping[0].CloseMainWindow();
-                        }
-                    }
-                }
-                
-            }
-        }
-
-        private void WriteLog(string logText, string type, string discordMessage)
-        {
-            if (enableLogging.Checked)
-            {
-                if (!File.Exists(logFilePath))
-                {
-                    var file = File.Create(logFilePath);
-                    file.Close();
-                }
-
-                AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + logText, type, discordMessage);
-
-                try
-                {
-                    using (StreamWriter sw = File.AppendText(logFilePath))
-                    {
-                        sw.WriteLine(DateTime.Now.ToString("G") + "> " + logText);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    AppendText(logTextBox, DateTime.Now.ToString("G") + "> " + "Cannot access " + logFilePath + " - " + exception.Message ,"ERROR",null);
-                }
-            }
-            else
-            {
-                AppendText(logTextBox, null, type, discordMessage);
-            }
-        }
-
-        private void enableLogging_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void rememberSteamPass_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void changeLaunchParams_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void restartServerTimeOption_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void saveConfigOnStart_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void autoStartWithWindows_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void autoStartServer_Click(object sender, EventArgs e)
-        {
-            SaveData();
-        }
-
-        private void openLog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (File.Exists(logFilePath))
-            {
-                Process.Start(logFilePath);
-            }
-            else
-            {
-                MessageBox.Show("No log exists yet.  Run with logging enabled to create the file", "No Log", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void backgroundColour_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                backgroundColour.BackColor = colorDialog1.Color;
-            }
-
-            logTextBox.BackColor = backgroundColour.BackColor;
-
-            SaveData();
-        }
-
-        private void userEventColour_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                userEventColour.BackColor = colorDialog1.Color;
-            }
-
-            SaveData();
-        }
-
-        private void memoryLimitColour_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                memoryLimitColour.BackColor = colorDialog1.Color;
-            }
-
-            SaveData();
-        }
-
-        private void timedRestartColour_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                timedRestartColour.BackColor = colorDialog1.Color;
-            }
-
-            SaveData();
-        }
-
-        private void serverCrashColour_Click(object sender, EventArgs e)
-        {
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                serverCrashColour.BackColor = colorDialog1.Color;
-            }
-
-            SaveData();
-        }
-
-        private void discordWebHook_CheckedChanged(object sender, EventArgs e)
-        {
-            if (discordWebHook.Checked)
-            {
-                webhookURL.Enabled = true;
-            }
-            else
-            {
-                webhookURL.Enabled = false;
-                webhookURL.Text = "";
-            }
-        }
-
+        //all the below just call SaveData to store the current settings in the application
         private void discordWebHook_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private async void SendDiscordWebHook(string message, Color colour)
+        private void enableLogging_Click(object sender, EventArgs e)
         {
-            if (message != null)
-            {
-                try
-                {
-                    int players = 0;
-                    int maxPlayers = 0;
-                    if (serverInfo != null)
-                    {
-                        players = serverInfo.Players;
-                        maxPlayers = serverInfo.MaxPlayers;
-                    }
-
-                    var client = new DiscordWebhookClient(webhookURL.Text);
-                    DiscordMessage messageTxt;
-                    if (discordIncludeAdditional.Checked)
-                    {
-                        messageTxt = new DiscordMessage(
-                        " ",
-                        embeds: new[]
-                        {
-                            new DiscordMessageEmbed(
-                                message,
-                                color: HexConverter(colour),
-                                fields: new[]
-                                {
-                                    new DiscordMessageEmbedField("Previous Player Count", players + "/" + maxPlayers),
-                                    new DiscordMessageEmbedField("Previous Uptime", uptime.ToString(@"d\.hh\:mm\:ss"))
-                                },
-                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
-                            )
-                        }
-                        );
-                    }
-                    else
-                    {
-                        messageTxt = new DiscordMessage(
-                        " ",
-                        embeds: new[]
-                        {
-                            new DiscordMessageEmbed(
-                                message,
-                                color: HexConverter(colour),
-                                footer: new DiscordMessageEmbedFooter("Powered by Dead Matter Server Manager","https://www.winglessraven.com/DMSM/images/DMSM-Icon.jpg")
-                            )
-                        }
-                        );
-                    }
-
-                    await client.SendToDiscord(messageTxt);
-
-                }
-                catch
-                {
-                    //fail!!
-                }
-            }
-
+            SaveData();
         }
-        private static int HexConverter(Color c)
+        private void rememberSteamPass_Click(object sender, EventArgs e)
         {
-            string hex = c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
-            return int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+            SaveData();
         }
-
+        private void changeLaunchParams_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void restartServerTimeOption_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void saveConfigOnStart_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void autoStartWithWindows_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void autoStartServer_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void restartServerTime_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void rememberSteamPass_CheckedChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void checkUpdateOnStart_CheckedChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void steamID_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void steamPassword_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void maxServerMemory_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+        private void launchParameters_Leave(object sender, EventArgs e)
+        {
+            SaveData();
+        }
         private void webhookURL_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void notifyOnMemoryLimit_CheckedChanged(object sender, EventArgs e)
-        {
-            if (notifyOnMemoryLimit.Checked)
-            {
-                memoryLimitDiscordTxt.Enabled = true;
-            }
-            else
-            {
-                memoryLimitDiscordTxt.Enabled = false;
-            }
-
-        }
-
-        private void notifyOnTimedRestart_CheckedChanged(object sender, EventArgs e)
-        {
-            if (notifyOnTimedRestart.Checked)
-            {
-                timedRestartDiscordTxt.Enabled = true;
-            }
-            else
-            {
-                timedRestartDiscordTxt.Enabled = false;
-            }
-        }
-
-        private void notifiyOnCrash_CheckedChanged(object sender, EventArgs e)
-        {
-            if (notifiyOnCrash.Checked)
-            {
-                serverCrashedDiscordTxt.Enabled = true;
-            }
-            else
-            {
-                serverCrashedDiscordTxt.Enabled = false;
-            }
-        }
-
         private void notifyOnMemoryLimit_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void notifyOnTimedRestart_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void notifiyOnCrash_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void testWebhook_Click(object sender, EventArgs e)
-        {
-            SaveData();
-            SendDiscordWebHook(webhookTestMsg.Text, Color.Gold);
-        }
-
         private void webhookTestMsg_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void memoryLimitDiscordTxt_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void timedRestartDiscordTxt_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void serverCrashedDiscordTxt_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void discordIncludeAdditional_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void enableBackups_MouseClick(object sender, MouseEventArgs e)
         {
             SaveData();
         }
-
-        private void enableBackups_CheckedChanged(object sender, EventArgs e)
-        {
-            if (enableBackups.Checked)
-            {
-                backupDestinationFolder.ReadOnly = false;
-                browseBackupDestinationFolder.Enabled = true;
-                backupScheduleMinutes.Enabled = true;
-                backupRetentionQty.Enabled = true;
-                backupNow.Enabled = true;
-            }
-            else
-            {
-                backupDestinationFolder.ReadOnly = true;
-                browseBackupDestinationFolder.Enabled = false;
-                backupScheduleMinutes.Enabled = false;
-                backupRetentionQty.Enabled = false;
-                backupNow.Enabled = false;
-            }
-        }
-
         private void enableBackups_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void backupDestinationFolder_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void browseBackupDestinationFolder_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
-            {
-                Description = "Select Backup Folder Location"
-            };
-            DialogResult result = folderBrowserDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                backupDestinationFolder.Text = folderBrowserDialog.SelectedPath;
-            }
-
-            SaveData();
-        }
-
         private void backupScheduleMinutes_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void backupScheduleMinutes_Scroll(object sender, ScrollEventArgs e)
         {
             SaveData();
         }
-
         private void backupScheduleMinutes_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void backupRetentionQty_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void backupRetentionQty_Scroll(object sender, ScrollEventArgs e)
         {
             SaveData();
         }
-
         private void backupRetentionQty_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private async void backupNow_Click(object sender, EventArgs e)
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    lastBackup = DateTime.Now;
-
-                    var backupFile = ZipFile.Open(backupDestinationFolder.Text + "\\" + @"DM-Backup-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".zip", ZipArchiveMode.Create);
-
-                    string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
-                    string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-
-
-                    //get all db files (in case version updates change them)
-                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
-
-                    DateTime mostRecent = new DateTime(1990, 1, 1);
-                    string mostRecentFile = "";
-
-                    foreach (string s in saveDB)
-                    {
-                        FileInfo file = new FileInfo(s);
-                        if (file.LastWriteTime > mostRecent)
-                        {
-                            mostRecent = file.LastWriteTime;
-                            mostRecentFile = s;
-                        }
-                    }
-
-                    backupFile.CreateEntryFromFile(mostRecentFile, Path.GetFileName(mostRecentFile), CompressionLevel.Optimal);
-
-                    backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
-                    backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
-
-                    backupFile.Dispose();
-
-                    WriteLog("Backup created successfully", "INFO", null);
-
-                    CheckBackups();
-                }
-                catch (Exception ex)
-                {
-                    //file already exists for this second - don't dooo eeeeet
-                    WriteLog("Backup Failed! " + ex.Message, "ERROR", null);
-                }
-            });
-        }
-
         private void restoreGameIni_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void restoreEngineIni_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void RestoreNow_Click(object sender, EventArgs e)
-        {
-            SaveData();
-
-            if (backupList.SelectedItem != null)
-            {
-                string backupFile = backupList.SelectedItem.ToString();
-                string tempExtractPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\restore";
-
-                if (!Directory.Exists(tempExtractPath))
-                {
-                    Directory.CreateDirectory(tempExtractPath);
-                }
-
-                DirectoryInfo directoryInfo = new DirectoryInfo(tempExtractPath);
-
-                foreach (FileInfo file in directoryInfo.GetFiles())
-                {
-                    file.Delete();
-                }
-
-                string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
-                string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\";
-
-                string extractGameIni = tempExtractPath + @"\\Game.ini";
-                string extractEngineIni = tempExtractPath + @"\\Engine.ini";
-
-                ZipFile.ExtractToDirectory(backupFile, tempExtractPath);
-                if (restoreGameIni.Checked)
-                {
-                    if (File.Exists(gameIni))
-                    {
-                        _ = new FileInfo(gameIni)
-                        {
-                            IsReadOnly = false
-                        };
-                        File.Delete(gameIni);
-                    }
-                    File.Move(extractGameIni, gameIni);
-                    _ = new FileInfo(gameIni)
-                    {
-                        IsReadOnly = true
-                    };
-                }
-
-                if (restoreEngineIni.Checked)
-                {
-                    if (File.Exists(engineIni))
-                    {
-                        _ = new FileInfo(engineIni)
-                        {
-                            IsReadOnly = false
-                        };
-                        File.Delete(engineIni);
-                    }
-                    File.Move(extractEngineIni, engineIni);
-                    _ = new FileInfo(engineIni)
-                    {
-                        IsReadOnly = true
-                    };
-                }
-
-                if (restoreWorldSave.Checked)
-                {
-                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
-
-                    foreach (string s in saveDB)
-                    {
-                        FileInfo file = new FileInfo(s);
-
-                        if (File.Exists(worldSave + file.Name))
-                        {
-                            _ = new FileInfo(worldSave + file.Name)
-                            {
-                                IsReadOnly = false
-                            };
-                            File.Delete(worldSave + file.Name);
-                        }
-
-                        File.Move(s, worldSave + file.Name);
-                    }
-                }
-
-                WriteLog("Backup restored successfully", "INFO", null);
-                MessageBox.Show("Backup restored!", "Restored", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            }
-            else
-            {
-                MessageBox.Show("Select Backup to Restore First", "Not Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-        private void CheckBackups()
-        {
-            if (backupDestinationFolder.Text != "")
-            {
-                ListControl(backupList, false, null);
-
-                try
-                {
-                    if (Directory.Exists(backupDestinationFolder.Text))
-                    {
-                        string[] backupFiles = Directory.GetFiles(backupDestinationFolder.Text);
-
-                        //filter down so we just get the files we want
-                        List<BackupFiles> backupsList = new List<BackupFiles>();
-
-                        DateTime mostRecent = new DateTime(0);
-                        foreach (string s in backupFiles)
-                        {
-                            if (s.EndsWith(".zip") && s.StartsWith(backupDestinationFolder.Text + "\\" + @"DM-Backup"))
-                            {
-                                FileInfo fileInfo = new FileInfo(s);
-                                if (fileInfo.LastWriteTime > mostRecent)
-                                {
-                                    mostRecent = fileInfo.LastWriteTime;
-                                }
-                                backupsList.Add(new BackupFiles() { FileName = s, CreatedDateTime = fileInfo.LastWriteTime });
-                            }
-                        }
-
-
-                        //check qty of backups
-                        if (backupsList.Count > backupRetentionQty.Value)
-                        {
-                            backupsList.OrderBy(o => o.CreatedDateTime).ToList();
-                            decimal qtyToRemove = backupsList.Count - backupRetentionQty.Value;
-                            for (int i = 1; i <= qtyToRemove; i++)
-                            {
-                                File.Delete(backupsList[0].FileName);
-                                backupsList.RemoveAt(0);
-                            }
-                        }
-
-                        foreach (BackupFiles files in backupsList)
-                        {
-                            ListControl(backupList, true, files.FileName);
-                        }
-
-                        if (mostRecent != new DateTime(0))
-                        {
-                            SetText(lastBackupTime, mostRecent.ToString(), Color.Black, true);
-                            lastBackup = mostRecent;
-                        }
-
-                    }
-                }
-                catch
-                {
-                    SetText(lastBackupTime, "No Backup Found", Color.Black, true);
-                }
-
-            }
-        }
-
-        public void ListControl(ListBox controlToChange, bool addItem, string itemName)
-        {
-            if (controlToChange.InvokeRequired)
-            {
-                SetListControlItems DDD = new SetListControlItems(ListControl);
-                controlToChange.Invoke(DDD, controlToChange, addItem, itemName);
-            }
-            else
-            {
-                if (addItem)
-                {
-                    controlToChange.Items.Add(itemName);
-                }
-                else
-                {
-                    controlToChange.Items.Clear();
-                }
-            }
-        }
-
         private void scheduledRestartOption_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void scheduledRestartOption_CheckedChanged(object sender, EventArgs e)
-        {
-            if (scheduledRestartOption.Checked)
-            {
-                configureRestartSchedule.Enabled = true;
-            }
-            else
-            {
-                configureRestartSchedule.Enabled = false;
-            }
-        }
-
-        private void restartSchedule_Click(object sender, EventArgs e)
-        {
-            RestartSchedule restartSchedule = new RestartSchedule();
-            restartSchedule.Show();
-        }
-
-        private void notifyOnScheduledRestart_CheckedChanged(object sender, EventArgs e)
-        {
-            if (notifyOnScheduledRestart.Checked)
-            {
-                scheduledRestartDiscordTxt.Enabled = true;
-            }
-            else
-            {
-                scheduledRestartDiscordTxt.Enabled = false;
-            }
-        }
-
         private void scheduledRestartDiscordTxt_Leave(object sender, EventArgs e)
         {
             SaveData();
         }
-
         private void notifyOnScheduledRestart_Click(object sender, EventArgs e)
         {
             SaveData();
         }
-
-        private void GetSavedPlayers()
-        {
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
-            serverPlayers.Items.Clear();
-            playerCharacters.Items.Clear();
-            inventoryData.Text = "";
-
-            SQLiteConnection connection = new SQLiteConnection(connectionString);
-            try
-            {
-                connection.Open();
-
-                string queryTxt = "SELECT DocumentID,OwningPlayerID,CharacterIDs FROM PlayerData";
-                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while(reader.Read())
-                {
-                    PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
-                    //string tmp = reader[1].ToString().Substring(13, 17);
-                    playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
-                    playerSteamInfo.CharacterIDs = reader[2].ToString();
-                    serverPlayers.Items.Add(playerSteamInfo);
-                }
-            }
-            catch
-            {
-                //error connecting to db - do something
-            }
-
-        }
-
-        private string GetSteamName(string communityID)
-        {
-            try
-            {
-                WebClient client = new WebClient();
-                string name = client.DownloadString("https://www.winglessraven.com/DMSM/getSteamName.php?userID=" + communityID);
-                return name;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public class PlayerSteamInfo
-        {
-            public string CharacterIDs { get; set; }
-            public string SteamName { get; set; }
-
-            public override string ToString()
-            {
-                return SteamName;
-            }
-        }
-
-        public class Character
-        {
-            public int CharacterKey { get; set; }
-            public string Name { get; set; }
-            public override string ToString()
-            {
-                return Name;
-            }
-        }
-
-        public class CharacterLocation
-        {
-            public int CharacterKey { get; set; }
-            public double TranslationX { get; set; }
-            public double TranslationY { get; set; }
-            public double TranslationZ { get; set; }
-        }
-
-        private void serverPlayers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            playerCharacters.Items.Clear();
-            xPosition.Text = "";
-            yPosition.Text = "";
-            zPosition.Text = "";
-            inventoryData.Text = "";
-
-            PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
-            if(selectedPlayer.CharacterIDs.Length > 15)
-            {
-                string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
-                tmp = tmp.Replace(")", "");
-                string[] characters = tmp.Split(',');
-                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
-
-                SQLiteConnection connection = new SQLiteConnection(connectionString);
-                try
-                {
-                    connection.Open();
-
-                    foreach (string s in characters)
-                    {
-                        string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
-                        SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
-                        SQLiteDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            Character character = new Character();
-                            //string tmp = reader[1].ToString().Substring(13, 17);
-                            character.CharacterKey = Convert.ToInt32(s);
-
-                            string[] temp = reader[0].ToString().Split('=');
-                            string name = "";
-                            if (temp.Length > 1)
-                            {
-                                name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
-                                if (temp.Length > 2)
-                                {
-                                    name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
-                                }
-                            }
-                            name = name.Replace("\"", "");
-                            character.Name = name;
-                            playerCharacters.Items.Add(character);
-                        }
-                    }
-                }
-                catch
-                {
-                    //error connecting to db - do something
-                }
-            }
-        }
-
-        private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            inventoryData.Text = "";
-            Character character = (Character)playerCharacters.SelectedItem;
-            int tmp = character.CharacterKey;
-
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
-
-            SQLiteConnection connection = new SQLiteConnection(connectionString);
-            try
-            {
-                connection.Open();
-
-                string queryTxt = "SELECT CharacterTransform, InventoryData FROM Characters WHERE CharacterKey = '" + tmp + "'";
-                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    string[] temp = reader[0].ToString().Split('(');
-                    string[] temp1 = temp[3].Split('=');
-                    string xPos = temp1[1].Split(',')[0];
-                    string yPos = temp1[2].Split(',')[0];
-                    string zPos = temp1[3].Split(')')[0];
-
-                    CharacterLocation characterLocation = new CharacterLocation();
-                    characterLocation.CharacterKey = tmp;
-                    characterLocation.TranslationX = Convert.ToDouble(xPos);
-                    characterLocation.TranslationY = Convert.ToDouble(yPos);
-                    characterLocation.TranslationZ = Convert.ToDouble(zPos);
-
-                    xPosition.Text = "Position X: " + characterLocation.TranslationX;
-                    yPosition.Text = "Position Y: " + characterLocation.TranslationY;
-                    zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
-
-                    string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
-                    List<string> itemNames = new List<string>();
-
-                    foreach(string s in items)
-                    {
-                        string[] split = s.Split(',');
-                        itemNames.Add(split[0]);
-                    }
-
-                    foreach(string s in itemNames)
-                    {
-                        if(!s.StartsWith("(EquipmentInventory"))
-                        {
-                            string trim = s.Replace(")","");
-                            trim = trim.Replace("\"", "");
-                            inventoryData.AppendText(trim + Environment.NewLine);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                //error connecting to db - do something
-                xPosition.Text = "";
-                yPosition.Text = "";
-                zPosition.Text = "";
-                inventoryData.Text = "";
-            }
-        }
-
-        private void refreshPlayerData_Click(object sender, EventArgs e)
-        {
-            GetSavedPlayers();
-        }
+        //end of 'SaveData' group
     }
 }
 
