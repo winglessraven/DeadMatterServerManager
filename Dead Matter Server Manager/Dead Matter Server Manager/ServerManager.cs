@@ -2883,7 +2883,7 @@ namespace Dead_Matter_Server_Manager
         /// <param name="e"></param>
         private void sendTestEmail_Click(object sender, EventArgs e)
         {
-            sendEmailNotification(testEmailText.Text, true,true);
+            sendEmailNotification(testEmailText.Text, true,emailAdditional.Checked);
         }
 
         public class PlayerSteamInfo
