@@ -4,9 +4,12 @@ A GUI server manager for Dead Matter dedicated servers.  Idea was to create a si
 ## Features
 * Configure server settings from within the application - no manual editing of ini files required
 * Set your maximum memory limit - if the server goes above your limit the application will restart your server
-* Set up timer based restarts
+* Set up timer or schedule based restarts
 * Log each time your server restarts and record the previous uptimes and player counts
 * Integrate with Discord web hooks to notify your community when the server is restarting
+* Send email notifications via your preferred SMTP server
+* Back up your data in case of corruption
+* Get the world location of characters on your server
 
 You can submit requests and/or issues [here](https://github.com/winglessraven/DeadMatterServerManager/issues/new), or drop me a message on Discord @winglessraven#4334
 
@@ -40,6 +43,9 @@ You can submit requests and/or issues [here](https://github.com/winglessraven/De
 * Save Config to write your changes to the server configuration files
 * Enter your maximum memory for the server, when the server reaches this value it will restart.  If you do not set a value the server will just run until it crashes and will automatically restart
 * If you wish to restart the server on a timer, set the number of minutes you want your server to run for before restarting
+* If you want to restart on a schedule, enable the option and click 'Configure Restart Schedule' to add the times you want the server to restart
+* For email notifications, input your smtp server details and test.  Note, some providers have an extra layer of security that could block connections.
+* Enable backups to take a scheuled backup of your data (ini files and server database), configure your schedule and retention policy as required.  Restore files selectively by choosing your options before clicking 'restore now'.
 
 ## Start Server
 * Starting the server will launch a new window with the server output.
