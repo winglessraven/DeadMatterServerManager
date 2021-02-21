@@ -71,7 +71,7 @@ namespace Dead_Matter_Server_Manager
         private TimeSpan timeSinceLastKill;
         private int killAttempts;
 
-        //misc ooleans
+        //misc booleans
         private bool initialStartUpDone;
         private bool stoppedControlsChanged;
 
@@ -496,13 +496,13 @@ namespace Dead_Matter_Server_Manager
                         }
                     }
 
-                    if(s.StartsWith("EnableEmailAlerts"))
+                    if (s.StartsWith("EnableEmailAlerts"))
                     {
                         String[] temp = s.Split('=');
                         enableEmailAlerts.Checked = Convert.ToBoolean(temp[1]);
                     }
 
-                    if(s.StartsWith("EmailSMTPAddress"))
+                    if (s.StartsWith("EmailSMTPAddress"))
                     {
                         String[] temp = s.Split('=');
                         smtpAddress.Text = temp[1];
@@ -1327,6 +1327,12 @@ namespace Dead_Matter_Server_Manager
                                 WriteLog("SCHEDULED SERVER RESTART TIME REACHED", "SCHEDULED", tmp);
                             }
 
+                            double players = 0;
+                            if (serverInfo != null)
+                            {
+                                players = serverInfo.Players;
+                            }
+
                             //log number of shutdown attempts, online players, and uptime
                             WriteLog("SERVER SHUTDOWN REQUEST " + killAttempts + " ATTEMPTED: Players Online= " + serverInfo.Players + ", Uptime= " + uptime.ToString(@"d\.hh\:mm\:ss"), "INFO", null);
                             plannedShutdown = true;
@@ -1363,7 +1369,6 @@ namespace Dead_Matter_Server_Manager
                         SetText(onlinePlayers, "", Color.Black, true);
                         SetText(allTimeHighPlayersLbl, "All Time High Players" + Environment.NewLine + allTimeHighPlayers, Color.Black, true);
                         SetText(longestUptimeLbl, "Longest Uptime" + Environment.NewLine + longestUptime.ToString(@"d\.hh\:mm\:ss"), Color.Black, true);
-
                         stoppedControlsChanged = true;
                     }
 
@@ -1414,7 +1419,7 @@ namespace Dead_Matter_Server_Manager
                         dmServerExe.Start();
                         Thread.Sleep(500);
                         serverStartTime = DateTime.Now;
-                        
+
                         //reset the plannedShutdown
                         plannedShutdown = false;
 
@@ -1512,86 +1517,70 @@ namespace Dead_Matter_Server_Manager
             }
             else
             {
-                if (enableLogging.Checked)
+                controlToChange.SelectionStart = controlToChange.TextLength;
+                controlToChange.SelectionLength = 0;
+
+                if (type.Equals("INFO"))
                 {
-                    controlToChange.SelectionStart = controlToChange.TextLength;
-                    controlToChange.SelectionLength = 0;
-
-                    if (type.Equals("INFO"))
-                    {
-                        controlToChange.SelectionColor = userEventColour.BackColor;
-                        SendDiscordWebHook(discordMessage, userEventColour.BackColor);
-                    }
-
-                    if (type.Equals("UPTIME LIMIT"))
-                    {
-                        if(discordTimedRestart.Checked && notifyOnTimedRestart.Checked && discordWebHook.Checked)
-                        {
-                            controlToChange.SelectionColor = timedRestartColour.BackColor;
-                            SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
-                        }
-                        if(emailTimedRestart.Checked && notifyOnTimedRestart.Checked && enableEmailAlerts.Checked)
-                        {
-                            sendEmailNotification(discordMessage, emailAdditional.Checked, false);
-                        }
-                    }
-
-                    if (type.Equals("SCHEDULED"))
-                    {
-                        if (discordScheduledRestart.Checked && notifyOnScheduledRestart.Checked && discordWebHook.Checked)
-                        {
-                            controlToChange.SelectionColor = timedRestartColour.BackColor;
-                            SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
-                        }
-                        if(emailScheduledRestart.Checked && notifyOnScheduledRestart.Checked && enableEmailAlerts.Checked)
-                        {
-                            sendEmailNotification(discordMessage, emailAdditional.Checked, false);
-                        }
-                    }
-
-                    if (type.Equals("MEM LIMIT"))
-                    {
-                        if (discordMemLimit.Checked && notifyOnMemoryLimit.Checked && discordWebHook.Checked)
-                        {
-                            controlToChange.SelectionColor = memoryLimitColour.BackColor;
-                            SendDiscordWebHook(discordMessage, memoryLimitColour.BackColor);
-                        }
-                        if(emailMemLimit.Checked && notifyOnMemoryLimit.Checked && enableEmailAlerts.Checked)
-                        {
-                            sendEmailNotification(discordMessage, emailAdditional.Checked, false);
-                        }
-                            
-                    }
-
-                    if (type.Equals("ERROR"))
-                    {
-                        if (discordCrash.Checked && notifiyOnCrash.Checked && discordWebHook.Checked)
-                        {
-                            controlToChange.SelectionColor = serverCrashColour.BackColor;
-                            SendDiscordWebHook(discordMessage, serverCrashColour.BackColor);
-                        }   
-                        if(emailCrash.Checked && notifiyOnCrash.Checked && enableEmailAlerts.Checked)
-                        {
-                            sendEmailNotification(discordMessage, emailAdditional.Checked, false);
-                        }
-                    }
-
-                    controlToChange.AppendText(Environment.NewLine + message);
-                    controlToChange.SelectionColor = controlToChange.ForeColor;
+                    controlToChange.SelectionColor = userEventColour.BackColor;
+                    SendDiscordWebHook(discordMessage, userEventColour.BackColor);
                 }
-                else
+
+                if (type.Equals("UPTIME LIMIT"))
                 {
-                    if (discordWebHook.Checked)
+                    if (discordTimedRestart.Checked && notifyOnTimedRestart.Checked && discordWebHook.Checked)
                     {
-                        SendDiscordWebHook(discordMessage, controlToChange.ForeColor);
+                        controlToChange.SelectionColor = timedRestartColour.BackColor;
+                        SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
                     }
-                    else if(enableEmailAlerts.Checked)
+                    if (emailTimedRestart.Checked && notifyOnTimedRestart.Checked && enableEmailAlerts.Checked && discordMessage != null)
                     {
                         sendEmailNotification(discordMessage, emailAdditional.Checked, false);
                     }
-                    
                 }
 
+                if (type.Equals("SCHEDULED"))
+                {
+                    if (discordScheduledRestart.Checked && notifyOnScheduledRestart.Checked && discordWebHook.Checked)
+                    {
+                        controlToChange.SelectionColor = timedRestartColour.BackColor;
+                        SendDiscordWebHook(discordMessage, timedRestartColour.BackColor);
+                    }
+                    if (emailScheduledRestart.Checked && notifyOnScheduledRestart.Checked && enableEmailAlerts.Checked && discordMessage != null)
+                    {
+                        sendEmailNotification(discordMessage, emailAdditional.Checked, false);
+                    }
+                }
+
+                if (type.Equals("MEM LIMIT"))
+                {
+                    if (discordMemLimit.Checked && notifyOnMemoryLimit.Checked && discordWebHook.Checked)
+                    {
+                        controlToChange.SelectionColor = memoryLimitColour.BackColor;
+                        SendDiscordWebHook(discordMessage, memoryLimitColour.BackColor);
+                    }
+                    if (emailMemLimit.Checked && notifyOnMemoryLimit.Checked && enableEmailAlerts.Checked && discordMessage != null)
+                    {
+                        sendEmailNotification(discordMessage, emailAdditional.Checked, false);
+                    }
+
+                }
+
+                if (type.Equals("ERROR"))
+                {
+                    if (discordCrash.Checked && notifiyOnCrash.Checked && discordWebHook.Checked)
+                    {
+                        controlToChange.SelectionColor = serverCrashColour.BackColor;
+                        SendDiscordWebHook(discordMessage, serverCrashColour.BackColor);
+                    }
+                    if (emailCrash.Checked && notifiyOnCrash.Checked && enableEmailAlerts.Checked && discordMessage != null)
+                    {
+                        sendEmailNotification(discordMessage, emailAdditional.Checked, false);
+                    }
+                }
+
+                controlToChange.AppendText(Environment.NewLine + message);
+                controlToChange.SelectionColor = controlToChange.ForeColor;
             }
         }
 
@@ -2814,64 +2803,66 @@ namespace Dead_Matter_Server_Manager
         /// <summary>
         /// Send Email Notification
         /// </summary>
-        private void sendEmailNotification(string subject, bool includeAdditional,bool showErrorMessage)
+        private void sendEmailNotification(string subject, bool includeAdditional, bool showErrorMessage)
         {
-            if(smtpAddress.Text != "" && emailUsername.Text != "" && emailPassword.Text != "" && emailTo.Text != "")
+            if (smtpAddress.Text != "" && emailUsername.Text != "" && emailPassword.Text != "" && emailTo.Text != "")
             {
                 try
                 {
-                    int players = 0;
-                    int maxPlayers = 0;
-                    if (serverInfo != null)
+                    if (subject != null)
                     {
-                        players = serverInfo.Players;
-                        maxPlayers = serverInfo.MaxPlayers;
-                    }
+                        int players = 0;
+                        int maxPlayers = 0;
+                        if (serverInfo != null)
+                        {
+                            players = serverInfo.Players;
+                            maxPlayers = serverInfo.MaxPlayers;
+                        }
 
-                    MailMessage email = new MailMessage();
-                    SmtpClient smtpClient = new SmtpClient(smtpAddress.Text);
+                        MailMessage email = new MailMessage();
+                        SmtpClient smtpClient = new SmtpClient(smtpAddress.Text);
 
-                    email.IsBodyHtml = true;
+                        email.IsBodyHtml = true;
+                        email.From = new MailAddress(emailUsername.Text);
+                        email.To.Add(emailTo.Text);
+                        email.Subject = subject;
+                        email.Body =
+                            "<html>" +
+                            "<body>" +
+                            "<p><b>Dead Matter Server Notification</b></p>" +
+                            "<br>" +
+                            "<p>Status Message: <b>" + subject + "</b></p>";
 
-                    email.From = new MailAddress(emailUsername.Text);
-                    email.To.Add(emailTo.Text);
-                    email.Subject = subject;
-                    email.Body =
-                        "<html>" +
-                        "<body>" +
-                        "<p><b>Dead Matter Server Notification</b></p>" +
-                        "<br>" +
-                        "<p>Status Message: <b>" + subject + "</b></p>";
+                        if (includeAdditional)
+                        {
+                            email.Body +=
+                                "<p>Previous Player Count: <b>" + players + "/" + maxPlayers + "</b></p>" +
+                                "<p>Previous Uptime: <b>" + uptime.ToString(@"d\.hh\:mm\:ss") + "</b></p>";
+                        }
 
-                    if(includeAdditional)
-                    {
                         email.Body +=
-                            "<p>Previous Player Count: <b>" + players + "/" + maxPlayers + "</b></p>" +
-                            "<p>Previous Uptime: <b>" + uptime.ToString(@"d\.hh\:mm\:ss") + "</b></p>";
-                    }
-                        
-                    email.Body +=
-                        "</body>" +
-                        "</html>";
+                            "</body>" +
+                            "</html>";
 
-                    smtpClient.Port = Convert.ToInt32(emailPort.Text);
-                    smtpClient.Credentials = new NetworkCredential(emailUsername.Text, emailPassword.Text);
-                    smtpClient.EnableSsl = emailSSL.Checked;
+                        smtpClient.Port = Convert.ToInt32(emailPort.Text);
+                        smtpClient.Credentials = new NetworkCredential(emailUsername.Text, emailPassword.Text);
+                        smtpClient.EnableSsl = emailSSL.Checked;
 
-                    smtpClient.Send(email);
+                        smtpClient.Send(email);
 
-                    if(showErrorMessage)
-                    {
-                        MessageBox.Show("Email sent successfully", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (showErrorMessage)
+                        {
+                            MessageBox.Show("Email sent successfully", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
-                catch(SmtpException exception)
+                catch (SmtpException exception)
                 {
-                    if(showErrorMessage)
+                    if (showErrorMessage)
                     {
                         MessageBox.Show(exception.Message, "Error Sending Email", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    
+
                 }
             }
         }
@@ -2883,7 +2874,7 @@ namespace Dead_Matter_Server_Manager
         /// <param name="e"></param>
         private void sendTestEmail_Click(object sender, EventArgs e)
         {
-            sendEmailNotification(testEmailText.Text, true,true);
+            sendEmailNotification(testEmailText.Text, true, emailAdditional.Checked);
         }
 
         public class PlayerSteamInfo
