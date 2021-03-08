@@ -127,6 +127,12 @@
             this.emailCrash = new System.Windows.Forms.CheckBox();
             this.discordAdditional = new System.Windows.Forms.CheckBox();
             this.emailAdditional = new System.Windows.Forms.CheckBox();
+            this.emailTo = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.emailPort = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.emailSSL = new System.Windows.Forms.CheckBox();
             this.backupsTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.enableBackups = new System.Windows.Forms.CheckBox();
@@ -187,12 +193,6 @@
             this.scheduledRestartOption = new System.Windows.Forms.CheckBox();
             this.configureRestartSchedule = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.emailTo = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.emailPort = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.emailSSL = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsTabPage.SuspendLayout();
@@ -293,7 +293,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1145, 699);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 711);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label2
@@ -321,7 +321,7 @@
             // steamCMDBrowse
             // 
             this.steamCMDBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamCMDBrowse.Location = new System.Drawing.Point(354, 28);
+            this.steamCMDBrowse.Location = new System.Drawing.Point(393, 28);
             this.steamCMDBrowse.Name = "steamCMDBrowse";
             this.steamCMDBrowse.Size = new System.Drawing.Size(130, 24);
             this.steamCMDBrowse.TabIndex = 3;
@@ -332,7 +332,7 @@
             // serverFolderBrowse
             // 
             this.serverFolderBrowse.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverFolderBrowse.Location = new System.Drawing.Point(354, 58);
+            this.serverFolderBrowse.Location = new System.Drawing.Point(393, 58);
             this.serverFolderBrowse.Name = "serverFolderBrowse";
             this.serverFolderBrowse.Size = new System.Drawing.Size(130, 24);
             this.serverFolderBrowse.TabIndex = 4;
@@ -346,7 +346,7 @@
             this.steamCMDPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.steamCMDPath.Location = new System.Drawing.Point(121, 28);
             this.steamCMDPath.Name = "steamCMDPath";
-            this.steamCMDPath.Size = new System.Drawing.Size(227, 20);
+            this.steamCMDPath.Size = new System.Drawing.Size(266, 20);
             this.steamCMDPath.TabIndex = 5;
             // 
             // serverFolderPath
@@ -355,13 +355,13 @@
             this.serverFolderPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverFolderPath.Location = new System.Drawing.Point(121, 58);
             this.serverFolderPath.Name = "serverFolderPath";
-            this.serverFolderPath.Size = new System.Drawing.Size(227, 20);
+            this.serverFolderPath.Size = new System.Drawing.Size(266, 20);
             this.serverFolderPath.TabIndex = 6;
             // 
             // updateSteamCMD
             // 
             this.updateSteamCMD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateSteamCMD.Location = new System.Drawing.Point(490, 28);
+            this.updateSteamCMD.Location = new System.Drawing.Point(529, 28);
             this.updateSteamCMD.Name = "updateSteamCMD";
             this.updateSteamCMD.Size = new System.Drawing.Size(150, 24);
             this.updateSteamCMD.TabIndex = 7;
@@ -372,7 +372,7 @@
             // steamID
             // 
             this.steamID.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamID.Location = new System.Drawing.Point(954, 28);
+            this.steamID.Location = new System.Drawing.Point(993, 28);
             this.steamID.Name = "steamID";
             this.steamID.Size = new System.Drawing.Size(188, 20);
             this.steamID.TabIndex = 8;
@@ -381,7 +381,7 @@
             // steamPassword
             // 
             this.steamPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.steamPassword.Location = new System.Drawing.Point(954, 58);
+            this.steamPassword.Location = new System.Drawing.Point(993, 58);
             this.steamPassword.Name = "steamPassword";
             this.steamPassword.PasswordChar = '*';
             this.steamPassword.Size = new System.Drawing.Size(188, 20);
@@ -392,7 +392,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(807, 25);
+            this.label4.Location = new System.Drawing.Point(846, 25);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(141, 30);
             this.label4.TabIndex = 10;
@@ -403,7 +403,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(807, 55);
+            this.label5.Location = new System.Drawing.Point(846, 55);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(141, 30);
             this.label5.TabIndex = 11;
@@ -413,7 +413,7 @@
             // updateServer
             // 
             this.updateServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateServer.Location = new System.Drawing.Point(646, 28);
+            this.updateServer.Location = new System.Drawing.Point(685, 28);
             this.updateServer.Name = "updateServer";
             this.updateServer.Size = new System.Drawing.Size(155, 24);
             this.updateServer.TabIndex = 13;
@@ -424,7 +424,7 @@
             // getConfig
             // 
             this.getConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.getConfig.Location = new System.Drawing.Point(490, 58);
+            this.getConfig.Location = new System.Drawing.Point(529, 58);
             this.getConfig.Name = "getConfig";
             this.getConfig.Size = new System.Drawing.Size(150, 24);
             this.getConfig.TabIndex = 14;
@@ -435,7 +435,7 @@
             // saveConfig
             // 
             this.saveConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConfig.Location = new System.Drawing.Point(646, 58);
+            this.saveConfig.Location = new System.Drawing.Point(685, 58);
             this.saveConfig.Name = "saveConfig";
             this.saveConfig.Size = new System.Drawing.Size(155, 24);
             this.saveConfig.TabIndex = 17;
@@ -447,7 +447,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(807, 545);
+            this.label1.Location = new System.Drawing.Point(846, 557);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 30);
             this.label1.TabIndex = 18;
@@ -457,7 +457,7 @@
             // maxServerMemory
             // 
             this.maxServerMemory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maxServerMemory.Location = new System.Drawing.Point(954, 548);
+            this.maxServerMemory.Location = new System.Drawing.Point(993, 560);
             this.maxServerMemory.Name = "maxServerMemory";
             this.maxServerMemory.Size = new System.Drawing.Size(188, 20);
             this.maxServerMemory.TabIndex = 19;
@@ -466,7 +466,7 @@
             // startServer
             // 
             this.startServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startServer.Location = new System.Drawing.Point(954, 608);
+            this.startServer.Location = new System.Drawing.Point(993, 620);
             this.startServer.Name = "startServer";
             this.startServer.Size = new System.Drawing.Size(188, 24);
             this.startServer.TabIndex = 20;
@@ -477,7 +477,7 @@
             // stopServer
             // 
             this.stopServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stopServer.Location = new System.Drawing.Point(954, 638);
+            this.stopServer.Location = new System.Drawing.Point(993, 650);
             this.stopServer.Name = "stopServer";
             this.stopServer.Size = new System.Drawing.Size(188, 24);
             this.stopServer.TabIndex = 22;
@@ -491,7 +491,7 @@
             this.serverStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.serverStatus.ForeColor = System.Drawing.Color.Red;
-            this.serverStatus.Location = new System.Drawing.Point(3, 545);
+            this.serverStatus.Location = new System.Drawing.Point(3, 557);
             this.serverStatus.Name = "serverStatus";
             this.serverStatus.Size = new System.Drawing.Size(112, 30);
             this.serverStatus.TabIndex = 23;
@@ -502,9 +502,9 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.memoryUsedProgressBar, 2);
             this.memoryUsedProgressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 548);
+            this.memoryUsedProgressBar.Location = new System.Drawing.Point(121, 560);
             this.memoryUsedProgressBar.Name = "memoryUsedProgressBar";
-            this.memoryUsedProgressBar.Size = new System.Drawing.Size(227, 24);
+            this.memoryUsedProgressBar.Size = new System.Drawing.Size(266, 24);
             this.memoryUsedProgressBar.TabIndex = 24;
             // 
             // tabControl1
@@ -523,7 +523,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tableLayoutPanel1.SetRowSpan(this.tabControl1, 2);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 431);
+            this.tabControl1.Size = new System.Drawing.Size(1178, 443);
             this.tabControl1.TabIndex = 25;
             // 
             // settingsTabPage
@@ -942,7 +942,7 @@
             this.discordTabPage.Controls.Add(this.tableLayoutPanel6);
             this.discordTabPage.Location = new System.Drawing.Point(4, 22);
             this.discordTabPage.Name = "discordTabPage";
-            this.discordTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.discordTabPage.Size = new System.Drawing.Size(1170, 417);
             this.discordTabPage.TabIndex = 5;
             this.discordTabPage.Text = "Discord/Email Notifications";
             // 
@@ -1013,7 +1013,7 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // discordWebHook
@@ -1443,6 +1443,72 @@
             this.emailAdditional.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.emailAdditional.UseVisualStyleBackColor = true;
             this.emailAdditional.Click += new System.EventHandler(this.emailAdditional_Click);
+            // 
+            // emailTo
+            // 
+            this.tableLayoutPanel6.SetColumnSpan(this.emailTo, 2);
+            this.emailTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailTo.Enabled = false;
+            this.emailTo.Location = new System.Drawing.Point(925, 83);
+            this.emailTo.Name = "emailTo";
+            this.emailTo.Size = new System.Drawing.Size(242, 20);
+            this.emailTo.TabIndex = 80;
+            this.emailTo.Leave += new System.EventHandler(this.emailTo_Leave);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label24.Location = new System.Drawing.Point(832, 80);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(87, 25);
+            this.label24.TabIndex = 81;
+            this.label24.Text = "Email To";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // emailPort
+            // 
+            this.emailPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailPort.Enabled = false;
+            this.emailPort.Location = new System.Drawing.Point(925, 58);
+            this.emailPort.Name = "emailPort";
+            this.emailPort.Size = new System.Drawing.Size(99, 20);
+            this.emailPort.TabIndex = 82;
+            this.emailPort.Leave += new System.EventHandler(this.emailPort_Leave);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Location = new System.Drawing.Point(832, 55);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(87, 25);
+            this.label25.TabIndex = 83;
+            this.label25.Text = "Port";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label26.Location = new System.Drawing.Point(3, 80);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(212, 25);
+            this.label26.TabIndex = 84;
+            this.label26.Text = "Username and Password";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // emailSSL
+            // 
+            this.emailSSL.AutoSize = true;
+            this.emailSSL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.emailSSL.Location = new System.Drawing.Point(1030, 58);
+            this.emailSSL.Name = "emailSSL";
+            this.emailSSL.Size = new System.Drawing.Size(137, 19);
+            this.emailSSL.TabIndex = 85;
+            this.emailSSL.Text = "SSL";
+            this.emailSSL.UseVisualStyleBackColor = true;
+            this.emailSSL.Click += new System.EventHandler(this.emailSSL_Click);
             // 
             // backupsTabPage
             // 
@@ -1920,7 +1986,7 @@
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel1.Location = new System.Drawing.Point(954, 665);
+            this.linkLabel1.Location = new System.Drawing.Point(993, 677);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(188, 29);
             this.linkLabel1.TabIndex = 26;
@@ -1933,7 +1999,7 @@
             // 
             this.uptimeLbl.AutoSize = true;
             this.uptimeLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uptimeLbl.Location = new System.Drawing.Point(3, 575);
+            this.uptimeLbl.Location = new System.Drawing.Point(3, 587);
             this.uptimeLbl.Name = "uptimeLbl";
             this.uptimeLbl.Size = new System.Drawing.Size(112, 30);
             this.uptimeLbl.TabIndex = 27;
@@ -1944,9 +2010,9 @@
             // 
             this.serverUptime.AutoSize = true;
             this.serverUptime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serverUptime.Location = new System.Drawing.Point(121, 575);
+            this.serverUptime.Location = new System.Drawing.Point(121, 587);
             this.serverUptime.Name = "serverUptime";
-            this.serverUptime.Size = new System.Drawing.Size(86, 30);
+            this.serverUptime.Size = new System.Drawing.Size(125, 30);
             this.serverUptime.TabIndex = 28;
             this.serverUptime.Text = "0.00:00:00";
             this.serverUptime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1956,9 +2022,9 @@
             this.autoStartWithWindows.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.autoStartWithWindows, 3);
             this.autoStartWithWindows.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.autoStartWithWindows.Location = new System.Drawing.Point(3, 638);
+            this.autoStartWithWindows.Location = new System.Drawing.Point(3, 650);
             this.autoStartWithWindows.Name = "autoStartWithWindows";
-            this.autoStartWithWindows.Size = new System.Drawing.Size(345, 24);
+            this.autoStartWithWindows.Size = new System.Drawing.Size(384, 24);
             this.autoStartWithWindows.TabIndex = 29;
             this.autoStartWithWindows.Text = "Auto Start with Windows";
             this.autoStartWithWindows.UseVisualStyleBackColor = true;
@@ -1970,9 +2036,9 @@
             this.autoStartServer.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.autoStartServer, 3);
             this.autoStartServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.autoStartServer.Location = new System.Drawing.Point(3, 668);
+            this.autoStartServer.Location = new System.Drawing.Point(3, 680);
             this.autoStartServer.Name = "autoStartServer";
-            this.autoStartServer.Size = new System.Drawing.Size(345, 23);
+            this.autoStartServer.Size = new System.Drawing.Size(384, 23);
             this.autoStartServer.TabIndex = 30;
             this.autoStartServer.Text = "Auto Start Server on Launch";
             this.autoStartServer.UseVisualStyleBackColor = true;
@@ -1985,7 +2051,7 @@
             this.updateSoftware.Dock = System.Windows.Forms.DockStyle.Fill;
             this.updateSoftware.Location = new System.Drawing.Point(3, 0);
             this.updateSoftware.Name = "updateSoftware";
-            this.updateSoftware.Size = new System.Drawing.Size(481, 25);
+            this.updateSoftware.Size = new System.Drawing.Size(520, 25);
             this.updateSoftware.TabIndex = 31;
             this.updateSoftware.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.updateSoftware_LinkClicked);
             // 
@@ -1993,7 +2059,7 @@
             // 
             this.restartServerTimelbl.AutoSize = true;
             this.restartServerTimelbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimelbl.Location = new System.Drawing.Point(807, 575);
+            this.restartServerTimelbl.Location = new System.Drawing.Point(846, 587);
             this.restartServerTimelbl.Name = "restartServerTimelbl";
             this.restartServerTimelbl.Size = new System.Drawing.Size(141, 30);
             this.restartServerTimelbl.TabIndex = 32;
@@ -2003,7 +2069,7 @@
             // restartServerTime
             // 
             this.restartServerTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTime.Location = new System.Drawing.Point(954, 578);
+            this.restartServerTime.Location = new System.Drawing.Point(993, 590);
             this.restartServerTime.Name = "restartServerTime";
             this.restartServerTime.Size = new System.Drawing.Size(188, 20);
             this.restartServerTime.TabIndex = 33;
@@ -2014,7 +2080,7 @@
             this.restartServerTimeOption.AutoSize = true;
             this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServerTimeOption.Location = new System.Drawing.Point(646, 578);
+            this.restartServerTimeOption.Location = new System.Drawing.Point(685, 590);
             this.restartServerTimeOption.Name = "restartServerTimeOption";
             this.restartServerTimeOption.Size = new System.Drawing.Size(155, 24);
             this.restartServerTimeOption.TabIndex = 34;
@@ -2028,7 +2094,7 @@
             // 
             this.rememberSteamPass.AutoSize = true;
             this.rememberSteamPass.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rememberSteamPass.Location = new System.Drawing.Point(954, 88);
+            this.rememberSteamPass.Location = new System.Drawing.Point(993, 88);
             this.rememberSteamPass.Name = "rememberSteamPass";
             this.rememberSteamPass.Size = new System.Drawing.Size(188, 17);
             this.rememberSteamPass.TabIndex = 35;
@@ -2040,7 +2106,7 @@
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabel2.Location = new System.Drawing.Point(954, 0);
+            this.linkLabel2.Location = new System.Drawing.Point(993, 0);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(188, 25);
             this.linkLabel2.TabIndex = 37;
@@ -2054,7 +2120,7 @@
             this.changeLaunchParams.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.changeLaunchParams, 2);
             this.changeLaunchParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeLaunchParams.Location = new System.Drawing.Point(354, 88);
+            this.changeLaunchParams.Location = new System.Drawing.Point(393, 88);
             this.changeLaunchParams.Name = "changeLaunchParams";
             this.changeLaunchParams.Size = new System.Drawing.Size(286, 17);
             this.changeLaunchParams.TabIndex = 40;
@@ -2081,7 +2147,7 @@
             this.launchParameters.Location = new System.Drawing.Point(121, 88);
             this.launchParameters.Name = "launchParameters";
             this.launchParameters.ReadOnly = true;
-            this.launchParameters.Size = new System.Drawing.Size(227, 20);
+            this.launchParameters.Size = new System.Drawing.Size(266, 20);
             this.launchParameters.TabIndex = 42;
             this.launchParameters.Text = "-USEALLAVAILABLECORES -log";
             this.launchParameters.Leave += new System.EventHandler(this.launchParameters_Leave);
@@ -2091,7 +2157,7 @@
             this.saveConfigOnStart.AutoSize = true;
             this.saveConfigOnStart.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.saveConfigOnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConfigOnStart.Location = new System.Drawing.Point(807, 608);
+            this.saveConfigOnStart.Location = new System.Drawing.Point(846, 620);
             this.saveConfigOnStart.Name = "saveConfigOnStart";
             this.saveConfigOnStart.Size = new System.Drawing.Size(141, 24);
             this.saveConfigOnStart.TabIndex = 43;
@@ -2103,7 +2169,7 @@
             // restartServer
             // 
             this.restartServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartServer.Location = new System.Drawing.Point(807, 638);
+            this.restartServer.Location = new System.Drawing.Point(846, 650);
             this.restartServer.Name = "restartServer";
             this.restartServer.Size = new System.Drawing.Size(141, 24);
             this.restartServer.TabIndex = 44;
@@ -2114,7 +2180,7 @@
             // checkUpdateOnStart
             // 
             this.checkUpdateOnStart.AutoSize = true;
-            this.checkUpdateOnStart.Location = new System.Drawing.Point(807, 668);
+            this.checkUpdateOnStart.Location = new System.Drawing.Point(846, 680);
             this.checkUpdateOnStart.Name = "checkUpdateOnStart";
             this.checkUpdateOnStart.Size = new System.Drawing.Size(141, 17);
             this.checkUpdateOnStart.TabIndex = 15;
@@ -2127,7 +2193,7 @@
             // 
             this.onlinePlayers.AutoSize = true;
             this.onlinePlayers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlinePlayers.Location = new System.Drawing.Point(490, 545);
+            this.onlinePlayers.Location = new System.Drawing.Point(529, 557);
             this.onlinePlayers.Name = "onlinePlayers";
             this.onlinePlayers.Size = new System.Drawing.Size(150, 30);
             this.onlinePlayers.TabIndex = 36;
@@ -2138,7 +2204,7 @@
             // 
             this.restartsThisSessionTxt.AutoSize = true;
             this.restartsThisSessionTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.restartsThisSessionTxt.Location = new System.Drawing.Point(354, 575);
+            this.restartsThisSessionTxt.Location = new System.Drawing.Point(393, 587);
             this.restartsThisSessionTxt.Name = "restartsThisSessionTxt";
             this.restartsThisSessionTxt.Size = new System.Drawing.Size(130, 30);
             this.restartsThisSessionTxt.TabIndex = 38;
@@ -2149,7 +2215,7 @@
             // 
             this.lastRestartTxt.AutoSize = true;
             this.lastRestartTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lastRestartTxt.Location = new System.Drawing.Point(490, 575);
+            this.lastRestartTxt.Location = new System.Drawing.Point(529, 587);
             this.lastRestartTxt.Name = "lastRestartTxt";
             this.lastRestartTxt.Size = new System.Drawing.Size(150, 30);
             this.lastRestartTxt.TabIndex = 39;
@@ -2160,7 +2226,7 @@
             // 
             this.memoryUsed.AutoSize = true;
             this.memoryUsed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.memoryUsed.Location = new System.Drawing.Point(354, 545);
+            this.memoryUsed.Location = new System.Drawing.Point(393, 557);
             this.memoryUsed.Name = "memoryUsed";
             this.memoryUsed.Size = new System.Drawing.Size(130, 30);
             this.memoryUsed.TabIndex = 21;
@@ -2171,7 +2237,7 @@
             // 
             this.allTimeHighPlayersLbl.AutoSize = true;
             this.allTimeHighPlayersLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(354, 605);
+            this.allTimeHighPlayersLbl.Location = new System.Drawing.Point(393, 617);
             this.allTimeHighPlayersLbl.Name = "allTimeHighPlayersLbl";
             this.allTimeHighPlayersLbl.Size = new System.Drawing.Size(130, 30);
             this.allTimeHighPlayersLbl.TabIndex = 45;
@@ -2182,7 +2248,7 @@
             // 
             this.longestUptimeLbl.AutoSize = true;
             this.longestUptimeLbl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.longestUptimeLbl.Location = new System.Drawing.Point(490, 605);
+            this.longestUptimeLbl.Location = new System.Drawing.Point(529, 617);
             this.longestUptimeLbl.Name = "longestUptimeLbl";
             this.longestUptimeLbl.Size = new System.Drawing.Size(150, 30);
             this.longestUptimeLbl.TabIndex = 46;
@@ -2194,7 +2260,7 @@
             this.scheduledRestartOption.AutoSize = true;
             this.scheduledRestartOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.scheduledRestartOption.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scheduledRestartOption.Location = new System.Drawing.Point(646, 608);
+            this.scheduledRestartOption.Location = new System.Drawing.Point(685, 620);
             this.scheduledRestartOption.Name = "scheduledRestartOption";
             this.scheduledRestartOption.Size = new System.Drawing.Size(155, 24);
             this.scheduledRestartOption.TabIndex = 47;
@@ -2208,7 +2274,7 @@
             // 
             this.configureRestartSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configureRestartSchedule.Enabled = false;
-            this.configureRestartSchedule.Location = new System.Drawing.Point(646, 638);
+            this.configureRestartSchedule.Location = new System.Drawing.Point(685, 650);
             this.configureRestartSchedule.Name = "configureRestartSchedule";
             this.configureRestartSchedule.Size = new System.Drawing.Size(155, 24);
             this.configureRestartSchedule.TabIndex = 48;
@@ -2216,79 +2282,14 @@
             this.configureRestartSchedule.UseVisualStyleBackColor = true;
             this.configureRestartSchedule.Click += new System.EventHandler(this.restartSchedule_Click);
             // 
-            // emailTo
-            // 
-            this.tableLayoutPanel6.SetColumnSpan(this.emailTo, 2);
-            this.emailTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.emailTo.Enabled = false;
-            this.emailTo.Location = new System.Drawing.Point(925, 83);
-            this.emailTo.Name = "emailTo";
-            this.emailTo.Size = new System.Drawing.Size(203, 20);
-            this.emailTo.TabIndex = 80;
-            this.emailTo.Leave += new System.EventHandler(this.emailTo_Leave);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label24.Location = new System.Drawing.Point(832, 80);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(87, 25);
-            this.label24.TabIndex = 81;
-            this.label24.Text = "Email To";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // emailPort
-            // 
-            this.emailPort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.emailPort.Enabled = false;
-            this.emailPort.Location = new System.Drawing.Point(925, 58);
-            this.emailPort.Name = "emailPort";
-            this.emailPort.Size = new System.Drawing.Size(99, 20);
-            this.emailPort.TabIndex = 82;
-            this.emailPort.Leave += new System.EventHandler(this.emailPort_Leave);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label25.Location = new System.Drawing.Point(832, 55);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(87, 25);
-            this.label25.TabIndex = 83;
-            this.label25.Text = "Port";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label26.Location = new System.Drawing.Point(3, 80);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(212, 25);
-            this.label26.TabIndex = 84;
-            this.label26.Text = "Username and Password";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // emailSSL
-            // 
-            this.emailSSL.AutoSize = true;
-            this.emailSSL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.emailSSL.Location = new System.Drawing.Point(1030, 58);
-            this.emailSSL.Name = "emailSSL";
-            this.emailSSL.Size = new System.Drawing.Size(98, 19);
-            this.emailSSL.TabIndex = 85;
-            this.emailSSL.Text = "SSL";
-            this.emailSSL.UseVisualStyleBackColor = true;
-            this.emailSSL.Click += new System.EventHandler(this.emailSSL_Click);
-            // 
             // ServerManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1145, 699);
+            this.ClientSize = new System.Drawing.Size(1184, 711);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1135, 650);
             this.Name = "ServerManager";
             this.Text = "Dead Matter Server Manager";
             this.tableLayoutPanel1.ResumeLayout(false);
