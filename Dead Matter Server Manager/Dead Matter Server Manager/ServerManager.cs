@@ -35,7 +35,7 @@ namespace Dead_Matter_Server_Manager
         //file info and paths
         private static string configFilePath;
         private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
-        public string currentDBfile = "SaveData_v04.db";
+        public string currentDBfile = "Database.db3";
 
         //delegates
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
@@ -180,427 +180,435 @@ namespace Dead_Matter_Server_Manager
         {
             if (File.Exists(configFilePath))
             {
-                string[] cfg = File.ReadAllLines(configFilePath);
-
-                foreach (string s in cfg)
+                try
                 {
-                    //read in the config and set saved settings
-                    if (s.StartsWith("SteamCMDPath"))
-                    {
-                        String[] temp = s.Split('=');
-                        steamCMDPath.Text = temp[1];
-                    }
+                    string[] cfg = File.ReadAllLines(configFilePath);
 
-                    if (s.StartsWith("ServerPath"))
+                    foreach (string s in cfg)
                     {
-                        String[] temp = s.Split('=');
-                        serverFolderPath.Text = temp[1];
-                        if (!temp[1].Equals(""))
+                        //read in the config and set saved settings
+                        if (s.StartsWith("SteamCMDPath"))
                         {
-                            getConfig_Click(null, null);
+                            String[] temp = s.Split('=');
+                            steamCMDPath.Text = temp[1];
                         }
-                    }
 
-                    if (s.StartsWith("SteamID"))
-                    {
-                        String[] temp = s.Split('=');
-                        steamID.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("UpdateServer"))
-                    {
-                        String[] temp = s.Split('=');
-                        checkUpdateOnStart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("MaxMemory"))
-                    {
-                        String[] temp = s.Split('=');
-                        maxServerMemory.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("AllTimeHighPlayers"))
-                    {
-                        String[] temp = s.Split('=');
-                        try
+                        if (s.StartsWith("ServerPath"))
                         {
-                            allTimeHighPlayers = Convert.ToInt32(temp[1]);
-                        }
-                        catch
-                        {
-                            //not a number for some reason, reset to 0
-                            allTimeHighPlayers = 0;
-                        }
-                    }
-
-                    if (s.StartsWith("LongestUptime"))
-                    {
-                        String[] temp = s.Split('=');
-                        try
-                        {
-                            longestUptime = TimeSpan.Parse(Convert.ToString(temp[1]));
-                        }
-                        catch
-                        {
-                            //not a valid timespan
-                            longestUptime = new TimeSpan(0);
-                        }
-                    }
-
-                    if (s.StartsWith("LastStart"))
-                    {
-                        String[] temp = s.Split('=');
-                        serverStartTime = Convert.ToDateTime(temp[1]);
-                    }
-
-                    if (s.StartsWith("TimedRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        restartServerTimeOption.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("TimerRestartTime"))
-                    {
-                        String[] temp = s.Split('=');
-                        try
-                        {
-                            restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]) * 60);
-                        }
-                        catch
-                        {
-                            //do nowt
-                        }
-                    }
-
-                    if (s.StartsWith("MinsTimerRestartTime"))
-                    {
-                        String[] temp = s.Split('=');
-                        if (!Convert.ToString(temp[1]).Equals(""))
-                        {
-                            restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]));
-                        }
-                    }
-
-                    if (s.StartsWith("RememberPassword"))
-                    {
-                        String[] temp = s.Split('=');
-                        rememberSteamPass.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("SteamPassword"))
-                    {
-                        String[] temp = s.Split('=');
-                        if (!temp[1].Equals(""))
-                        {
-                            steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
-                        }
-                    }
-
-                    if (s.StartsWith("ChangeLaunchParams"))
-                    {
-                        String[] temp = s.Split('=');
-                        changeLaunchParams.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("LaunchParams"))
-                    {
-                        String[] temp = s.Split('=');
-                        launchParameters.Text = Convert.ToString(temp[1]);
-                    }
-
-                    if (s.StartsWith("SaveConfigOnStart"))
-                    {
-                        String[] temp = s.Split('=');
-                        saveConfigOnStart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("StartServerOnLaunch"))
-                    {
-                        String[] temp = s.Split('=');
-                        autoStartServer.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("StartWithWindows"))
-                    {
-                        String[] temp = s.Split('=');
-                        autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("EnableLogging"))
-                    {
-                        String[] temp = s.Split('=');
-                        enableLogging.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("BackgroundColour"))
-                    {
-                        String[] temp = s.Split('=');
-                        backgroundColour.BackColor = ColorTranslator.FromHtml(temp[1]);
-                        logTextBox.BackColor = ColorTranslator.FromHtml(temp[1]);
-                    }
-
-                    if (s.StartsWith("UserEventColour"))
-                    {
-                        String[] temp = s.Split('=');
-                        userEventColour.BackColor = ColorTranslator.FromHtml(temp[1]);
-                    }
-
-                    if (s.StartsWith("MemoryLimitColour"))
-                    {
-                        String[] temp = s.Split('=');
-                        memoryLimitColour.BackColor = ColorTranslator.FromHtml(temp[1]);
-                    }
-
-                    if (s.StartsWith("RestartTimerColour"))
-                    {
-                        String[] temp = s.Split('=');
-                        timedRestartColour.BackColor = ColorTranslator.FromHtml(temp[1]);
-                    }
-
-                    if (s.StartsWith("ServerCrashColour"))
-                    {
-                        String[] temp = s.Split('=');
-                        serverCrashColour.BackColor = ColorTranslator.FromHtml(temp[1]);
-                    }
-
-                    if (s.StartsWith("WebhookURL"))
-                    {
-                        String[] temp = s.Split('=');
-                        webhookURL.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordIntegration"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordWebHook.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyOnMemoryLimit"))
-                    {
-                        String[] temp = s.Split('=');
-                        notifyOnMemoryLimit.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifiyOnTimedRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        notifyOnTimedRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifiyOnScheduledRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        notifyOnScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyOnCrash"))
-                    {
-                        String[] temp = s.Split('=');
-                        notifiyOnCrash.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("DiscordTxtMemoryLimit"))
-                    {
-                        String[] temp = s.Split('=');
-                        memoryLimitDiscordTxt.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordTxtCrash"))
-                    {
-                        String[] temp = s.Split('=');
-                        serverCrashedDiscordTxt.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordTxtTimedRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        timedRestartDiscordTxt.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordTxtScheduledRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        scheduledRestartDiscordTxt.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordWebhookTest"))
-                    {
-                        String[] temp = s.Split('=');
-                        webhookTestMsg.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("DiscordIncludeAdditionalInfo"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordIncludeAdditional.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("EnableBackups"))
-                    {
-                        String[] temp = s.Split('=');
-                        enableBackups.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("RestoreGameIni"))
-                    {
-                        String[] temp = s.Split('=');
-                        restoreGameIni.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("RestoreEngineIni"))
-                    {
-                        String[] temp = s.Split('=');
-                        restoreEngineIni.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("RestoreWorld"))
-                    {
-                        String[] temp = s.Split('=');
-                        restoreWorldSave.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("BackupDestinationFolder"))
-                    {
-                        String[] temp = s.Split('=');
-                        backupDestinationFolder.Text = Convert.ToString(temp[1]);
-                    }
-
-                    if (s.StartsWith("BackupSchedule"))
-                    {
-                        String[] temp = s.Split('=');
-                        backupScheduleMinutes.Value = Convert.ToDecimal(temp[1]);
-                    }
-
-                    if (s.StartsWith("BackupRetention"))
-                    {
-                        String[] temp = s.Split('=');
-                        backupRetentionQty.Value = Convert.ToDecimal(temp[1]);
-                    }
-
-                    if (s.StartsWith("ScheduledRestartOption"))
-                    {
-                        String[] temp = s.Split('=');
-                        scheduledRestartOption.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("ScheduledRestartTimes"))
-                    {
-                        String[] temp = s.Split('=');
-                        String[] times = temp[1].Split(',');
-                        foreach (string time in times)
-                        {
-                            if (time != "")
+                            String[] temp = s.Split('=');
+                            serverFolderPath.Text = temp[1];
+                            if (!temp[1].Equals(""))
                             {
-                                restartSchedules.Add(Convert.ToDateTime(time));
+                                getConfig_Click(null, null);
                             }
                         }
-                    }
 
-                    if (s.StartsWith("EnableEmailAlerts"))
-                    {
-                        String[] temp = s.Split('=');
-                        enableEmailAlerts.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("EmailSMTPAddress"))
-                    {
-                        String[] temp = s.Split('=');
-                        smtpAddress.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("EmailUsername"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailUsername.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("EmailPassword"))
-                    {
-                        String[] temp = s.Split('=');
-                        if (!temp[1].Equals(""))
+                        if (s.StartsWith("SteamID"))
                         {
-                            emailPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
+                            String[] temp = s.Split('=');
+                            steamID.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("UpdateServer"))
+                        {
+                            String[] temp = s.Split('=');
+                            checkUpdateOnStart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("MaxMemory"))
+                        {
+                            String[] temp = s.Split('=');
+                            maxServerMemory.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("AllTimeHighPlayers"))
+                        {
+                            String[] temp = s.Split('=');
+                            try
+                            {
+                                allTimeHighPlayers = Convert.ToInt32(temp[1]);
+                            }
+                            catch
+                            {
+                                //not a number for some reason, reset to 0
+                                allTimeHighPlayers = 0;
+                            }
+                        }
+
+                        if (s.StartsWith("LongestUptime"))
+                        {
+                            String[] temp = s.Split('=');
+                            try
+                            {
+                                longestUptime = TimeSpan.Parse(Convert.ToString(temp[1]));
+                            }
+                            catch
+                            {
+                                //not a valid timespan
+                                longestUptime = new TimeSpan(0);
+                            }
+                        }
+
+                        if (s.StartsWith("LastStart"))
+                        {
+                            String[] temp = s.Split('=');
+                            serverStartTime = Convert.ToDateTime(temp[1]);
+                        }
+
+                        if (s.StartsWith("TimedRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            restartServerTimeOption.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("TimerRestartTime"))
+                        {
+                            String[] temp = s.Split('=');
+                            try
+                            {
+                                restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]) * 60);
+                            }
+                            catch
+                            {
+                                //do nowt
+                            }
+                        }
+
+                        if (s.StartsWith("MinsTimerRestartTime"))
+                        {
+                            String[] temp = s.Split('=');
+                            if (!Convert.ToString(temp[1]).Equals(""))
+                            {
+                                restartServerTime.Text = Convert.ToString(Convert.ToDouble(temp[1]));
+                            }
+                        }
+
+                        if (s.StartsWith("RememberPassword"))
+                        {
+                            String[] temp = s.Split('=');
+                            rememberSteamPass.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("SteamPassword"))
+                        {
+                            String[] temp = s.Split('=');
+                            if (!temp[1].Equals(""))
+                            {
+                                steamPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
+                            }
+                        }
+
+                        if (s.StartsWith("ChangeLaunchParams"))
+                        {
+                            String[] temp = s.Split('=');
+                            changeLaunchParams.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("LaunchParams"))
+                        {
+                            String[] temp = s.Split('=');
+                            launchParameters.Text = Convert.ToString(temp[1]);
+                        }
+
+                        if (s.StartsWith("SaveConfigOnStart"))
+                        {
+                            String[] temp = s.Split('=');
+                            saveConfigOnStart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("StartServerOnLaunch"))
+                        {
+                            String[] temp = s.Split('=');
+                            autoStartServer.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("StartWithWindows"))
+                        {
+                            String[] temp = s.Split('=');
+                            autoStartWithWindows.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("EnableLogging"))
+                        {
+                            String[] temp = s.Split('=');
+                            enableLogging.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("BackgroundColour"))
+                        {
+                            String[] temp = s.Split('=');
+                            backgroundColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                            logTextBox.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        }
+
+                        if (s.StartsWith("UserEventColour"))
+                        {
+                            String[] temp = s.Split('=');
+                            userEventColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        }
+
+                        if (s.StartsWith("MemoryLimitColour"))
+                        {
+                            String[] temp = s.Split('=');
+                            memoryLimitColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        }
+
+                        if (s.StartsWith("RestartTimerColour"))
+                        {
+                            String[] temp = s.Split('=');
+                            timedRestartColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        }
+
+                        if (s.StartsWith("ServerCrashColour"))
+                        {
+                            String[] temp = s.Split('=');
+                            serverCrashColour.BackColor = ColorTranslator.FromHtml(temp[1]);
+                        }
+
+                        if (s.StartsWith("WebhookURL"))
+                        {
+                            String[] temp = s.Split('=');
+                            webhookURL.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordIntegration"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordWebHook.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyOnMemoryLimit"))
+                        {
+                            String[] temp = s.Split('=');
+                            notifyOnMemoryLimit.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifiyOnTimedRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            notifyOnTimedRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifiyOnScheduledRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            notifyOnScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyOnCrash"))
+                        {
+                            String[] temp = s.Split('=');
+                            notifiyOnCrash.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("DiscordTxtMemoryLimit"))
+                        {
+                            String[] temp = s.Split('=');
+                            memoryLimitDiscordTxt.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordTxtCrash"))
+                        {
+                            String[] temp = s.Split('=');
+                            serverCrashedDiscordTxt.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordTxtTimedRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            timedRestartDiscordTxt.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordTxtScheduledRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            scheduledRestartDiscordTxt.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordWebhookTest"))
+                        {
+                            String[] temp = s.Split('=');
+                            webhookTestMsg.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("DiscordIncludeAdditionalInfo"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordIncludeAdditional.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("EnableBackups"))
+                        {
+                            String[] temp = s.Split('=');
+                            enableBackups.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("RestoreGameIni"))
+                        {
+                            String[] temp = s.Split('=');
+                            restoreGameIni.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("RestoreEngineIni"))
+                        {
+                            String[] temp = s.Split('=');
+                            restoreEngineIni.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("RestoreWorld"))
+                        {
+                            String[] temp = s.Split('=');
+                            restoreWorldSave.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("BackupDestinationFolder"))
+                        {
+                            String[] temp = s.Split('=');
+                            backupDestinationFolder.Text = Convert.ToString(temp[1]);
+                        }
+
+                        if (s.StartsWith("BackupSchedule"))
+                        {
+                            String[] temp = s.Split('=');
+                            backupScheduleMinutes.Value = Convert.ToDecimal(temp[1]);
+                        }
+
+                        if (s.StartsWith("BackupRetention"))
+                        {
+                            String[] temp = s.Split('=');
+                            backupRetentionQty.Value = Convert.ToDecimal(temp[1]);
+                        }
+
+                        if (s.StartsWith("ScheduledRestartOption"))
+                        {
+                            String[] temp = s.Split('=');
+                            scheduledRestartOption.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("ScheduledRestartTimes"))
+                        {
+                            String[] temp = s.Split('=');
+                            String[] times = temp[1].Split(',');
+                            foreach (string time in times)
+                            {
+                                if (time != "")
+                                {
+                                    restartSchedules.Add(Convert.ToDateTime(time));
+                                }
+                            }
+                        }
+
+                        if (s.StartsWith("EnableEmailAlerts"))
+                        {
+                            String[] temp = s.Split('=');
+                            enableEmailAlerts.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("EmailSMTPAddress"))
+                        {
+                            String[] temp = s.Split('=');
+                            smtpAddress.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("EmailUsername"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailUsername.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("EmailPassword"))
+                        {
+                            String[] temp = s.Split('=');
+                            if (!temp[1].Equals(""))
+                            {
+                                emailPassword.Text = StringCipher.Decrypt(Convert.ToString(temp[1]), Environment.UserName);
+                            }
+                        }
+
+                        if (s.StartsWith("NotifyDiscordMemLimit"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordMemLimit.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyDiscordTimedRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordTimedRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyDiscordScheduledRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyDiscordCrash"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordCrash.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyDiscordAdditional"))
+                        {
+                            String[] temp = s.Split('=');
+                            discordAdditional.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyEmailMemLimit"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailMemLimit.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyEmailTimedRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailTimedRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyEmailScheduledRestart"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyEmailCrash"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailCrash.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("NotifyEmailAdditional"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailAdditional.Checked = Convert.ToBoolean(temp[1]);
+                        }
+
+                        if (s.StartsWith("EmailTo"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailTo.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("EmailPort"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailPort.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("EmailSSL"))
+                        {
+                            String[] temp = s.Split('=');
+                            emailSSL.Checked = Convert.ToBoolean(temp[1]);
                         }
                     }
-
-                    if (s.StartsWith("NotifyDiscordMemLimit"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordMemLimit.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyDiscordTimedRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordTimedRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyDiscordScheduledRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyDiscordCrash"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordCrash.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyDiscordAdditional"))
-                    {
-                        String[] temp = s.Split('=');
-                        discordAdditional.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyEmailMemLimit"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailMemLimit.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyEmailTimedRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailTimedRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyEmailScheduledRestart"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailScheduledRestart.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyEmailCrash"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailCrash.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("NotifyEmailAdditional"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailAdditional.Checked = Convert.ToBoolean(temp[1]);
-                    }
-
-                    if (s.StartsWith("EmailTo"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailTo.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("EmailPort"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailPort.Text = temp[1];
-                    }
-
-                    if (s.StartsWith("EmailSSL"))
-                    {
-                        String[] temp = s.Split('=');
-                        emailSSL.Checked = Convert.ToBoolean(temp[1]);
-                    }
                 }
+                catch
+                {
+                    WriteLog("Error reading config file, will be recreated", "ERROR", null);
+                }
+
             }
             else
             {
@@ -1156,7 +1164,6 @@ namespace Dead_Matter_Server_Manager
                         {
                             stoppedControlsChanged = false;
 
-                            SetText(memoryUsed, "Memory Used" + Environment.NewLine + memoryGB, Color.Black, true);
                             SetText(serverStatus, "SERVER RUNNING", Color.Green, true);
                             serverStatus.ForeColor = Color.Green;
                             SetText(startServer, "Start Server", Color.Black, false);
@@ -1180,6 +1187,7 @@ namespace Dead_Matter_Server_Manager
                             maxMem = "100";
                         }
 
+                        SetText(memoryUsed, "Memory Used" + Environment.NewLine + memoryGB, Color.Black, true);
                         SetProgress(memoryUsedProgressBar, Convert.ToDouble(maxMem), Convert.ToDouble(memory / 1024 / 1024 / 1024));
 
                         uptime = DateTime.Now - serverStartTime;
@@ -2377,7 +2385,7 @@ namespace Dead_Matter_Server_Manager
 
 
                     //get all db files (in case version updates change them)
-                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
+                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database", "*.db3", SearchOption.AllDirectories);
 
                     DateTime mostRecent = new DateTime(1990, 1, 1);
                     string mostRecentFile = "";
@@ -2439,7 +2447,7 @@ namespace Dead_Matter_Server_Manager
 
                 string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
                 string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\";
+                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\";
 
                 string extractGameIni = tempExtractPath + @"\\Game.ini";
                 string extractEngineIni = tempExtractPath + @"\\Engine.ini";
@@ -2481,7 +2489,7 @@ namespace Dead_Matter_Server_Manager
 
                 if (restoreWorldSave.Checked)
                 {
-                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
+                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db3", SearchOption.AllDirectories);
 
                     foreach (string s in saveDB)
                     {
@@ -2609,7 +2617,7 @@ namespace Dead_Matter_Server_Manager
         /// </summary>
         private void GetSavedPlayers()
         {
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
             serverPlayers.Items.Clear();
             playerCharacters.Items.Clear();
             inventoryData.Text = "";
@@ -2619,7 +2627,7 @@ namespace Dead_Matter_Server_Manager
             {
                 connection.Open();
 
-                string queryTxt = "SELECT DocumentID,OwningPlayerID,CharacterIDs FROM PlayerData";
+                string queryTxt = "SELECT ID,NetID,LastCharacter FROM Players";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2628,7 +2636,7 @@ namespace Dead_Matter_Server_Manager
                     PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
                     //string tmp = reader[1].ToString().Substring(13, 17);
                     playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
-                    playerSteamInfo.CharacterIDs = reader[2].ToString();
+                    playerSteamInfo.CharacterIDs = reader[0].ToString();
                     serverPlayers.Items.Add(playerSteamInfo);
                 }
             }
@@ -2673,21 +2681,19 @@ namespace Dead_Matter_Server_Manager
             inventoryData.Text = "";
 
             PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
-            if (selectedPlayer.CharacterIDs.Length > 15)
+            if (selectedPlayer.CharacterIDs.Length > 0)
             {
-                string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
-                tmp = tmp.Replace(")", "");
-                string[] characters = tmp.Split(',');
-                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+                string tmp = selectedPlayer.CharacterIDs;
+
+                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
 
                 SQLiteConnection connection = new SQLiteConnection(connectionString);
                 try
                 {
                     connection.Open();
 
-                    foreach (string s in characters)
-                    {
-                        string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
+                    
+                        string queryTxt = "SELECT FirstName || ' ' || LastName as Name, ID FROM Characters WHERE PlayerID = '" + tmp + "'";
                         SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                         SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2695,25 +2701,14 @@ namespace Dead_Matter_Server_Manager
                         {
                             Character character = new Character();
                             //string tmp = reader[1].ToString().Substring(13, 17);
-                            character.CharacterKey = Convert.ToInt32(s);
+                            character.CharacterKey = Convert.ToInt32(reader[1].ToString());
 
-                            string[] temp = reader[0].ToString().Split('=');
-                            string name = "";
-                            if (temp.Length > 1)
-                            {
-                                name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
-                                if (temp.Length > 2)
-                                {
-                                    name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
-                                }
-                            }
-                            name = name.Replace("\"", "");
-                            character.Name = name;
+                            character.Name = reader[0].ToString();
                             playerCharacters.Items.Add(character);
                         }
-                    }
+                    
                 }
-                catch
+                catch (Exception exception)
                 {
                     //error connecting to db - do something
                 }
@@ -2731,24 +2726,23 @@ namespace Dead_Matter_Server_Manager
             Character character = (Character)playerCharacters.SelectedItem;
             int tmp = character.CharacterKey;
 
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=True";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
             try
             {
                 connection.Open();
 
-                string queryTxt = "SELECT CharacterTransform, InventoryData FROM Characters WHERE CharacterKey = '" + tmp + "'";
+                string queryTxt = "SELECT Transform, InventoryData FROM Characters WHERE ID = '" + tmp + "'";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    string[] temp = reader[0].ToString().Split('(');
-                    string[] temp1 = temp[3].Split('=');
-                    string xPos = temp1[1].Split(',')[0];
-                    string yPos = temp1[2].Split(',')[0];
-                    string zPos = temp1[3].Split(')')[0];
+                    string[] temp = reader[0].ToString().Split('|');
+                    string xPos = temp[0].Split(',')[0];
+                    string yPos = temp[0].Split(',')[1];
+                    string zPos = temp[0].Split(',')[2];
 
                     CharacterLocation characterLocation = new CharacterLocation();
                     characterLocation.CharacterKey = tmp;
@@ -2780,7 +2774,7 @@ namespace Dead_Matter_Server_Manager
                     }
                 }
             }
-            catch
+            catch(Exception exception)
             {
                 //error connecting to db - do something
                 xPosition.Text = "";
