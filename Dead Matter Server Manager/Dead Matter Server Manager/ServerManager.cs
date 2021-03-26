@@ -35,7 +35,7 @@ namespace Dead_Matter_Server_Manager
         //file info and paths
         private static string configFilePath;
         private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
-        public string currentDBfile = "SaveData_v04.db";
+        public string currentDBfile = "Database.db3";
 
         //delegates
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
@@ -2385,7 +2385,7 @@ namespace Dead_Matter_Server_Manager
 
 
                     //get all db files (in case version updates change them)
-                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3", "*.db", SearchOption.AllDirectories);
+                    string[] saveDB = Directory.GetFiles(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database", "*.db3", SearchOption.AllDirectories);
 
                     DateTime mostRecent = new DateTime(1990, 1, 1);
                     string mostRecentFile = "";
@@ -2447,7 +2447,7 @@ namespace Dead_Matter_Server_Manager
 
                 string gameIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini";
                 string engineIni = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini";
-                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\";
+                string worldSave = serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\";
 
                 string extractGameIni = tempExtractPath + @"\\Game.ini";
                 string extractEngineIni = tempExtractPath + @"\\Engine.ini";
@@ -2489,7 +2489,7 @@ namespace Dead_Matter_Server_Manager
 
                 if (restoreWorldSave.Checked)
                 {
-                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db", SearchOption.AllDirectories);
+                    string[] saveDB = Directory.GetFiles(tempExtractPath, "*.db3", SearchOption.AllDirectories);
 
                     foreach (string s in saveDB)
                     {
@@ -2617,7 +2617,7 @@ namespace Dead_Matter_Server_Manager
         /// </summary>
         private void GetSavedPlayers()
         {
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
             serverPlayers.Items.Clear();
             playerCharacters.Items.Clear();
             inventoryData.Text = "";
@@ -2627,7 +2627,7 @@ namespace Dead_Matter_Server_Manager
             {
                 connection.Open();
 
-                string queryTxt = "SELECT DocumentID,OwningPlayerID,CharacterIDs FROM PlayerData";
+                string queryTxt = "SELECT ID,NetID,LastCharacter FROM Players";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2636,7 +2636,7 @@ namespace Dead_Matter_Server_Manager
                     PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
                     //string tmp = reader[1].ToString().Substring(13, 17);
                     playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
-                    playerSteamInfo.CharacterIDs = reader[2].ToString();
+                    playerSteamInfo.CharacterIDs = reader[0].ToString();
                     serverPlayers.Items.Add(playerSteamInfo);
                 }
             }
@@ -2681,21 +2681,19 @@ namespace Dead_Matter_Server_Manager
             inventoryData.Text = "";
 
             PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
-            if (selectedPlayer.CharacterIDs.Length > 15)
+            if (selectedPlayer.CharacterIDs.Length > 0)
             {
-                string tmp = selectedPlayer.CharacterIDs.Substring(15, selectedPlayer.CharacterIDs.Length - 15);
-                tmp = tmp.Replace(")", "");
-                string[] characters = tmp.Split(',');
-                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=true";
+                string tmp = selectedPlayer.CharacterIDs;
+
+                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
 
                 SQLiteConnection connection = new SQLiteConnection(connectionString);
                 try
                 {
                     connection.Open();
 
-                    foreach (string s in characters)
-                    {
-                        string queryTxt = "SELECT BasicData FROM Characters WHERE CharacterKey = '" + s + "'";
+                    
+                        string queryTxt = "SELECT FirstName || ' ' || LastName as Name, ID FROM Characters WHERE PlayerID = '" + tmp + "'";
                         SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                         SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2703,25 +2701,14 @@ namespace Dead_Matter_Server_Manager
                         {
                             Character character = new Character();
                             //string tmp = reader[1].ToString().Substring(13, 17);
-                            character.CharacterKey = Convert.ToInt32(s);
+                            character.CharacterKey = Convert.ToInt32(reader[1].ToString());
 
-                            string[] temp = reader[0].ToString().Split('=');
-                            string name = "";
-                            if (temp.Length > 1)
-                            {
-                                name = Regex.Match(temp[1], "\"[^\"]*\"").ToString();
-                                if (temp.Length > 2)
-                                {
-                                    name += " " + Regex.Match(temp[2], "\"[^\"]*\"").ToString();
-                                }
-                            }
-                            name = name.Replace("\"", "");
-                            character.Name = name;
+                            character.Name = reader[0].ToString();
                             playerCharacters.Items.Add(character);
                         }
-                    }
+                    
                 }
-                catch
+                catch (Exception exception)
                 {
                     //error connecting to db - do something
                 }
@@ -2739,24 +2726,23 @@ namespace Dead_Matter_Server_Manager
             Character character = (Character)playerCharacters.SelectedItem;
             int tmp = character.CharacterKey;
 
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\sqlite3\" + currentDBfile + ";Version=3;Read Only=True";
+            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=True";
 
             SQLiteConnection connection = new SQLiteConnection(connectionString);
             try
             {
                 connection.Open();
 
-                string queryTxt = "SELECT CharacterTransform, InventoryData FROM Characters WHERE CharacterKey = '" + tmp + "'";
+                string queryTxt = "SELECT Transform, InventoryData FROM Characters WHERE ID = '" + tmp + "'";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    string[] temp = reader[0].ToString().Split('(');
-                    string[] temp1 = temp[3].Split('=');
-                    string xPos = temp1[1].Split(',')[0];
-                    string yPos = temp1[2].Split(',')[0];
-                    string zPos = temp1[3].Split(')')[0];
+                    string[] temp = reader[0].ToString().Split('|');
+                    string xPos = temp[0].Split(',')[0];
+                    string yPos = temp[0].Split(',')[1];
+                    string zPos = temp[0].Split(',')[2];
 
                     CharacterLocation characterLocation = new CharacterLocation();
                     characterLocation.CharacterKey = tmp;
@@ -2788,7 +2774,7 @@ namespace Dead_Matter_Server_Manager
                     }
                 }
             }
-            catch
+            catch(Exception exception)
             {
                 //error connecting to db - do something
                 xPosition.Text = "";

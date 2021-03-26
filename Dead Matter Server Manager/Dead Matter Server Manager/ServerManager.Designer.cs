@@ -533,7 +533,7 @@
             this.settingsTabPage.Location = new System.Drawing.Point(4, 22);
             this.settingsTabPage.Name = "settingsTabPage";
             this.settingsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.settingsTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.settingsTabPage.Size = new System.Drawing.Size(1170, 417);
             this.settingsTabPage.TabIndex = 1;
             this.settingsTabPage.Text = "Server Settings";
             // 
@@ -551,7 +551,7 @@
             this.configSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.configSettings.Location = new System.Drawing.Point(3, 3);
             this.configSettings.Name = "configSettings";
-            this.configSettings.Size = new System.Drawing.Size(1125, 399);
+            this.configSettings.Size = new System.Drawing.Size(1164, 411);
             this.configSettings.TabIndex = 16;
             // 
             // Variable
@@ -598,7 +598,7 @@
             this.userTabPage.Location = new System.Drawing.Point(4, 22);
             this.userTabPage.Name = "userTabPage";
             this.userTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.userTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.userTabPage.Size = new System.Drawing.Size(1170, 417);
             this.userTabPage.TabIndex = 0;
             this.userTabPage.Text = "Admin/Whitelist";
             // 
@@ -616,8 +616,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 399F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1125, 399);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 411F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1164, 411);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // whitelistDGV
@@ -629,7 +629,7 @@
             this.whitelistDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.whitelistDGV.Location = new System.Drawing.Point(3, 3);
             this.whitelistDGV.Name = "whitelistDGV";
-            this.whitelistDGV.Size = new System.Drawing.Size(369, 393);
+            this.whitelistDGV.Size = new System.Drawing.Size(382, 405);
             this.whitelistDGV.TabIndex = 0;
             // 
             // whiteListPlayers
@@ -644,9 +644,9 @@
             this.adminDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.adminPlayers});
             this.adminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.adminDGV.Location = new System.Drawing.Point(378, 3);
+            this.adminDGV.Location = new System.Drawing.Point(391, 3);
             this.adminDGV.Name = "adminDGV";
-            this.adminDGV.Size = new System.Drawing.Size(369, 393);
+            this.adminDGV.Size = new System.Drawing.Size(382, 405);
             this.adminDGV.TabIndex = 1;
             // 
             // adminPlayers
@@ -661,9 +661,9 @@
             this.superAdminDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.superAdminPlayers});
             this.superAdminDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superAdminDGV.Location = new System.Drawing.Point(753, 3);
+            this.superAdminDGV.Location = new System.Drawing.Point(779, 3);
             this.superAdminDGV.Name = "superAdminDGV";
-            this.superAdminDGV.Size = new System.Drawing.Size(369, 393);
+            this.superAdminDGV.Size = new System.Drawing.Size(382, 405);
             this.superAdminDGV.TabIndex = 2;
             // 
             // superAdminPlayers
@@ -677,7 +677,7 @@
             this.serverTagsTabPage.Controls.Add(this.tableLayoutPanel3);
             this.serverTagsTabPage.Location = new System.Drawing.Point(4, 22);
             this.serverTagsTabPage.Name = "serverTagsTabPage";
-            this.serverTagsTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.serverTagsTabPage.Size = new System.Drawing.Size(1170, 417);
             this.serverTagsTabPage.TabIndex = 2;
             this.serverTagsTabPage.Text = "Server Tags";
             // 
@@ -694,7 +694,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // serverTagsDGV
@@ -706,7 +706,7 @@
             this.serverTagsDGV.Location = new System.Drawing.Point(3, 3);
             this.serverTagsDGV.Name = "serverTagsDGV";
             this.tableLayoutPanel3.SetRowSpan(this.serverTagsDGV, 2);
-            this.serverTagsDGV.Size = new System.Drawing.Size(842, 399);
+            this.serverTagsDGV.Size = new System.Drawing.Size(871, 411);
             this.serverTagsDGV.TabIndex = 0;
             // 
             // serverTags
@@ -718,9 +718,9 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(851, 0);
+            this.label6.Location = new System.Drawing.Point(880, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 202);
+            this.label6.Size = new System.Drawing.Size(287, 208);
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
             // 
@@ -730,7 +730,7 @@
             this.playersOnlineTabPage.Controls.Add(this.tableLayoutPanel4);
             this.playersOnlineTabPage.Location = new System.Drawing.Point(4, 22);
             this.playersOnlineTabPage.Name = "playersOnlineTabPage";
-            this.playersOnlineTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.playersOnlineTabPage.Size = new System.Drawing.Size(1170, 417);
             this.playersOnlineTabPage.TabIndex = 3;
             this.playersOnlineTabPage.Text = "Online Players";
             // 
@@ -747,7 +747,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // playersOnlineDGV
@@ -764,7 +764,7 @@
             this.playersOnlineDGV.Name = "playersOnlineDGV";
             this.playersOnlineDGV.ReadOnly = true;
             this.tableLayoutPanel4.SetRowSpan(this.playersOnlineDGV, 2);
-            this.playersOnlineDGV.Size = new System.Drawing.Size(559, 399);
+            this.playersOnlineDGV.Size = new System.Drawing.Size(579, 411);
             this.playersOnlineDGV.TabIndex = 0;
             // 
             // playerName
@@ -781,7 +781,7 @@
             // 
             // refreshOnlinePlayerList
             // 
-            this.refreshOnlinePlayerList.Location = new System.Drawing.Point(568, 3);
+            this.refreshOnlinePlayerList.Location = new System.Drawing.Point(588, 3);
             this.refreshOnlinePlayerList.Name = "refreshOnlinePlayerList";
             this.refreshOnlinePlayerList.Size = new System.Drawing.Size(75, 23);
             this.refreshOnlinePlayerList.TabIndex = 1;
@@ -795,7 +795,7 @@
             this.playerInfoTabPage.Controls.Add(this.tableLayoutPanel8);
             this.playerInfoTabPage.Location = new System.Drawing.Point(4, 22);
             this.playerInfoTabPage.Name = "playerInfoTabPage";
-            this.playerInfoTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.playerInfoTabPage.Size = new System.Drawing.Size(1170, 417);
             this.playerInfoTabPage.TabIndex = 7;
             this.playerInfoTabPage.Text = "Player Info";
             // 
@@ -826,7 +826,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel8.TabIndex = 0;
             // 
             // serverPlayers
@@ -836,7 +836,7 @@
             this.serverPlayers.Location = new System.Drawing.Point(3, 43);
             this.serverPlayers.Name = "serverPlayers";
             this.tableLayoutPanel8.SetRowSpan(this.serverPlayers, 5);
-            this.serverPlayers.Size = new System.Drawing.Size(136, 359);
+            this.serverPlayers.Size = new System.Drawing.Size(136, 371);
             this.serverPlayers.TabIndex = 1;
             this.serverPlayers.SelectedIndexChanged += new System.EventHandler(this.serverPlayers_SelectedIndexChanged);
             // 
@@ -846,7 +846,7 @@
             this.playerCharacters.FormattingEnabled = true;
             this.playerCharacters.Location = new System.Drawing.Point(145, 43);
             this.playerCharacters.Name = "playerCharacters";
-            this.playerCharacters.Size = new System.Drawing.Size(171, 131);
+            this.playerCharacters.Size = new System.Drawing.Size(171, 137);
             this.playerCharacters.TabIndex = 2;
             this.playerCharacters.SelectedIndexChanged += new System.EventHandler(this.playerCharacters_SelectedIndexChanged);
             // 
@@ -854,7 +854,7 @@
             // 
             this.xPosition.AutoSize = true;
             this.xPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xPosition.Location = new System.Drawing.Point(145, 177);
+            this.xPosition.Location = new System.Drawing.Point(145, 183);
             this.xPosition.Name = "xPosition";
             this.xPosition.Size = new System.Drawing.Size(171, 30);
             this.xPosition.TabIndex = 3;
@@ -864,7 +864,7 @@
             // 
             this.yPosition.AutoSize = true;
             this.yPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.yPosition.Location = new System.Drawing.Point(145, 207);
+            this.yPosition.Location = new System.Drawing.Point(145, 213);
             this.yPosition.Name = "yPosition";
             this.yPosition.Size = new System.Drawing.Size(171, 30);
             this.yPosition.TabIndex = 4;
@@ -874,7 +874,7 @@
             // 
             this.zPosition.AutoSize = true;
             this.zPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zPosition.Location = new System.Drawing.Point(145, 237);
+            this.zPosition.Location = new System.Drawing.Point(145, 243);
             this.zPosition.Name = "zPosition";
             this.zPosition.Size = new System.Drawing.Size(171, 30);
             this.zPosition.TabIndex = 5;
@@ -908,7 +908,7 @@
             this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label21.Location = new System.Drawing.Point(322, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(668, 40);
+            this.label21.Size = new System.Drawing.Size(707, 40);
             this.label21.TabIndex = 8;
             this.label21.Text = "Inventory Data";
             this.label21.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -922,13 +922,13 @@
             this.inventoryData.Name = "inventoryData";
             this.inventoryData.ReadOnly = true;
             this.tableLayoutPanel8.SetRowSpan(this.inventoryData, 5);
-            this.inventoryData.Size = new System.Drawing.Size(806, 359);
+            this.inventoryData.Size = new System.Drawing.Size(845, 371);
             this.inventoryData.TabIndex = 9;
             // 
             // refreshPlayerData
             // 
             this.refreshPlayerData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.refreshPlayerData.Location = new System.Drawing.Point(996, 3);
+            this.refreshPlayerData.Location = new System.Drawing.Point(1035, 3);
             this.refreshPlayerData.Name = "refreshPlayerData";
             this.refreshPlayerData.Size = new System.Drawing.Size(132, 34);
             this.refreshPlayerData.TabIndex = 10;
@@ -1516,7 +1516,7 @@
             this.backupsTabPage.Controls.Add(this.tableLayoutPanel7);
             this.backupsTabPage.Location = new System.Drawing.Point(4, 22);
             this.backupsTabPage.Name = "backupsTabPage";
-            this.backupsTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.backupsTabPage.Size = new System.Drawing.Size(1170, 417);
             this.backupsTabPage.TabIndex = 6;
             this.backupsTabPage.Text = "Backup/Restore";
             // 
@@ -1561,7 +1561,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel7.TabIndex = 0;
             // 
             // enableBackups
@@ -1714,7 +1714,7 @@
             this.backupList.Location = new System.Drawing.Point(707, 33);
             this.backupList.Name = "backupList";
             this.tableLayoutPanel7.SetRowSpan(this.backupList, 9);
-            this.backupList.Size = new System.Drawing.Size(421, 264);
+            this.backupList.Size = new System.Drawing.Size(460, 264);
             this.backupList.TabIndex = 11;
             // 
             // label19
@@ -1725,7 +1725,7 @@
             this.label19.Location = new System.Drawing.Point(556, 0);
             this.label19.Name = "label19";
             this.tableLayoutPanel7.SetRowSpan(this.label19, 11);
-            this.label19.Size = new System.Drawing.Size(2, 405);
+            this.label19.Size = new System.Drawing.Size(2, 417);
             this.label19.TabIndex = 12;
             // 
             // restoreGameIni
@@ -1784,7 +1784,7 @@
             this.logsTabPage.Location = new System.Drawing.Point(4, 22);
             this.logsTabPage.Name = "logsTabPage";
             this.logsTabPage.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.logsTabPage.Size = new System.Drawing.Size(1131, 405);
+            this.logsTabPage.Size = new System.Drawing.Size(1170, 417);
             this.logsTabPage.TabIndex = 4;
             this.logsTabPage.Text = "Logs";
             // 
@@ -1794,7 +1794,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.33333F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.66666F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.openLog, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
@@ -1822,7 +1822,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1131, 405);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1170, 417);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // enableLogging
@@ -1831,7 +1831,7 @@
             this.enableLogging.Dock = System.Windows.Forms.DockStyle.Fill;
             this.enableLogging.Location = new System.Drawing.Point(3, 3);
             this.enableLogging.Name = "enableLogging";
-            this.enableLogging.Size = new System.Drawing.Size(202, 24);
+            this.enableLogging.Size = new System.Drawing.Size(210, 24);
             this.enableLogging.TabIndex = 0;
             this.enableLogging.Text = "Enable Logging";
             this.enableLogging.UseVisualStyleBackColor = true;
@@ -1842,9 +1842,9 @@
             this.openLog.AutoSize = true;
             this.tableLayoutPanel5.SetColumnSpan(this.openLog, 2);
             this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openLog.Location = new System.Drawing.Point(978, 0);
+            this.openLog.Location = new System.Drawing.Point(1015, 0);
             this.openLog.Name = "openLog";
-            this.openLog.Size = new System.Drawing.Size(150, 30);
+            this.openLog.Size = new System.Drawing.Size(152, 30);
             this.openLog.TabIndex = 2;
             this.openLog.TabStop = true;
             this.openLog.Text = "Open Log File";
@@ -1863,7 +1863,7 @@
             this.logTextBox.ReadOnly = true;
             this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
             this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(969, 369);
+            this.logTextBox.Size = new System.Drawing.Size(1006, 381);
             this.logTextBox.TabIndex = 3;
             this.logTextBox.Text = "";
             // 
@@ -1872,9 +1872,9 @@
             this.backgroundColour.BackColor = System.Drawing.Color.Black;
             this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backgroundColour.Location = new System.Drawing.Point(1104, 33);
+            this.backgroundColour.Location = new System.Drawing.Point(1141, 33);
             this.backgroundColour.Name = "backgroundColour";
-            this.backgroundColour.Size = new System.Drawing.Size(24, 19);
+            this.backgroundColour.Size = new System.Drawing.Size(26, 19);
             this.backgroundColour.TabIndex = 4;
             this.backgroundColour.UseVisualStyleBackColor = false;
             this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
@@ -1883,7 +1883,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(978, 30);
+            this.label8.Location = new System.Drawing.Point(1015, 30);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(120, 25);
             this.label8.TabIndex = 5;
@@ -1894,7 +1894,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(978, 55);
+            this.label9.Location = new System.Drawing.Point(1015, 55);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(120, 25);
             this.label9.TabIndex = 6;
@@ -1906,9 +1906,9 @@
             this.userEventColour.BackColor = System.Drawing.Color.White;
             this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.userEventColour.Location = new System.Drawing.Point(1104, 58);
+            this.userEventColour.Location = new System.Drawing.Point(1141, 58);
             this.userEventColour.Name = "userEventColour";
-            this.userEventColour.Size = new System.Drawing.Size(24, 19);
+            this.userEventColour.Size = new System.Drawing.Size(26, 19);
             this.userEventColour.TabIndex = 7;
             this.userEventColour.UseVisualStyleBackColor = false;
             this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
@@ -1917,7 +1917,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(978, 80);
+            this.label10.Location = new System.Drawing.Point(1015, 80);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(120, 25);
             this.label10.TabIndex = 8;
@@ -1929,9 +1929,9 @@
             this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryLimitColour.Location = new System.Drawing.Point(1104, 83);
+            this.memoryLimitColour.Location = new System.Drawing.Point(1141, 83);
             this.memoryLimitColour.Name = "memoryLimitColour";
-            this.memoryLimitColour.Size = new System.Drawing.Size(24, 19);
+            this.memoryLimitColour.Size = new System.Drawing.Size(26, 19);
             this.memoryLimitColour.TabIndex = 9;
             this.memoryLimitColour.UseVisualStyleBackColor = false;
             this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
@@ -1940,7 +1940,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(978, 105);
+            this.label11.Location = new System.Drawing.Point(1015, 105);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(120, 25);
             this.label11.TabIndex = 10;
@@ -1952,9 +1952,9 @@
             this.timedRestartColour.BackColor = System.Drawing.Color.Lime;
             this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timedRestartColour.Location = new System.Drawing.Point(1104, 108);
+            this.timedRestartColour.Location = new System.Drawing.Point(1141, 108);
             this.timedRestartColour.Name = "timedRestartColour";
-            this.timedRestartColour.Size = new System.Drawing.Size(24, 19);
+            this.timedRestartColour.Size = new System.Drawing.Size(26, 19);
             this.timedRestartColour.TabIndex = 11;
             this.timedRestartColour.UseVisualStyleBackColor = false;
             this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
@@ -1963,7 +1963,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(978, 130);
+            this.label12.Location = new System.Drawing.Point(1015, 130);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(120, 25);
             this.label12.TabIndex = 12;
@@ -1975,9 +1975,9 @@
             this.serverCrashColour.BackColor = System.Drawing.Color.Red;
             this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverCrashColour.Location = new System.Drawing.Point(1104, 133);
+            this.serverCrashColour.Location = new System.Drawing.Point(1141, 133);
             this.serverCrashColour.Name = "serverCrashColour";
-            this.serverCrashColour.Size = new System.Drawing.Size(24, 19);
+            this.serverCrashColour.Size = new System.Drawing.Size(26, 19);
             this.serverCrashColour.TabIndex = 13;
             this.serverCrashColour.UseVisualStyleBackColor = false;
             this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
