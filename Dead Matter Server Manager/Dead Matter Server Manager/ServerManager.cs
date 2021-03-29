@@ -2680,19 +2680,21 @@ namespace Dead_Matter_Server_Manager
             zPosition.Text = "";
             inventoryData.Text = "";
 
-            PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
-            if (selectedPlayer.CharacterIDs.Length > 0)
+            if(serverPlayers.SelectedItem != null)
             {
-                string tmp = selectedPlayer.CharacterIDs;
-
-                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
-
-                SQLiteConnection connection = new SQLiteConnection(connectionString);
-                try
+                PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
+                if (selectedPlayer.CharacterIDs.Length > 0)
                 {
-                    connection.Open();
+                    string tmp = selectedPlayer.CharacterIDs;
 
-                    
+                    string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=true";
+
+                    SQLiteConnection connection = new SQLiteConnection(connectionString);
+                    try
+                    {
+                        connection.Open();
+
+
                         string queryTxt = "SELECT FirstName || ' ' || LastName as Name, ID FROM Characters WHERE PlayerID = '" + tmp + "'";
                         SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                         SQLiteDataReader reader = command.ExecuteReader();
@@ -2706,13 +2708,15 @@ namespace Dead_Matter_Server_Manager
                             character.Name = reader[0].ToString();
                             playerCharacters.Items.Add(character);
                         }
-                    
-                }
-                catch (Exception exception)
-                {
-                    //error connecting to db - do something
+
+                    }
+                    catch (Exception exception)
+                    {
+                        //error connecting to db - do something
+                    }
                 }
             }
+            
         }
 
         /// <summary>
