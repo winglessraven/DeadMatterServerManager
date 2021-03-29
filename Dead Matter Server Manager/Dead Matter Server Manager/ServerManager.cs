@@ -2723,64 +2723,67 @@ namespace Dead_Matter_Server_Manager
         private void playerCharacters_SelectedIndexChanged(object sender, EventArgs e)
         {
             inventoryData.Text = "";
-            Character character = (Character)playerCharacters.SelectedItem;
-            int tmp = character.CharacterKey;
-
-            string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=True";
-
-            SQLiteConnection connection = new SQLiteConnection(connectionString);
-            try
+            if (playerCharacters.SelectedItem != null)
             {
-                connection.Open();
+                Character character = (Character)playerCharacters.SelectedItem;
+                int tmp = character.CharacterKey;
 
-                string queryTxt = "SELECT Transform, InventoryData FROM Characters WHERE ID = '" + tmp + "'";
-                SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
-                SQLiteDataReader reader = command.ExecuteReader();
+                string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=True";
 
-                while (reader.Read())
+                SQLiteConnection connection = new SQLiteConnection(connectionString);
+                try
                 {
-                    string[] temp = reader[0].ToString().Split('|');
-                    string xPos = temp[0].Split(',')[0];
-                    string yPos = temp[0].Split(',')[1];
-                    string zPos = temp[0].Split(',')[2];
+                    connection.Open();
 
-                    CharacterLocation characterLocation = new CharacterLocation();
-                    characterLocation.CharacterKey = tmp;
-                    characterLocation.TranslationX = Convert.ToDouble(xPos);
-                    characterLocation.TranslationY = Convert.ToDouble(yPos);
-                    characterLocation.TranslationZ = Convert.ToDouble(zPos);
+                    string queryTxt = "SELECT Transform, InventoryData FROM Characters WHERE ID = '" + tmp + "'";
+                    SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                    SQLiteDataReader reader = command.ExecuteReader();
 
-                    xPosition.Text = "Position X: " + characterLocation.TranslationX;
-                    yPosition.Text = "Position Y: " + characterLocation.TranslationY;
-                    zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
-
-                    string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
-                    List<string> itemNames = new List<string>();
-
-                    foreach (string s in items)
+                    while (reader.Read())
                     {
-                        string[] split = s.Split(',');
-                        itemNames.Add(split[0]);
-                    }
+                        string[] temp = reader[0].ToString().Split('|');
+                        string xPos = temp[0].Split(',')[0];
+                        string yPos = temp[0].Split(',')[1];
+                        string zPos = temp[0].Split(',')[2];
 
-                    foreach (string s in itemNames)
-                    {
-                        if (!s.StartsWith("(EquipmentInventory"))
+                        CharacterLocation characterLocation = new CharacterLocation();
+                        characterLocation.CharacterKey = tmp;
+                        characterLocation.TranslationX = Convert.ToDouble(xPos);
+                        characterLocation.TranslationY = Convert.ToDouble(yPos);
+                        characterLocation.TranslationZ = Convert.ToDouble(zPos);
+
+                        xPosition.Text = "Position X: " + characterLocation.TranslationX;
+                        yPosition.Text = "Position Y: " + characterLocation.TranslationY;
+                        zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
+
+                        string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
+                        List<string> itemNames = new List<string>();
+
+                        foreach (string s in items)
                         {
-                            string trim = s.Replace(")", "");
-                            trim = trim.Replace("\"", "");
-                            inventoryData.AppendText(trim + Environment.NewLine);
+                            string[] split = s.Split(',');
+                            itemNames.Add(split[0]);
+                        }
+
+                        foreach (string s in itemNames)
+                        {
+                            if (!s.StartsWith("(EquipmentInventory"))
+                            {
+                                string trim = s.Replace(")", "");
+                                trim = trim.Replace("\"", "");
+                                inventoryData.AppendText(trim + Environment.NewLine);
+                            }
                         }
                     }
                 }
-            }
-            catch(Exception exception)
-            {
-                //error connecting to db - do something
-                xPosition.Text = "";
-                yPosition.Text = "";
-                zPosition.Text = "";
-                inventoryData.Text = "";
+                catch (Exception exception)
+                {
+                    //error connecting to db - do something
+                    xPosition.Text = "";
+                    yPosition.Text = "";
+                    zPosition.Text = "";
+                    inventoryData.Text = "";
+                }
             }
         }
 
