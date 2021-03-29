@@ -2400,8 +2400,26 @@ namespace Dead_Matter_Server_Manager
                         }
                     }
 
-                    backupFile.CreateEntryFromFile(mostRecentFile, Path.GetFileName(mostRecentFile), CompressionLevel.Optimal);
+                    try
+                    {
+                        Process copyDB = new Process();
+                        copyDB.StartInfo.UseShellExecute = false;
+                        copyDB.StartInfo.RedirectStandardOutput = true;
+                        copyDB.StartInfo.FileName = "cmd.exe";
+                        copyDB.StartInfo.Arguments = "/C copy \"" + mostRecentFile + "\" \"" + mostRecentFile + "_" + "\"";
+                        copyDB.Start();
+                        WriteLog(copyDB.StandardOutput.ReadToEnd(),"INFO",null);
+                        copyDB.WaitForExit();
+                        copyDB.Close();
+                        backupFile.CreateEntryFromFile(mostRecentFile + "_", Path.GetFileName(mostRecentFile), CompressionLevel.Optimal);
+                        File.Delete(mostRecentFile + "_");
+                    }
+                    catch (IOException execption)
+                    {
+                        WriteLog(execption.Message,"ERROR",null);
+                    }
 
+                    
                     backupFile.CreateEntryFromFile(gameIni, Path.GetFileName(gameIni), CompressionLevel.Optimal);
                     backupFile.CreateEntryFromFile(engineIni, Path.GetFileName(engineIni), CompressionLevel.Optimal);
 
