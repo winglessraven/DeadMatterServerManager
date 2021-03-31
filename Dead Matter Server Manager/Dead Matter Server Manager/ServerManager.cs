@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using JNogueira.Discord.Webhook.Client;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Color = System.Drawing.Color;
 
 namespace Dead_Matter_Server_Manager
@@ -75,6 +76,9 @@ namespace Dead_Matter_Server_Manager
         private bool initialStartUpDone;
         private bool stoppedControlsChanged;
 
+        //api key
+        private string apiKey;
+
         //for memory conversion
         static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
@@ -89,6 +93,9 @@ namespace Dead_Matter_Server_Manager
 
             //set form title to include version number
             this.Text = "Dead Matter Server Manager || " + this.ProductVersion;
+
+            //init apiKey;
+            apiKey = "";
 
             //set config file path
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
@@ -2649,16 +2656,24 @@ namespace Dead_Matter_Server_Manager
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
+                List<PlayerSteamInfo> playerSteamInfo = new List<PlayerSteamInfo>();
+
                 while (reader.Read())
                 {
-                    PlayerSteamInfo playerSteamInfo = new PlayerSteamInfo();
-                    //string tmp = reader[1].ToString().Substring(13, 17);
-                    playerSteamInfo.SteamName = GetSteamName(reader[1].ToString());
-                    playerSteamInfo.CharacterIDs = reader[0].ToString();
-                    serverPlayers.Items.Add(playerSteamInfo);
+                    string tmp = reader[1].ToString().Substring(13);
+                    playerSteamInfo.Add(new PlayerSteamInfo { SteamID = tmp, CharacterIDs = reader[0].ToString() });
+                    //string tmp = reader[1].ToString().Substring(13, 17);                   
                 }
+
+                foreach(PlayerSteamInfo p in playerSteamInfo)
+                {
+                    p.SteamResponse = GetSteamInfo(p.SteamID);
+                    p.SteamName = p.SteamResponse.personaname;
+                    //p.SteamID = p.SteamResponse.steamid;
+                    serverPlayers.Items.Add(p);
+                }   
             }
-            catch
+            catch(Exception exception)
             {
                 //error connecting to db - do something
             }
@@ -2671,13 +2686,32 @@ namespace Dead_Matter_Server_Manager
         /// </summary>
         /// <param name="communityID">SteamID</param>
         /// <returns></returns>
-        private string GetSteamName(string communityID)
+        private Player GetSteamInfo(string communityID)
         {
             try
             {
                 WebClient client = new WebClient();
-                string name = client.DownloadString("https://www.winglessraven.com/DMSM/getSteamName.php?userID=" + communityID);
-                return name;
+
+                if(apiKey.Length == 0)
+                {
+                    apiKey = client.DownloadString("https://www.winglessraven.com/DMSM/api.html");
+                }
+                
+                dynamic response = client.DownloadString("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + apiKey + "&steamids=" + communityID);
+                //Debug.Print(test.ToString());
+
+                Root steamResult = JsonConvert.DeserializeObject<Root>(response);
+                List<Player> players = new List<Player>( players = steamResult.response.players);
+
+                Player player = new Player();
+
+                foreach(Player p in players)
+                {
+                    player = p;
+                }
+
+                return player;
+                
             }
             catch
             {
@@ -2697,8 +2731,13 @@ namespace Dead_Matter_Server_Manager
             yPosition.Text = "";
             zPosition.Text = "";
             inventoryData.Text = "";
+            PlayerSteamID.Text = "";
+            PlayerProfileLink.Text = "";
+            PlayerProfileLink.Links.Clear();
+            PlayerProfilePic.Image = null;
 
-            if(serverPlayers.SelectedItem != null)
+
+            if (serverPlayers.SelectedItem != null)
             {
                 PlayerSteamInfo selectedPlayer = (PlayerSteamInfo)serverPlayers.SelectedItem;
                 if (selectedPlayer.CharacterIDs.Length > 0)
@@ -2732,6 +2771,11 @@ namespace Dead_Matter_Server_Manager
                     {
                         //error connecting to db - do something
                     }
+
+                    PlayerSteamID.Text = "SteamID: " + selectedPlayer.SteamResponse.steamid;
+                    PlayerProfileLink.Text = selectedPlayer.SteamResponse.profileurl;
+                    PlayerProfileLink.Links.Add(0, selectedPlayer.SteamResponse.profileurl.Length, selectedPlayer.SteamResponse.profileurl);
+                    PlayerProfilePic.Load(selectedPlayer.SteamResponse.avatarfull);
                 }
             }
             
@@ -2900,6 +2944,8 @@ namespace Dead_Matter_Server_Manager
         {
             public string CharacterIDs { get; set; }
             public string SteamName { get; set; }
+            public string SteamID { get; set; }
+            public Player SteamResponse { get; set; }
 
             public override string ToString()
             {
@@ -3247,6 +3293,30 @@ namespace Dead_Matter_Server_Manager
             }
         }
 
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
+        public class Player
+        {
+            public string steamid { get; set; }
+            public int communityvisibilitystate { get; set; }
+            public int profilestate { get; set; }
+            public string personaname { get; set; }
+            public int lastlogoff { get; set; }
+            public string profileurl { get; set; }
+            public string avatar { get; set; }
+            public string avatarmedium { get; set; }
+            public string avatarfull { get; set; }
+        }
+
+        public class Response
+        {
+            public List<Player> players { get; set; }
+        }
+
+        public class Root
+        {
+            public Response response { get; set; }
+        }
+
         //all the below just call SaveData to store the current settings in the application
         private void discordWebHook_Click(object sender, EventArgs e)
         {
@@ -3473,6 +3543,11 @@ namespace Dead_Matter_Server_Manager
             SaveData();
         }
         //end of 'SaveData' group
+
+        private void PlayerProfileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(PlayerProfileLink.Text);
+        }
     }
 }
 
