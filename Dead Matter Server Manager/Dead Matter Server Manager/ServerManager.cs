@@ -1200,13 +1200,15 @@ namespace Dead_Matter_Server_Manager
                         uptime = DateTime.Now - serverStartTime;
                         SetText(serverUptime, uptime.Days.ToString("0") + "." + uptime.Hours.ToString("00") + ":" + uptime.Minutes.ToString("00") + ":" + uptime.Seconds.ToString("00"), Color.Black, true);
 
+
                         //only run this every 30 seconds, no need to run it each time this method is called
-                        if (uptime.Minutes % 1 == 0 && uptime.Seconds % 30 == 0)
+                        if (uptime.Minutes % 1 == 0 && uptime.Seconds % 5 == 0)
                         {
                             //try to get online player numbers
                             try
                             {
-                                serverIP = IPAddress.Parse(GetPublicIP());
+                                serverIP = IPAddress.Parse("100.64.17.159");
+                                //serverIP = IPAddress.Parse(GetPublicIP());
                                 serverInfo = null;
                                 serverInfo = new A2S_INFO(new IPEndPoint(serverIP, steamQueryPort));
                                 SetText(onlinePlayers, "Online Players" + Environment.NewLine + serverInfo.Players + "/" + serverInfo.MaxPlayers, Color.Black, true);
@@ -1888,9 +1890,11 @@ namespace Dead_Matter_Server_Manager
         /// <param name="e"></param>
         private void refreshOnlinePlayerList_Click(object sender, EventArgs e)
         {
-            serverIP = IPAddress.Parse(GetPublicIP());
+			//serverIP = IPAddress.Parse(GetPublicIP());
+            serverIP = IPAddress.Parse("100.64.17.159");
+
             try
-            {
+			{
                 playerInfo = new A2S_PLAYER(new IPEndPoint(serverIP, steamQueryPort));
                 SetOnlinePlayers(playersOnlineDGV, playerInfo);
             }
@@ -3166,9 +3170,26 @@ namespace Dead_Matter_Server_Manager
                 udp.Client.ReceiveTimeout = 300;
                 MemoryStream ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
                 BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
-                ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
-                Header = br.ReadByte();
-                Protocol = br.ReadByte();
+				ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
+				Header = br.ReadByte();
+                if(Header == 65) // =41 in hex. Challenge response. Resend request, but with the last four bytes of the challenge appended.)
+				{
+					byte[] CHALLENGE = br.ReadBytes(4);
+                    byte[] RESPONSE = new byte[REQUEST.Length + CHALLENGE.Length];
+                    Buffer.BlockCopy(REQUEST, 0, RESPONSE, 0, REQUEST.Length);
+                    Buffer.BlockCopy(CHALLENGE, 0, RESPONSE, REQUEST.Length, CHALLENGE.Length);
+                    br.Close();
+                    ms.Close();
+
+                    //Probably a better way than manually repeting this.
+                    udp.Send(RESPONSE, RESPONSE.Length, ep);
+                    udp.Client.ReceiveTimeout = 300;
+                    ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
+                    br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
+                    ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
+                    Header = br.ReadByte();
+                }
+				Protocol = br.ReadByte();
                 Name = ReadNullTerminatedString(ref br);
                 Map = ReadNullTerminatedString(ref br);
                 Folder = ReadNullTerminatedString(ref br);
@@ -3183,22 +3204,22 @@ namespace Dead_Matter_Server_Manager
                 VAC = (VACFlags)br.ReadByte();
                 Version = ReadNullTerminatedString(ref br);
                 ExtraDataFlag = (ExtraDataFlags)br.ReadByte();
-                //#region These EDF readers have to be in this order because that's the way they are reported
-                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
-                //    Port = br.ReadInt32();
-                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
-                //    SteamID = br.ReadUInt64();
-                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
-                //{
-                //    SpectatorPort = br.ReadInt32();
-                //    Spectator = ReadNullTerminatedString(ref br);
-                //}
-                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
-                //    Keywords = ReadNullTerminatedString(ref br);
-                //if (ExtraDataFlag.HasFlag(ExtraDataFlags.GameID))
-                //    GameID = br.ReadUInt64();
-                //#endregion
-                br.Close();
+				#region These EDF readers have to be in this order because that's the way they are reported
+				if (ExtraDataFlag.HasFlag(ExtraDataFlags.Port))
+					Port = br.ReadInt32();
+				if (ExtraDataFlag.HasFlag(ExtraDataFlags.SteamID))
+					SteamID = br.ReadUInt64();
+				if (ExtraDataFlag.HasFlag(ExtraDataFlags.Spectator))
+				{
+					SpectatorPort = br.ReadInt32();
+					Spectator = ReadNullTerminatedString(ref br);
+				}
+				if (ExtraDataFlag.HasFlag(ExtraDataFlags.Keywords))
+					Keywords = ReadNullTerminatedString(ref br);
+				if (ExtraDataFlag.HasFlag(ExtraDataFlags.GameID))
+					GameID = br.ReadUInt64();
+                #endregion
+				br.Close();
                 ms.Close();
                 udp.Close();
             }
