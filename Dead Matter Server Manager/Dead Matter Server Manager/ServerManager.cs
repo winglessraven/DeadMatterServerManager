@@ -3168,6 +3168,25 @@ namespace Dead_Matter_Server_Manager
                 BinaryReader br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
                 ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
                 Header = br.ReadByte();
+
+                if (Header == 65) // =41 in hex. Challenge response. Resend request, but with the last four bytes of the challenge appended.)
+                {
+                    byte[] CHALLENGE = br.ReadBytes(4);
+                    byte[] RESPONSE = new byte[REQUEST.Length + CHALLENGE.Length];
+                    Buffer.BlockCopy(REQUEST, 0, RESPONSE, 0, REQUEST.Length);
+                    Buffer.BlockCopy(CHALLENGE, 0, RESPONSE, REQUEST.Length, CHALLENGE.Length);
+                    br.Close();
+                    ms.Close();
+
+                    //Probably a better way than manually repeting this.
+                    udp.Send(RESPONSE, RESPONSE.Length, ep);
+                    udp.Client.ReceiveTimeout = 300;
+                    ms = new MemoryStream(udp.Receive(ref ep));    // Saves the received data in a memory buffer
+                    br = new BinaryReader(ms, Encoding.UTF8);      // A binary reader that treats charaters as Unicode 8-bit
+                    ms.Seek(4, SeekOrigin.Begin);   // skip the 4 0xFFs
+                    Header = br.ReadByte();
+                }
+
                 Protocol = br.ReadByte();
                 Name = ReadNullTerminatedString(ref br);
                 Map = ReadNullTerminatedString(ref br);
