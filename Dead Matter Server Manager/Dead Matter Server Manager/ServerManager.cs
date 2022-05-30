@@ -833,7 +833,7 @@ namespace Dead_Matter_Server_Manager
 
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
                         {
-                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
+                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable) && dataGridViewRow.Cells[3].Value.Equals("Game.ini"))
                             {
                                 dataGridViewRow.Cells[1].Value = configVariable[1];
                             }
@@ -859,32 +859,23 @@ namespace Dead_Matter_Server_Manager
                 }
             }
 
-
             foreach (string configLine in configEngine)
             {
-				string[] configVariable = configLine.Split('=');
-				foreach (Settings s in settings)
-				{
-					if (configVariable[0] == s.Variable)
-					{
-                        bool bSkipGamePort = true;
+                string[] configVariable = configLine.Split('=');
+                foreach (Settings s in settings)
+                {
+                    if (configVariable[0] == s.Variable)
+                    {
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
-						{
-							if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
-							{
-                                // There are two s.Variables called "Port" one is for Game.ini(client), one for Engine.ini (server). We skip the first one
-                                // which is Game.ini, otherwise the UI will always report the same port for both.
-								if (bSkipGamePort && s.Variable == "Port")
-								{
-									bSkipGamePort = false;
-									continue;
-								}
-								dataGridViewRow.Cells[1].Value = configVariable[1];
-							}
-						}
-					}
-				}
-			}
+                        {
+                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable) && dataGridViewRow.Cells[3].Value.Equals("Engine.ini"))
+                            {
+                                dataGridViewRow.Cells[1].Value = configVariable[1];
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
