@@ -833,7 +833,7 @@ namespace Dead_Matter_Server_Manager
 
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
                         {
-                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
+                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable) && dataGridViewRow.Cells[3].Value.Equals("Game.ini"))
                             {
                                 dataGridViewRow.Cells[1].Value = configVariable[1];
                             }
@@ -868,7 +868,7 @@ namespace Dead_Matter_Server_Manager
                     {
                         foreach (DataGridViewRow dataGridViewRow in configSettings.Rows)
                         {
-                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable))
+                            if (dataGridViewRow.Cells[0].Value.Equals(s.Variable) && dataGridViewRow.Cells[3].Value.Equals("Engine.ini"))
                             {
                                 dataGridViewRow.Cells[1].Value = configVariable[1];
                             }
