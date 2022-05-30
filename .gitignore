@@ -2,4 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Dead Matter Server Manager/Dead Matter Server Manager/obj/x64/Debug/Dead Matter Server Manager.csprojAssemblyReference.cache
+/Dead Matter Server Manager/Dead Matter Server Manager/obj/*
+/Dead Matter Server Manager/Dead Matter Server Manager/bin/*
+/Dead Matter Server Manager/.vs/*
