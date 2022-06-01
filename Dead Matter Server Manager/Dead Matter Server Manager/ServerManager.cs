@@ -36,7 +36,7 @@ namespace Dead_Matter_Server_Manager
         //file info and paths
         private static string configFilePath;
         private string logFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\log.txt";
-        public string currentDBfile = "Database.db3";
+        public string currentDBfile = "PersistentData_v1.db3";
 
         //delegates
         delegate void SetTextOnControl(Control controlToChange, string message, Color foreColour, bool enabled);
@@ -637,29 +637,29 @@ namespace Dead_Matter_Server_Manager
             //add rows for server settings
             settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MaxBanditCount", Value = "256", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for non-safezone human NPCs. If this many human NPCs are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "PVP", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Toggles whether or not PVP is enabled. If this is false, no damage can be inflicted by one player on another.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "FallDamageMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Change how much damage falling does here. 1.0 is full damage, 0 is no damage at all.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "bVACSecure", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Whether or not to turn on VAC and EAC.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "bIsHardcore", Value = "false", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Whether or not to turn on hardcore mode.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "AnimalSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.FlockSpawner]", Tooltip = "How many more animals to spawn than usual.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "ZombieSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.GlobalAISpawner]", Tooltip = "How many more zombies to spawn than usual.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MaxBanditCount", Value = "256", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for non-safezone human NPCs. If this many human NPCs are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "PVP", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Toggles whether or not PVP is enabled. If this is false, no damage can be inflicted by one player on another.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "FallDamageMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Change how much damage falling does here. 1.0 is full damage, 0 is no damage at all.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "bVACSecure", Value = "true", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Whether or not to turn on VAC and EAC.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "bIsHardcore", Value = "false", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Whether or not to turn on hardcore mode.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "AnimalSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.FlockSpawner]", Tooltip = "How many more animals to spawn than usual.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "ZombieSpawnMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.GlobalAISpawner]", Tooltip = "How many more zombies to spawn than usual.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Host", Value = "0.0.0.0", Script = "[Steam]", Tooltip = "Host to advertise to Steam.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
-            settings.Add(new Settings { Variable = "grass.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
-            settings.Add(new Settings { Variable = "foliage.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
+            //settings.Add(new Settings { Variable = "grass.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
+            //settings.Add(new Settings { Variable = "foliage.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
 
 
             foreach (Settings s in settings)
@@ -2652,7 +2652,7 @@ namespace Dead_Matter_Server_Manager
             {
                 connection.Open();
 
-                string queryTxt = "SELECT ID,NetID,LastCharacter FROM Players";
+                string queryTxt = "SELECT NetID,LastCharacter FROM PlayerData";
                 SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2660,8 +2660,8 @@ namespace Dead_Matter_Server_Manager
 
                 while (reader.Read())
                 {
-                    string tmp = reader[1].ToString().Substring(13);
-                    playerSteamInfo.Add(new PlayerSteamInfo { SteamID = tmp, CharacterIDs = reader[0].ToString() });
+                    string tmp = reader[0].ToString().Substring(12);
+                    playerSteamInfo.Add(new PlayerSteamInfo { SteamID = tmp, CharacterIDs = reader[1].ToString() });
                     //string tmp = reader[1].ToString().Substring(13, 17);                   
                 }
 
@@ -2752,7 +2752,7 @@ namespace Dead_Matter_Server_Manager
                         connection.Open();
 
 
-                        string queryTxt = "SELECT FirstName || ' ' || LastName as Name, ID FROM Characters WHERE PlayerID = '" + tmp + "'";
+                        string queryTxt = "SELECT FirstName || ' ' || LastName as Name, CharacterGUID FROM PlayerCharacters WHERE CharacterGUID = '" + tmp + "'";
                         SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                         SQLiteDataReader reader = command.ExecuteReader();
 
@@ -2760,7 +2760,7 @@ namespace Dead_Matter_Server_Manager
                         {
                             Character character = new Character();
                             //string tmp = reader[1].ToString().Substring(13, 17);
-                            character.CharacterKey = Convert.ToInt32(reader[1].ToString());
+                            character.CharacterKey = reader[1].ToString();
 
                             character.Name = reader[0].ToString();
                             playerCharacters.Items.Add(character);
@@ -2792,7 +2792,7 @@ namespace Dead_Matter_Server_Manager
             if (playerCharacters.SelectedItem != null)
             {
                 Character character = (Character)playerCharacters.SelectedItem;
-                int tmp = character.CharacterKey;
+                string tmp = character.CharacterKey;
 
                 string connectionString = @"Data Source=" + serverFolderPath.Text + "\\" + @"deadmatter\Saved\Database\" + currentDBfile + ";Version=3;Read Only=True";
 
@@ -2801,45 +2801,28 @@ namespace Dead_Matter_Server_Manager
                 {
                     connection.Open();
 
-                    string queryTxt = "SELECT Transform, InventoryData FROM Characters WHERE ID = '" + tmp + "'";
+                    string queryTxt = "SELECT Location FROM CharacterStats WHERE CharacterGUID = '" + tmp + "'";
                     SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
                     SQLiteDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
                         string[] temp = reader[0].ToString().Split('|');
-                        string xPos = temp[0].Split(',')[0];
-                        string yPos = temp[0].Split(',')[1];
-                        string zPos = temp[0].Split(',')[2];
+                        string xPos = temp[0].Split(' ')[0];
+                        string yPos = temp[0].Split(' ')[1];
+                        string zPos = temp[0].Split(' ')[2];
 
-                        CharacterLocation characterLocation = new CharacterLocation();
-                        characterLocation.CharacterKey = tmp;
-                        characterLocation.TranslationX = Convert.ToDouble(xPos);
-                        characterLocation.TranslationY = Convert.ToDouble(yPos);
-                        characterLocation.TranslationZ = Convert.ToDouble(zPos);
+                        //CharacterLocation characterLocation = new CharacterLocation();
+                        //characterLocation.CharacterKey = tmp;
+                        //characterLocation.TranslationX = xPos;
+                        //characterLocation.TranslationY = yPos;
+                        //characterLocation.TranslationZ = zPos;
 
-                        xPosition.Text = "Position X: " + characterLocation.TranslationX;
-                        yPosition.Text = "Position Y: " + characterLocation.TranslationY;
-                        zPosition.Text = "Position Z: " + characterLocation.TranslationZ;
+                        xPosition.Text = xPos;
+                        yPosition.Text = yPos;
+                        zPosition.Text = zPos;
 
-                        string[] items = reader[1].ToString().Split(new string[] { "ItemId=" }, StringSplitOptions.None);
-                        List<string> itemNames = new List<string>();
-
-                        foreach (string s in items)
-                        {
-                            string[] split = s.Split(',');
-                            itemNames.Add(split[0]);
-                        }
-
-                        foreach (string s in itemNames)
-                        {
-                            if (!s.StartsWith("(EquipmentInventory"))
-                            {
-                                string trim = s.Replace(")", "");
-                                trim = trim.Replace("\"", "");
-                                inventoryData.AppendText(trim + Environment.NewLine);
-                            }
-                        }
+                        connection.Close();
                     }
                 }
                 catch (Exception exception)
@@ -2848,6 +2831,54 @@ namespace Dead_Matter_Server_Manager
                     xPosition.Text = "";
                     yPosition.Text = "";
                     zPosition.Text = "";
+                }
+
+                //inventory data
+
+                List<InventoryItems> inventory = new List<InventoryItems>();
+
+                try
+                {
+                    connection.Open();
+
+                    string queryTxt = "SELECT ItemGUID, Debug_ItemID, InventoryOwnerGUID FROM GameInventories WHERE InventoryOwnerGUID = '" + tmp + "' AND OuterInventoryGUID IS NULL";
+                    SQLiteCommand command = new SQLiteCommand(queryTxt, connection);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        inventory.Add(new InventoryItems { ItemGUID = reader[0].ToString(), Debug_ItemID = reader[1].ToString(), InventoryOwnerGUID = reader[2].ToString(), ContainerInvItems = new List<ContainerInventoryItems>() });
+                    }
+
+                    //clear reader
+                    reader = null;
+
+                    foreach (InventoryItems item in inventory)
+                    {
+                        queryTxt = "SELECT ItemGUID, Debug_ItemID, InventoryOwnerGUID FROM GameInventories WHERE InventoryOwnerGUID = '" + tmp + "' AND OuterInventoryGUID = '" + item.ItemGUID + "'";
+                        command = new SQLiteCommand(queryTxt, connection);
+                        reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            item.ContainerInvItems.Add(new ContainerInventoryItems { ItemGUID = reader[0].ToString(), Debug_ItemID = reader[1].ToString(), InventoryOwnerGUID = reader[2].ToString() });
+                        }
+                    }
+
+                    foreach (InventoryItems item in inventory)
+                    {
+                        inventoryData.AppendText(item.Debug_ItemID + Environment.NewLine);
+                        if(item.ContainerInvItems.Count > 0)
+                        {
+                            foreach(ContainerInventoryItems inventoryItem in item.ContainerInvItems)
+                            {
+                                inventoryData.AppendText("    " + inventoryItem.Debug_ItemID + Environment.NewLine);
+                            }
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
                     inventoryData.Text = "";
                 }
             }
@@ -2955,7 +2986,7 @@ namespace Dead_Matter_Server_Manager
 
         public class Character
         {
-            public int CharacterKey { get; set; }
+            public string CharacterKey { get; set; }
             public string Name { get; set; }
             public override string ToString()
             {
@@ -2965,10 +2996,10 @@ namespace Dead_Matter_Server_Manager
 
         public class CharacterLocation
         {
-            public int CharacterKey { get; set; }
-            public double TranslationX { get; set; }
-            public double TranslationY { get; set; }
-            public double TranslationZ { get; set; }
+            public string CharacterKey { get; set; }
+            public string TranslationX { get; set; }
+            public string TranslationY { get; set; }
+            public string TranslationZ { get; set; }
         }
 
         public class Settings
@@ -3334,6 +3365,23 @@ namespace Dead_Matter_Server_Manager
         public class Root
         {
             public Response response { get; set; }
+        }
+
+        public class InventoryItems
+        {
+            public string ItemGUID { get; set; }
+            public string InventoryOwnerGUID { get; set; }
+            public string Debug_ItemID { get; set; }
+            public List<ContainerInventoryItems> ContainerInvItems { get; set; }
+
+        }
+
+        public class ContainerInventoryItems
+        {
+            public string ItemGUID { get; set; }
+            public string InventoryOwnerGUID { get; set; }
+            public string Debug_ItemID { get; set; }
+            public string OuterInventoryGUID { get; set; }
         }
 
         //all the below just call SaveData to store the current settings in the application
