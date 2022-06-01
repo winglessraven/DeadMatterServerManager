@@ -2821,9 +2821,8 @@ namespace Dead_Matter_Server_Manager
                         xPosition.Text = xPos;
                         yPosition.Text = yPos;
                         zPosition.Text = zPos;
-
-                        connection.Close();
                     }
+                    connection.Close();
                 }
                 catch (Exception exception)
                 {
