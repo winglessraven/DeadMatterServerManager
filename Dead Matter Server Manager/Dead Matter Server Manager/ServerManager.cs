@@ -103,6 +103,9 @@ namespace Dead_Matter_Server_Manager
             CheckAppData();
             CheckBackups();
 
+            //disable custom launch params for now
+            changeLaunchParams.Checked = false;
+
             //check if server is already running
             Process[] dmServerShipping = Process.GetProcessesByName("deadmatterServer-Win64-Shipping");
             if (dmServerShipping.Length != 0)
@@ -119,6 +122,13 @@ namespace Dead_Matter_Server_Manager
                 //auto start server is ticked, so set the flags to start the server
                 startServer_Click(this, null);
             }
+
+            //set launch parameters
+            configSettings_CellValueChanged(null, null);
+
+            //remove unused tabs from config
+            tabControl1.TabPages.RemoveAt(2);
+            tabControl1.TabPages.RemoveAt(1);
 
             //GetSavedPlayers();
 
@@ -636,9 +646,9 @@ namespace Dead_Matter_Server_Manager
         {
             //add rows for server settings
             settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
@@ -652,12 +662,14 @@ namespace Dead_Matter_Server_Manager
             //settings.Add(new Settings { Variable = "Timescale", Value = "5.5", Script = "[/Script/DeadMatter.Agenda]", Tooltip = "The timescale, relative to real time. The default value of 5.5 indicates that one real-life second is 5.5 seconds ingame.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "AttackMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How strongly the zombies do damage. Set to zero to disable.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Host", Value = "0.0.0.0", Script = "[Steam]", Tooltip = "Host to advertise to Steam.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "Host", Value = "0.0.0.0", Script = "[Steam]", Tooltip = "Host to advertise to Steam.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
+            settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[Steam]", Tooltip = "Database name to use.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
             //settings.Add(new Settings { Variable = "grass.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
             //settings.Add(new Settings { Variable = "foliage.DensityScale", Value = "1.1", Script = "[/Script/Engine.RenderSettings]", Tooltip = "Set lower for possible performance gains (untested)", IniFile = "Engine.ini" });
 
@@ -667,6 +679,10 @@ namespace Dead_Matter_Server_Manager
                 //add the settings to the DGV
                 configSettings.Rows.Add(s.Variable, s.Value, s.Script, s.IniFile, s.Tooltip);
             }
+
+            //hide the parts no longer needed for now
+            configSettings.Columns[2].Visible = false;
+            configSettings.Columns[3].Visible = false;
 
             configSettings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
@@ -917,34 +933,40 @@ namespace Dead_Matter_Server_Manager
                 }
             }
 
-            foreach (DataGridViewRow row in whitelistDGV.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.SurvivalBaseGamemode]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
-                }
-            }
-            foreach (DataGridViewRow row in adminDGV.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Admins=" + row.Cells[0].Value;
-                }
-            }
-            foreach (DataGridViewRow row in superAdminDGV.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
-                }
-            }
-            foreach (DataGridViewRow row in serverTagsDGV.Rows)
-            {
-                if (row.Cells[0].Value != null)
-                {
-                    writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "ServerTags=" + row.Cells[0].Value;
-                }
-            }
+            //whitelist not available in 0.9?
+            //foreach (DataGridViewRow row in whitelistDGV.Rows)
+            //{
+            //    if (row.Cells[0].Value != null)
+            //    {
+            //        writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.SurvivalBaseGamemode]")).Values += Environment.NewLine + "Whitelist=" + row.Cells[0].Value;
+            //    }
+            //}
+
+            //admin not available in 0.9?
+            //foreach (DataGridViewRow row in adminDGV.Rows)
+            //{
+            //    if (row.Cells[0].Value != null)
+            //    {
+            //        writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "Admins=" + row.Cells[0].Value;
+            //    }
+            //}
+            //foreach (DataGridViewRow row in superAdminDGV.Rows)
+            //{
+            //    if (row.Cells[0].Value != null)
+            //    {
+            //        writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "SuperAdmins=" + row.Cells[0].Value;
+            //    }
+            //}
+
+
+            //no server tags in 0.9?
+            //foreach (DataGridViewRow row in serverTagsDGV.Rows)
+            //{
+            //    if (row.Cells[0].Value != null)
+            //    {
+            //        writeConfigs.Find(p => p.Script.Equals("[/Script/DeadMatter.DMGameSession]")).Values += Environment.NewLine + "ServerTags=" + row.Cells[0].Value;
+            //    }
+            //}
 
             string gameIni = "";
 
@@ -3613,6 +3635,31 @@ namespace Dead_Matter_Server_Manager
         private void PlayerProfileLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(PlayerProfileLink.Text);
+        }
+
+        private void configSettings_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            launchParameters.Text = "-USEALLAVAILABLECORES -log";
+            //adapt to use launch switches - config files not being used in 0.9
+            foreach (DataGridViewRow row in configSettings.Rows)
+            {
+                if(row.Cells[0].Value.Equals("ServerName"))
+                {
+                    launchParameters.Text += " -SteamServerName=\"" + row.Cells[1].Value + "\"";
+                }
+                if (row.Cells[0].Value.Equals("Port"))
+                {
+                    launchParameters.Text += " -port=" + row.Cells[1].Value + "";
+                }
+                if (row.Cells[0].Value.Equals("QueryPort"))
+                {
+                    launchParameters.Text += " -queryport=" + row.Cells[1].Value + "";
+                }
+                if (row.Cells[0].Value.Equals("DatabaseName"))
+                {
+                    launchParameters.Text += " -DMDatabaseINI=\"../../DeadMatter/Saved/Config/WindowsServer/" + row.Cells[1].Value + "\"";
+                }
+            }
         }
     }
 }
