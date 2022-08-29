@@ -1,6 +1,9 @@
 # Dead Matter Server Manager
 A GUI server manager for Dead Matter dedicated servers.  Idea was to create a simple and clean interface for managing dedicated servers and the associated configurations without manually needing to locate and edit different ini files.  The application is constantly being updated and I welcome any ideas/suggestions for improvements along with bug reports.
 
+# IMPORTANT INFO
+Due to lack of time at the moment I recommend just using batch files as per the guide provided [here](https://docs.google.com/document/d/e/2PACX-1vTnvPi634Xd6Fmraz2u7sbxq4uT3r27qnR8NCcAYOw68USNKztXSWtTza2FFSKXiUYGJY5xnQ3fdkt7/pub) to run a server until I can find some time to clean up most of the unused/incorrect stuff in the current application.
+
 ## Features
 * Configure server settings from within the application - no manual editing of ini files required
 * Set your maximum memory limit - if the server goes above your limit the application will restart your server
