@@ -666,7 +666,7 @@ namespace Dead_Matter_Server_Manager
             //settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "Game.ini" });
             settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[Steam]", Tooltip = "Database name to use.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[/Game/DM_Core/Config/Config_Database.Config_Database_C]", Tooltip = "Database name to use.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
