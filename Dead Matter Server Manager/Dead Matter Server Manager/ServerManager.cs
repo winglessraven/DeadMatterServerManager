@@ -99,7 +99,9 @@ namespace Dead_Matter_Server_Manager
 
             //set config file path
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
-            AddConfigRows();
+            
+            //AddConfigRows();
+            
             CheckAppData();
             CheckBackups();
 
@@ -123,12 +125,33 @@ namespace Dead_Matter_Server_Manager
                 startServer_Click(this, null);
             }
 
-            //set launch parameters
-            configSettings_CellValueChanged(null, null);
-
             //remove unused tabs from config
             tabControl1.TabPages.RemoveAt(2);
             tabControl1.TabPages.RemoveAt(1);
+            tabControl1.TabPages.RemoveAt(0);
+
+            //clear any previous setting
+            saveConfigOnStart.Checked = false;
+
+            //make sure game.ini and engine.ini are no longer read only
+            FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
+            if (File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini"))
+            {
+                if (fileInfo.IsReadOnly)
+                {
+                    fileInfo.IsReadOnly = false;
+                }
+            }
+            fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini");
+            if (File.Exists(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Game.ini"))
+            {
+                if (fileInfo.IsReadOnly)
+                {
+                    fileInfo.IsReadOnly = false;
+                }
+            }
+
+            SaveData();
 
             //GetSavedPlayers();
 
@@ -619,6 +642,30 @@ namespace Dead_Matter_Server_Manager
                             String[] temp = s.Split('=');
                             emailSSL.Checked = Convert.ToBoolean(temp[1]);
                         }
+
+                        if (s.StartsWith("ServerName"))
+                        {
+                            String[] temp = s.Split('=');
+                            ServerName.Text = temp[1];
+                        }
+
+                        if (s.StartsWith("Port"))
+                        {
+                            String[] temp = s.Split('=');
+                            Port.Value = Convert.ToInt32(temp[1]);
+                        }
+
+                        if (s.StartsWith("QueryPort"))
+                        {
+                            String[] temp = s.Split('=');
+                            QueryPort.Value = Convert.ToInt32(temp[1]);
+                        }
+
+                        if (s.StartsWith("DatabaseName"))
+                        {
+                            String[] temp = s.Split('=');
+                            DatabaseName.Text = temp[1];
+                        }
                     }
                 }
                 catch
@@ -645,7 +692,7 @@ namespace Dead_Matter_Server_Manager
         private void AddConfigRows()
         {
             //add rows for server settings
-            settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "_Game.ini" });
             //settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
@@ -664,9 +711,9 @@ namespace Dead_Matter_Server_Manager
             //settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Host", Value = "0.0.0.0", Script = "[Steam]", Tooltip = "Host to advertise to Steam.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[/Game/DM_Core/Config/Config_Database.Config_Database_C]", Tooltip = "Database name to use.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "_Game.ini" });
+            settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "_Game.ini" });
+            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[/Game/DM_Core/Config/Config_Database.Config_Database_C]", Tooltip = "Database name to use.", IniFile = "_Game.ini" });
             //settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
@@ -1123,8 +1170,15 @@ namespace Dead_Matter_Server_Manager
                 "NotifyEmailAdditional=" + emailAdditional.Checked + Environment.NewLine +
                 "EmailTo=" + emailTo.Text + Environment.NewLine +
                 "EmailPort=" + emailPort.Text + Environment.NewLine +
-                "EmailSSL=" + emailSSL.Checked
+                "EmailSSL=" + emailSSL.Checked + Environment.NewLine +
+                "ServerName=" + ServerName.Text + Environment.NewLine +
+                "Port=" + Port.Value.ToString() + Environment.NewLine +
+                "QueryPort=" + QueryPort.Value.ToString() + Environment.NewLine +
+                "DatabaseName=" + DatabaseName.Text
                 );
+
+            steamQueryPort = Convert.ToInt32(QueryPort.Value);
+            UpdateLaunchCommand();
         }
 
         /// <summary>
@@ -3637,29 +3691,29 @@ namespace Dead_Matter_Server_Manager
             Process.Start(PlayerProfileLink.Text);
         }
 
-        private void configSettings_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void UpdateLaunchCommand()
         {
-            launchParameters.Text = "-USEALLAVAILABLECORES -log";
-            //adapt to use launch switches - config files not being used in 0.9
-            foreach (DataGridViewRow row in configSettings.Rows)
-            {
-                if(row.Cells[0].Value.Equals("ServerName"))
-                {
-                    launchParameters.Text += " -SteamServerName=\"" + row.Cells[1].Value + "\"";
-                }
-                if (row.Cells[0].Value.Equals("Port"))
-                {
-                    launchParameters.Text += " -port=" + row.Cells[1].Value + "";
-                }
-                if (row.Cells[0].Value.Equals("QueryPort"))
-                {
-                    launchParameters.Text += " -queryport=" + row.Cells[1].Value + "";
-                }
-                if (row.Cells[0].Value.Equals("DatabaseName"))
-                {
-                    launchParameters.Text += " -DMDatabaseINI=\"../../DeadMatter/Saved/Config/WindowsServer/" + row.Cells[1].Value + "\"";
-                }
-            }
+            launchParameters.Text = "-USEALLAVAILABLECORES -log -SteamServerName=\"" + ServerName.Text + "\" -port=" + Port.Value + " -queryport=" + QueryPort.Value + " -DMDatabaseINI=\"../../../DeadMatter/Saved/Config/WindowsServer/" + DatabaseName.Text + "\"";
+        }
+
+        private void ServerName_TextChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void Port_ValueChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void QueryPort_ValueChanged(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void DatabaseName_TextChanged(object sender, EventArgs e)
+        {
+            SaveData();
         }
     }
 }
