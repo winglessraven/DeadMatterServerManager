@@ -100,7 +100,7 @@ namespace Dead_Matter_Server_Manager
             //set config file path
             configFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\DeadMatterServerManager\\DMSM.cfg";
             
-            //AddConfigRows();
+            AddConfigRows();
             
             CheckAppData();
             CheckBackups();
@@ -126,12 +126,12 @@ namespace Dead_Matter_Server_Manager
             }
 
             //remove unused tabs from config
+            tabControl1.TabPages.RemoveAt(3);
             tabControl1.TabPages.RemoveAt(2);
-            tabControl1.TabPages.RemoveAt(1);
-            tabControl1.TabPages.RemoveAt(0);
+            //tabControl1.TabPages.RemoveAt(0);
 
             //clear any previous setting
-            saveConfigOnStart.Checked = false;
+            //saveConfigOnStart.Checked = false;
 
             //make sure game.ini and engine.ini are no longer read only
             FileInfo fileInfo = new FileInfo(serverFolderPath.Text + "\\" + @"deadmatter\Saved\Config\WindowsServer\Engine.ini");
@@ -692,10 +692,10 @@ namespace Dead_Matter_Server_Manager
         private void AddConfigRows()
         {
             //add rows for server settings
-            settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "_Game.ini" });
-            //settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "ServerName", Value = "My Server", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server name. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MaxPlayers", Value = "36", Script = "[/Script/Engine.GameSession]", Tooltip = "Maximum player count for the server.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Password", Value = "", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server password. Has a soft limit of 255 characters due to Steam server limitations.", IniFile = "Game.ini" });
-            //settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
+            settings.Add(new Settings { Variable = "MOTD", Value = "Welcome to the server.", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Server's MOTD, displayed in character creation.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxPlayerClaims", Value = "3", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "Maximum claims per group or player.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxZombieCount", Value = "2048", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for zombie NPCs. If this many zombies are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "MaxAnimalCount", Value = "100", Script = "[/Script/DeadMatter.DMGameSession]", Tooltip = "The absolute hard-cap for animal NPCs. If this many animals are on the server, no more will be allowed to spawn.", IniFile = "Game.ini" });
@@ -711,9 +711,9 @@ namespace Dead_Matter_Server_Manager
             //settings.Add(new Settings { Variable = "DefenseMultiplier", Value = "1.0", Script = "[/Script/DeadMatter.ZombiePawn]", Tooltip = "How much the zombies soak up hits. Set to zero to make them made of paper.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Host", Value = "0.0.0.0", Script = "[Steam]", Tooltip = "Host to advertise to Steam.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "SteamQueryPort", Value = "27016", Script = "[Steam]", Tooltip = "The port used to query A2S_INFO requests. This is what tells players who's on the server from the server browser.", IniFile = "Game.ini" });
-            settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "_Game.ini" });
-            settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "_Game.ini" });
-            settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[/Game/DM_Core/Config/Config_Database.Config_Database_C]", Tooltip = "Database name to use.", IniFile = "_Game.ini" });
+            //settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[Steam]", Tooltip = "Change the Steam advertised gameserver port. If this is absent it'll just use the server's port.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "QueryPort", Value = "7778", Script = "[Steam]", Tooltip = "The query port for the server.", IniFile = "Game.ini" });
+            //settings.Add(new Settings { Variable = "DatabaseName", Value = "DMDB.ini", Script = "[/Game/DM_Core/Config/Config_Database.Config_Database_C]", Tooltip = "Database name to use.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "SteamPort", Value = "7778", Script = "[Steam]", Tooltip = "Change the Steam communications port.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "WhitelistActive", Value = "false", Script = "[/Script/DeadMatter.SurvivalBaseGamemode]", Tooltip = "If the server whitelist is enabled.", IniFile = "Game.ini" });
             //settings.Add(new Settings { Variable = "Port", Value = "7777", Script = "[URL]", Tooltip = "Change the server's port.", IniFile = "Engine.ini" });
