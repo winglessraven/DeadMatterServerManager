@@ -55,6 +55,16 @@
             this.serverStatus = new System.Windows.Forms.Label();
             this.memoryUsedProgressBar = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.mainServerSettings = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.ServerName = new System.Windows.Forms.TextBox();
+            this.DatabaseName = new System.Windows.Forms.TextBox();
+            this.QueryPort = new System.Windows.Forms.NumericUpDown();
+            this.Port = new System.Windows.Forms.NumericUpDown();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
             this.configSettings = new System.Windows.Forms.DataGridView();
             this.Variable = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,16 +85,6 @@
             this.serverTagsDGV = new System.Windows.Forms.DataGridView();
             this.serverTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.mainServerSettings = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.ServerName = new System.Windows.Forms.TextBox();
-            this.DatabaseName = new System.Windows.Forms.TextBox();
-            this.QueryPort = new System.Windows.Forms.NumericUpDown();
-            this.Port = new System.Windows.Forms.NumericUpDown();
             this.playersOnlineTabPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.playersOnlineDGV = new System.Windows.Forms.DataGridView();
@@ -209,6 +209,10 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.mainServerSettings.SuspendLayout();
+            this.tableLayoutPanel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QueryPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Port)).BeginInit();
             this.settingsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configSettings)).BeginInit();
             this.userTabPage.SuspendLayout();
@@ -219,10 +223,6 @@
             this.serverTagsTabPage.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverTagsDGV)).BeginInit();
-            this.mainServerSettings.SuspendLayout();
-            this.tableLayoutPanel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.QueryPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Port)).BeginInit();
             this.playersOnlineTabPage.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playersOnlineDGV)).BeginInit();
@@ -547,6 +547,159 @@
             this.tabControl1.Size = new System.Drawing.Size(1178, 443);
             this.tabControl1.TabIndex = 25;
             // 
+            // mainServerSettings
+            // 
+            this.mainServerSettings.BackColor = System.Drawing.Color.Transparent;
+            this.mainServerSettings.Controls.Add(this.tableLayoutPanel10);
+            this.mainServerSettings.Location = new System.Drawing.Point(4, 22);
+            this.mainServerSettings.Name = "mainServerSettings";
+            this.mainServerSettings.Size = new System.Drawing.Size(1170, 417);
+            this.mainServerSettings.TabIndex = 8;
+            this.mainServerSettings.Text = "Main Server Settings";
+            // 
+            // tableLayoutPanel10
+            // 
+            this.tableLayoutPanel10.ColumnCount = 5;
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.376068F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.53846F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel10.Controls.Add(this.label27, 0, 0);
+            this.tableLayoutPanel10.Controls.Add(this.label28, 0, 1);
+            this.tableLayoutPanel10.Controls.Add(this.label29, 0, 2);
+            this.tableLayoutPanel10.Controls.Add(this.label30, 0, 3);
+            this.tableLayoutPanel10.Controls.Add(this.ServerName, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.DatabaseName, 1, 3);
+            this.tableLayoutPanel10.Controls.Add(this.QueryPort, 1, 2);
+            this.tableLayoutPanel10.Controls.Add(this.Port, 1, 1);
+            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
+            this.tableLayoutPanel10.RowCount = 8;
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(1170, 417);
+            this.tableLayoutPanel10.TabIndex = 0;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label27.Location = new System.Drawing.Point(3, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(92, 30);
+            this.label27.TabIndex = 0;
+            this.label27.Text = "Server Name";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label28.Location = new System.Drawing.Point(3, 30);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(92, 30);
+            this.label28.TabIndex = 1;
+            this.label28.Text = "Port";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Location = new System.Drawing.Point(3, 60);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(92, 30);
+            this.label29.TabIndex = 2;
+            this.label29.Text = "Query Port";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Location = new System.Drawing.Point(3, 90);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(92, 30);
+            this.label30.TabIndex = 3;
+            this.label30.Text = "Database Name";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ServerName
+            // 
+            this.ServerName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ServerName.Location = new System.Drawing.Point(101, 3);
+            this.ServerName.Name = "ServerName";
+            this.ServerName.Size = new System.Drawing.Size(363, 20);
+            this.ServerName.TabIndex = 1;
+            this.ServerName.Text = "My DM Server";
+            this.ServerName.TextChanged += new System.EventHandler(this.ServerName_TextChanged);
+            // 
+            // DatabaseName
+            // 
+            this.DatabaseName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DatabaseName.Location = new System.Drawing.Point(101, 93);
+            this.DatabaseName.Name = "DatabaseName";
+            this.DatabaseName.Size = new System.Drawing.Size(363, 20);
+            this.DatabaseName.TabIndex = 4;
+            this.DatabaseName.Text = "DMDatabase.ini";
+            this.DatabaseName.TextChanged += new System.EventHandler(this.DatabaseName_TextChanged);
+            // 
+            // QueryPort
+            // 
+            this.QueryPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.QueryPort.Location = new System.Drawing.Point(101, 63);
+            this.QueryPort.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.QueryPort.Minimum = new decimal(new int[] {
+            1025,
+            0,
+            0,
+            0});
+            this.QueryPort.Name = "QueryPort";
+            this.QueryPort.Size = new System.Drawing.Size(363, 20);
+            this.QueryPort.TabIndex = 3;
+            this.QueryPort.Value = new decimal(new int[] {
+            7778,
+            0,
+            0,
+            0});
+            this.QueryPort.ValueChanged += new System.EventHandler(this.QueryPort_ValueChanged);
+            // 
+            // Port
+            // 
+            this.Port.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Port.Location = new System.Drawing.Point(101, 33);
+            this.Port.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.Port.Minimum = new decimal(new int[] {
+            1025,
+            0,
+            0,
+            0});
+            this.Port.Name = "Port";
+            this.Port.Size = new System.Drawing.Size(363, 20);
+            this.Port.TabIndex = 2;
+            this.Port.Value = new decimal(new int[] {
+            7777,
+            0,
+            0,
+            0});
+            this.Port.ValueChanged += new System.EventHandler(this.Port_ValueChanged);
+            // 
             // settingsTabPage
             // 
             this.settingsTabPage.BackColor = System.Drawing.Color.Transparent;
@@ -744,159 +897,6 @@
             this.label6.Size = new System.Drawing.Size(287, 208);
             this.label6.TabIndex = 1;
             this.label6.Text = "Server tags format example:\r\n\r\nPVP:No KOS\r\nRP:Casual\r\nCountry:GB";
-            // 
-            // mainServerSettings
-            // 
-            this.mainServerSettings.BackColor = System.Drawing.Color.Transparent;
-            this.mainServerSettings.Controls.Add(this.tableLayoutPanel10);
-            this.mainServerSettings.Location = new System.Drawing.Point(4, 22);
-            this.mainServerSettings.Name = "mainServerSettings";
-            this.mainServerSettings.Size = new System.Drawing.Size(1170, 417);
-            this.mainServerSettings.TabIndex = 8;
-            this.mainServerSettings.Text = "Main Server Settings";
-            // 
-            // tableLayoutPanel10
-            // 
-            this.tableLayoutPanel10.ColumnCount = 5;
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.376068F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.53846F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel10.Controls.Add(this.label27, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.label28, 0, 1);
-            this.tableLayoutPanel10.Controls.Add(this.label29, 0, 2);
-            this.tableLayoutPanel10.Controls.Add(this.label30, 0, 3);
-            this.tableLayoutPanel10.Controls.Add(this.ServerName, 1, 0);
-            this.tableLayoutPanel10.Controls.Add(this.DatabaseName, 1, 3);
-            this.tableLayoutPanel10.Controls.Add(this.QueryPort, 1, 2);
-            this.tableLayoutPanel10.Controls.Add(this.Port, 1, 1);
-            this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel10.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-            this.tableLayoutPanel10.RowCount = 8;
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(1170, 417);
-            this.tableLayoutPanel10.TabIndex = 0;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label27.Location = new System.Drawing.Point(3, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(92, 30);
-            this.label27.TabIndex = 0;
-            this.label27.Text = "Server Name";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label28.Location = new System.Drawing.Point(3, 30);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(92, 30);
-            this.label28.TabIndex = 1;
-            this.label28.Text = "Port";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Location = new System.Drawing.Point(3, 60);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(92, 30);
-            this.label29.TabIndex = 2;
-            this.label29.Text = "Query Port";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Location = new System.Drawing.Point(3, 90);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(92, 30);
-            this.label30.TabIndex = 3;
-            this.label30.Text = "Database Name";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ServerName
-            // 
-            this.ServerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServerName.Location = new System.Drawing.Point(101, 3);
-            this.ServerName.Name = "ServerName";
-            this.ServerName.Size = new System.Drawing.Size(363, 20);
-            this.ServerName.TabIndex = 1;
-            this.ServerName.Text = "My DM Server";
-            this.ServerName.TextChanged += new System.EventHandler(this.ServerName_TextChanged);
-            // 
-            // DatabaseName
-            // 
-            this.DatabaseName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DatabaseName.Location = new System.Drawing.Point(101, 93);
-            this.DatabaseName.Name = "DatabaseName";
-            this.DatabaseName.Size = new System.Drawing.Size(363, 20);
-            this.DatabaseName.TabIndex = 4;
-            this.DatabaseName.Text = "DMDatabase.ini";
-            this.DatabaseName.TextChanged += new System.EventHandler(this.DatabaseName_TextChanged);
-            // 
-            // QueryPort
-            // 
-            this.QueryPort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueryPort.Location = new System.Drawing.Point(101, 63);
-            this.QueryPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.QueryPort.Minimum = new decimal(new int[] {
-            1025,
-            0,
-            0,
-            0});
-            this.QueryPort.Name = "QueryPort";
-            this.QueryPort.Size = new System.Drawing.Size(363, 20);
-            this.QueryPort.TabIndex = 3;
-            this.QueryPort.Value = new decimal(new int[] {
-            7778,
-            0,
-            0,
-            0});
-            this.QueryPort.ValueChanged += new System.EventHandler(this.QueryPort_ValueChanged);
-            // 
-            // Port
-            // 
-            this.Port.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Port.Location = new System.Drawing.Point(101, 33);
-            this.Port.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.Port.Minimum = new decimal(new int[] {
-            1025,
-            0,
-            0,
-            0});
-            this.Port.Name = "Port";
-            this.Port.Size = new System.Drawing.Size(363, 20);
-            this.Port.TabIndex = 2;
-            this.Port.Value = new decimal(new int[] {
-            7777,
-            0,
-            0,
-            0});
-            this.Port.ValueChanged += new System.EventHandler(this.Port_ValueChanged);
             // 
             // playersOnlineTabPage
             // 
@@ -2023,7 +2023,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.33333F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.66666F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel5.Controls.Add(this.enableLogging, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.openLog, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.logTextBox, 0, 1);
@@ -2071,9 +2071,9 @@
             this.openLog.AutoSize = true;
             this.tableLayoutPanel5.SetColumnSpan(this.openLog, 2);
             this.openLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openLog.Location = new System.Drawing.Point(1004, 0);
+            this.openLog.Location = new System.Drawing.Point(1002, 0);
             this.openLog.Name = "openLog";
-            this.openLog.Size = new System.Drawing.Size(163, 30);
+            this.openLog.Size = new System.Drawing.Size(165, 30);
             this.openLog.TabIndex = 2;
             this.openLog.TabStop = true;
             this.openLog.Text = "Open Log File";
@@ -2092,7 +2092,7 @@
             this.logTextBox.ReadOnly = true;
             this.tableLayoutPanel5.SetRowSpan(this.logTextBox, 9);
             this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(995, 381);
+            this.logTextBox.Size = new System.Drawing.Size(993, 381);
             this.logTextBox.TabIndex = 3;
             this.logTextBox.Text = "";
             // 
@@ -2101,9 +2101,9 @@
             this.backgroundColour.BackColor = System.Drawing.Color.Black;
             this.backgroundColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.backgroundColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backgroundColour.Location = new System.Drawing.Point(1130, 33);
+            this.backgroundColour.Location = new System.Drawing.Point(1128, 33);
             this.backgroundColour.Name = "backgroundColour";
-            this.backgroundColour.Size = new System.Drawing.Size(37, 19);
+            this.backgroundColour.Size = new System.Drawing.Size(39, 19);
             this.backgroundColour.TabIndex = 4;
             this.backgroundColour.UseVisualStyleBackColor = false;
             this.backgroundColour.Click += new System.EventHandler(this.backgroundColour_Click);
@@ -2112,7 +2112,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(1004, 30);
+            this.label8.Location = new System.Drawing.Point(1002, 30);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(120, 25);
             this.label8.TabIndex = 5;
@@ -2123,7 +2123,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(1004, 55);
+            this.label9.Location = new System.Drawing.Point(1002, 55);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(120, 25);
             this.label9.TabIndex = 6;
@@ -2135,9 +2135,9 @@
             this.userEventColour.BackColor = System.Drawing.Color.White;
             this.userEventColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userEventColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.userEventColour.Location = new System.Drawing.Point(1130, 58);
+            this.userEventColour.Location = new System.Drawing.Point(1128, 58);
             this.userEventColour.Name = "userEventColour";
-            this.userEventColour.Size = new System.Drawing.Size(37, 19);
+            this.userEventColour.Size = new System.Drawing.Size(39, 19);
             this.userEventColour.TabIndex = 7;
             this.userEventColour.UseVisualStyleBackColor = false;
             this.userEventColour.Click += new System.EventHandler(this.userEventColour_Click);
@@ -2146,7 +2146,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(1004, 80);
+            this.label10.Location = new System.Drawing.Point(1002, 80);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(120, 25);
             this.label10.TabIndex = 8;
@@ -2158,9 +2158,9 @@
             this.memoryLimitColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.memoryLimitColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.memoryLimitColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.memoryLimitColour.Location = new System.Drawing.Point(1130, 83);
+            this.memoryLimitColour.Location = new System.Drawing.Point(1128, 83);
             this.memoryLimitColour.Name = "memoryLimitColour";
-            this.memoryLimitColour.Size = new System.Drawing.Size(37, 19);
+            this.memoryLimitColour.Size = new System.Drawing.Size(39, 19);
             this.memoryLimitColour.TabIndex = 9;
             this.memoryLimitColour.UseVisualStyleBackColor = false;
             this.memoryLimitColour.Click += new System.EventHandler(this.memoryLimitColour_Click);
@@ -2169,7 +2169,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(1004, 105);
+            this.label11.Location = new System.Drawing.Point(1002, 105);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(120, 25);
             this.label11.TabIndex = 10;
@@ -2181,9 +2181,9 @@
             this.timedRestartColour.BackColor = System.Drawing.Color.Lime;
             this.timedRestartColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timedRestartColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timedRestartColour.Location = new System.Drawing.Point(1130, 108);
+            this.timedRestartColour.Location = new System.Drawing.Point(1128, 108);
             this.timedRestartColour.Name = "timedRestartColour";
-            this.timedRestartColour.Size = new System.Drawing.Size(37, 19);
+            this.timedRestartColour.Size = new System.Drawing.Size(39, 19);
             this.timedRestartColour.TabIndex = 11;
             this.timedRestartColour.UseVisualStyleBackColor = false;
             this.timedRestartColour.Click += new System.EventHandler(this.timedRestartColour_Click);
@@ -2192,7 +2192,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(1004, 130);
+            this.label12.Location = new System.Drawing.Point(1002, 130);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(120, 25);
             this.label12.TabIndex = 12;
@@ -2204,9 +2204,9 @@
             this.serverCrashColour.BackColor = System.Drawing.Color.Red;
             this.serverCrashColour.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serverCrashColour.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverCrashColour.Location = new System.Drawing.Point(1130, 133);
+            this.serverCrashColour.Location = new System.Drawing.Point(1128, 133);
             this.serverCrashColour.Name = "serverCrashColour";
-            this.serverCrashColour.Size = new System.Drawing.Size(37, 19);
+            this.serverCrashColour.Size = new System.Drawing.Size(39, 19);
             this.serverCrashColour.TabIndex = 13;
             this.serverCrashColour.UseVisualStyleBackColor = false;
             this.serverCrashColour.Click += new System.EventHandler(this.serverCrashColour_Click);
@@ -2302,12 +2302,15 @@
             this.restartServerTime.Name = "restartServerTime";
             this.restartServerTime.Size = new System.Drawing.Size(188, 20);
             this.restartServerTime.TabIndex = 33;
+            this.restartServerTime.Text = "1440";
             this.restartServerTime.Leave += new System.EventHandler(this.restartServerTime_Leave);
             // 
             // restartServerTimeOption
             // 
             this.restartServerTimeOption.AutoSize = true;
             this.restartServerTimeOption.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.restartServerTimeOption.Checked = true;
+            this.restartServerTimeOption.CheckState = System.Windows.Forms.CheckState.Checked;
             this.restartServerTimeOption.Dock = System.Windows.Forms.DockStyle.Fill;
             this.restartServerTimeOption.Location = new System.Drawing.Point(685, 590);
             this.restartServerTimeOption.Name = "restartServerTimeOption";
@@ -2525,6 +2528,11 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.mainServerSettings.ResumeLayout(false);
+            this.tableLayoutPanel10.ResumeLayout(false);
+            this.tableLayoutPanel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.QueryPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Port)).EndInit();
             this.settingsTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configSettings)).EndInit();
             this.userTabPage.ResumeLayout(false);
@@ -2536,11 +2544,6 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverTagsDGV)).EndInit();
-            this.mainServerSettings.ResumeLayout(false);
-            this.tableLayoutPanel10.ResumeLayout(false);
-            this.tableLayoutPanel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.QueryPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Port)).EndInit();
             this.playersOnlineTabPage.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.playersOnlineDGV)).EndInit();
